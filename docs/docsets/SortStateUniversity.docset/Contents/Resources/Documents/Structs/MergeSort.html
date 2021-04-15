@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MergeSort Structure Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Struct/MergeSort" class="dashAnchor"></a>
+    <a title="MergeSort Structure Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">SortStateUniversity 1.0.0 Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/kylehughes/sort-state-university"><img src="../img/gh.png"/>View on GitHub</a></p>
+        <p class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">SortStateUniversity Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        MergeSort Structure Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Complexity.html">Complexity</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SortingAlgorithmStep.html">SortingAlgorithmStep</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/Int.html">Int</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/SortingAlgorithm.html">SortingAlgorithm</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/Comparison.html">Comparison</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Comparison/Side.html">– Side</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/MergeSort.html">MergeSort</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/MergeSort/Merge.html">– Merge</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>MergeSort</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">MergeSort</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">Identifiable</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">MergeSort</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SortingAlgorithm.html">SortingAlgorithm</a></span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">MergeSort</span><span class="p">:</span> <span class="kt">Codable</span> <span class="k">where</span> <span class="kt">Element</span><span class="p">:</span> <span class="kt">Codable</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">MergeSort</span><span class="p">:</span> <span class="kt">Equatable</span> <span class="k">where</span> <span class="kt">Element</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">MergeSort</span><span class="p">:</span> <span class="kt">Hashable</span> <span class="k">where</span> <span class="kt">Element</span><span class="p">:</span> <span class="kt">Hashable</span></code></pre>
+
+                </div>
+              </div>
+            <p>A divide-and-conquer sorting algorithm, implemented statefully.</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="https://en.wikipedia.org/wiki/Merge_sort">https://en.wikipedia.org/wiki/Merge_sort</a>
+
+</div>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SortStateUniversity05MergeA0V8Elementsa"></a>
+                    <a name="//apple_ref/swift/Alias/Elements" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SortStateUniversity05MergeA0V8Elementsa">Elements</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A type that represents the collection of the elements that the algorithm is sorting.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">Elements</span> <span class="o">=</span> <span class="kt">Array</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SortStateUniversity05MergeA0V2id10Foundation4UUIDVvp"></a>
+                    <a name="//apple_ref/swift/Property/id" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SortStateUniversity05MergeA0V2id10Foundation4UUIDVvp">id</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The stable identity of the algorithm.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">UUID</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SortStateUniversity05MergeA0V5inputSayxGvp"></a>
+                    <a name="//apple_ref/swift/Property/input" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SortStateUniversity05MergeA0V5inputSayxGvp">input</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The given elements that the algorithm is sorting.</p>
+
+<p>This value is constant and will not change after instantiation.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">input</span><span class="p">:</span> <span class="kt"><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V8Elementsa">Elements</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SortStateUniversity05MergeA0V12currentIndexSivp"></a>
+                    <a name="//apple_ref/swift/Property/currentIndex" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SortStateUniversity05MergeA0V12currentIndexSivp">currentIndex</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The position of the first element in the left paritition to be merged.</p>
+
+<p>Whether the algorithm is finished or not cannot be inferred from this value.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">currentIndex</span><span class="p">:</span> <span class="kt"><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V8Elementsa">Elements</a></span><span class="o">.</span><span class="kt">Index</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SortStateUniversity05MergeA0V07ongoingD0AC0D0Vyx_GSgvp"></a>
+                    <a name="//apple_ref/swift/Property/ongoingMerge" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SortStateUniversity05MergeA0V07ongoingD0AC0D0Vyx_GSgvp">ongoingMerge</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The merge that is currently underway.</p>
+
+<p>This value will be <code>nil</code> when the algorithm has not started and when the algorithm is finished. Otherwise,
+a merge will always be ongoing and a value will always be returned.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">ongoingMerge</span><span class="p">:</span> <span class="kt"><a href="../Structs/MergeSort/Merge.html">Merge</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SortStateUniversity05MergeA0V6outputSayxGvp"></a>
+                    <a name="//apple_ref/swift/Property/output" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SortStateUniversity05MergeA0V6outputSayxGvp">output</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The current result of applying the sorting algorithm to <code><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V5inputSayxGvp">input</a></code>.</p>
+
+<p>This value is &ldquo;live&rdquo; and will change as the algorithm is executed. When the algorithm is finished this value
+will contain the sorted result of <code><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V5inputSayxGvp">input</a></code>. It is primarily exposed to allow the internals of the algorithm to
+be observed.</p>
+
+<p>This value should not be used as the final output of the algorithm unless it is known that the algorithm has
+finished. It may be easier to perform <code><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V14callAsFunctionAA20SortingAlgorithmStepOyACyxGGyF">callAsFunction()</a></code> and respond to the step that is returned – the output
+will be reported through that function if the algorithm is finished.</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <code><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V23outputAfterTransactionsSayxGvp">outputAfterTransactions</a></code>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">output</span><span class="p">:</span> <span class="kt"><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V8Elementsa">Elements</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SortStateUniversity05MergeA0V13partitionSizeSivp"></a>
+                    <a name="//apple_ref/swift/Property/partitionSize" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SortStateUniversity05MergeA0V13partitionSizeSivp">partitionSize</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The number of elements in each partition being merged.</p>
+
+<p>The algorithm is finished when this value is greater-than-or-equal-to the number of elements in <code><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V5inputSayxGvp">input</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">partitionSize</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Public%20Initialization"></a>
+                <a name="//apple_ref/swift/Section/Public Initialization" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Public%20Initialization"></a>
+                  <h3 class="section-name"><p>Public Initialization</p>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SortStateUniversity05MergeA0V5inputACyxGSayxG_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(input:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SortStateUniversity05MergeA0V5inputACyxGSayxG_tcfc">init(input:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates an algorithm to sort the given input using bottom-up merge sort.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">input</span><span class="p">:</span> <span class="kt"><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V8Elementsa">Elements</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>input</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The elements to sort.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Public%20Instance%20Interface"></a>
+                <a name="//apple_ref/swift/Section/Public Instance Interface" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Public%20Instance%20Interface"></a>
+                  <h3 class="section-name"><p>Public Instance Interface</p>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SortStateUniversity05MergeA0V23outputAfterTransactionsSayxGvp"></a>
+                    <a name="//apple_ref/swift/Property/outputAfterTransactions" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SortStateUniversity05MergeA0V23outputAfterTransactionsSayxGvp">outputAfterTransactions</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The value of <code><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V6outputSayxGvp">output</a></code> after applying the uncommitted transactions from the ongoing merge.</p>
+
+<p>This should not be used for general access to <code><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V6outputSayxGvp">output</a></code>.</p>
+
+<p>This is useful for observing the merging process happen to <code><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V6outputSayxGvp">output</a></code>. Due to implementation details, the outcome
+of a single merge will only be applied after all of the comparisons for that merge have been answered. Thus,
+<code><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V6outputSayxGvp">output</a></code> will only update in <code>partitionSize * 2</code>-sized chunks. This value allows a caller to inspect <code><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V6outputSayxGvp">output</a></code>
+with all of the in-flight transactions from the merge applied, which will show the merge happen step-by-step to
+the partitions within <code><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V6outputSayxGvp">output</a></code>.</p>
+
+<p>If there is no ongoing merge then this value will be equal to <code><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V6outputSayxGvp">output</a></code>.</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <code><a href="../Structs/MergeSort/Merge.html#/s:19SortStateUniversity05MergeA0V0D0V6outputShyAE11TransactionVyx__GGvp">MergeSort.Merge.output</a></code>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">outputAfterTransactions</span><span class="p">:</span> <span class="kt"><a href="../Structs/MergeSort.html#/s:19SortStateUniversity05MergeA0V8Elementsa">Elements</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SortStateUniversity05MergeA0V0D0V"></a>
+                    <a name="//apple_ref/swift/Struct/Merge" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SortStateUniversity05MergeA0V0D0V">Merge</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An algorithm that takes an array with two sorted partitions and produces one sorted partition in their place.</p>
+
+<p>This algorithm operates entirely on indices and comparisons so there it has no need to pass arrays or copy
+elements. The partitions are defined by the bounds created from indices, and the output are transactions that
+need to be applied to the source array.</p>
+
+<p>The left partition is the elements in the source array between [<code>fromIndex</code>, <code>middleIndex</code>].</p>
+
+<p>The right partition is the elements in the source array between (<code>middleIndex</code>, <code>toIndex</code>).</p>
+
+                        <a href="../Structs/MergeSort/Merge.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Merge</span> <span class="p">:</span> <span class="kt">Codable</span><span class="p">,</span> <span class="kt">Equatable</span><span class="p">,</span> <span class="kt">Hashable</span><span class="p">,</span> <span class="kt">Identifiable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Public%20Static%20Interface"></a>
+                <a name="//apple_ref/swift/Section/Public Static Interface" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Public%20Static%20Interface"></a>
+                  <h3 class="section-name"><p>Public Static Interface</p>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SortStateUniversity05MergeA0V10complexityAA10ComplexityOvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/complexity" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SortStateUniversity05MergeA0V10complexityAA10ComplexityOvpZ">complexity</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The runtime complexity of the algorithm.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">complexity</span><span class="p">:</span> <span class="kt"><a href="../Enums/Complexity.html">Complexity</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SortStateUniversity05MergeA0V46calculateMaximumNumberOfComparisonsInWorstCase3forS2i_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/calculateMaximumNumberOfComparisonsInWorstCase(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SortStateUniversity05MergeA0V46calculateMaximumNumberOfComparisonsInWorstCase3forS2i_tFZ">calculateMaximumNumberOfComparisonsInWorstCase(for:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the number of comparisons that the algorithm will perform, in the worst case, given an input
+with <code>n</code> elements.</p>
+
+<p>The algorithm may require fewer total comparisons than returned depending on the state of the input and the
+answers to the comparisons. The algorithm is guaranteed to not require more comparisons than returned.</p>
+
+<p>This value is provably correct and precise. It is not an estimate.</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <a href="https://oeis.org/A003071">https://oeis.org/A003071</a>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">calculateMaximumNumberOfComparisonsInWorstCase</span><span class="p">(</span><span class="k">for</span> <span class="nv">n</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>n</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The number of elements.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The number of comparisons that the algorithm will perform in the worst case.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Public%20Instance%20Interface2"></a>
+                <a name="//apple_ref/swift/Section/Public Instance Interface" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Public%20Instance%20Interface2"></a>
+                  <h3 class="section-name"><p>Public Instance Interface</p>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SortStateUniversity05MergeA0V6answeryyAA10ComparisonV4SideOyACyxG_GF"></a>
+                    <a name="//apple_ref/swift/Method/answer(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SortStateUniversity05MergeA0V6answeryyAA10ComparisonV4SideOyACyxG_GF">answer(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Answers the current comparison with the given side.</p>
+
+<p>The algorithm is advanced to the state that follows the answer.</p>
+
+<p>If the algorithm is not at a point of comparison then this function will have no effect.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">answer</span><span class="p">(</span><span class="n">_</span> <span class="nv">answer</span><span class="p">:</span> <span class="kt"><a href="../Structs/Comparison.html">Comparison</a></span><span class="o">&lt;</span><span class="err">`</span><span class="k">Self</span><span class="err">`</span><span class="o">&gt;.</span><span class="kt">Side</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>answer</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The answer to the current comparison.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SortStateUniversity05MergeA0V14callAsFunctionAA20SortingAlgorithmStepOyACyxGGyF"></a>
+                    <a name="//apple_ref/swift/Method/callAsFunction()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SortStateUniversity05MergeA0V14callAsFunctionAA20SortingAlgorithmStepOyACyxGGyF">callAsFunction()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Executes the algorithm in its current state and, if possible, advances it to the next state and returns the
+step to the caller.</p>
+
+<p>When the algorithm is not finished this function will return the next comparison that needs to
+be answered to continue the algorithm. When the algorithm is finished this function will return the sorted
+output.</p>
+
+<p>This function is idempotent: for a given state of the algorithm, calling this function will always produce
+the same result and will always leave the algorithm in the same – possibly new – state. Performing this
+function consecutively on the same algorithm will have no additional affect.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">callAsFunction</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/SortingAlgorithmStep.html">SortingAlgorithmStep</a></span><span class="o">&lt;</span><span class="err">`</span><span class="k">Self</span><span class="err">`</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The next step in the algorithm: either the next comparison to answer, or the sorted output.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:19SortStateUniversity05MergeA0V13peekAtElement3forxSgAA10ComparisonV4SideOyACyxG_G_tF"></a>
+                    <a name="//apple_ref/swift/Method/peekAtElement(for:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:19SortStateUniversity05MergeA0V13peekAtElement3forxSgAA10ComparisonV4SideOyACyxG_G_tF">peekAtElement(for:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the element that represents the given side of the current comparison.</p>
+
+<p>If the algorithm is not at a point of comparison then <code>nil</code> will be returned. For example, if the
+algorithm has not started or is finished then <code>nil</code> will be returned.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">peekAtElement</span><span class="p">(</span><span class="k">for</span> <span class="nv">answer</span><span class="p">:</span> <span class="kt"><a href="../Structs/Comparison.html">Comparison</a></span><span class="o">&lt;</span><span class="kt">MergeSort</span><span class="o">&lt;</span><span class="kt">Element</span><span class="o">&gt;&gt;.</span><span class="kt">Side</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Element</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>answer</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The answer that represents the side of the comparison to peek at.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The element that represents the given side of the current comparison, or <code>nil</code> if the algorithm
+is not at a point of comparison.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2021 <a class="link" href="https://kylehugh.es" target="_blank" rel="external">Kyle Hughes</a>. All rights reserved. (Last updated: 2021-05-08)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.7</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
