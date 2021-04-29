@@ -11,6 +11,12 @@ let package = Package(
         .watchOS(.v7),
     ],
     products: [
+        .executable(
+            name: "SortStateUniversityClimber",
+            targets: [
+                "SortStateUniversityClimber"
+            ]
+        ),
         .library(
             name: "SortStateUniversity",
             targets: [
@@ -23,6 +29,12 @@ let package = Package(
         .target(
             name: "SortStateUniversity",
             dependencies: []
+        ),
+        .executableTarget(
+            name: "SortStateUniversityClimber",
+            dependencies: [
+                "SortStateUniversity"
+            ]
         ),
         .testTarget(
             name: "SortStateUniversityTests",
