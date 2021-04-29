@@ -27,6 +27,7 @@ public protocol Algorithm: Identifiable {
     var input: [Element] { get }
     
     mutating func callAsFunction() -> AlgorithmStep<Self>
+    mutating func iterateForAnswer(_ answer: Comparison<Self>.Answer, element: Element)
 }
 
 // MARK: - Default Implementation

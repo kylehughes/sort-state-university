@@ -6,28 +6,16 @@
 //
 
 public struct Comparison<Algorithm> where Algorithm: SortStateUniversity.Algorithm {
-    public let leftSide: Side
-    public let rightSide: Side
+    public let left: Algorithm.Element
+    public let right: Algorithm.Element
+    public let source: Algorithm
     
     // MARK: Public Initialization
-    
-    public init<OtherAlgorithm>(
-        wrapping other: Comparison<OtherAlgorithm>,
-        outcomeWrapper: (OtherAlgorithm) -> Algorithm
-    )
-    where
-        OtherAlgorithm: SortStateUniversity.Algorithm,
-        OtherAlgorithm.Element == Algorithm.Element
-    {
-        self.init(
-            leftSide: Side(element: other.leftSide.element, outcome: outcomeWrapper(other(.left))),
-            rightSide: Side(element: other.rightSide.element, outcome: outcomeWrapper(other(.right)))
-        )
-    }
-    
-    public init(leftSide: Side, rightSide: Side) {
-        self.leftSide = leftSide
-        self.rightSide = rightSide
+
+    public init(source: Algorithm, left: Algorithm.Element, right: Algorithm.Element) {
+        self.source = source
+        self.left = left
+        self.right = right
     }
     
     // MARK: Internal Instance Interface
@@ -35,9 +23,13 @@ public struct Comparison<Algorithm> where Algorithm: SortStateUniversity.Algorit
     public func callAsFunction(_ answer: Answer) -> Algorithm {
         switch answer {
         case .left:
-            return leftSide.outcome
+            var algorithm = source
+            algorithm.iterateForAnswer(.left, element: left)
+            return algorithm
         case .right:
-            return rightSide.outcome
+            var algorithm = source
+            algorithm.iterateForAnswer(.right, element: right)
+            return algorithm
         }
     }
     
@@ -80,7 +72,7 @@ extension Comparison where Algorithm.Element: Comparable {
     // MARK: Public Instance Interface
     
     public func callAsFunction() -> Algorithm {
-        self(leftSide.element < rightSide.element)
+        self(left < right)
     }
 }
 

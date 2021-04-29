@@ -53,26 +53,7 @@ public struct Merge<Element>: Identifiable {
     }
     
     private func makeComparison() -> Comparison<Self> {
-        Comparison(
-            leftSide: Comparison.Side(
-                element: input[leftPartitionIndex]
-            ) {
-                var algorithm = self
-                algorithm.output[outputIndex] = $0
-                algorithm.outputIndex += 1
-                algorithm.leftPartitionIndex += 1
-                return algorithm
-            },
-            rightSide: Comparison.Side(
-                element: input[rightPartitionIndex]
-            ) {
-                var algorithm = self
-                algorithm.output[outputIndex] = $0
-                algorithm.outputIndex += 1
-                algorithm.rightPartitionIndex += 1
-                return algorithm
-            }
-        )
+        Comparison(source: self, left: input[leftPartitionIndex], right: input[rightPartitionIndex])
     }
 }
 
@@ -95,6 +76,19 @@ extension Merge: Algorithm {
         }
         
         return .comparison(makeComparison())
+    }
+    
+    public mutating func iterateForAnswer(_ answer: Comparison<Self>.Answer, element: Element) {
+        switch answer {
+        case .left:
+            output[outputIndex] = input[leftPartitionIndex]
+            leftPartitionIndex += 1
+        case .right:
+            output[outputIndex] = input[rightPartitionIndex]
+            rightPartitionIndex += 1
+        }
+        
+        outputIndex += 1
     }
 }
 
