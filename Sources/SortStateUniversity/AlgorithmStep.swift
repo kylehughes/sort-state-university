@@ -59,25 +59,3 @@ public enum AlgorithmStep<Algorithm> where Algorithm: SortStateUniversity.Algori
         return output
     }
 }
-
-// MARK: - Equatable Extension
-
-extension AlgorithmStep: Equatable where Algorithm: Equatable, Algorithm.Element: Equatable {
-    // NO-OP
-}
-
-// MARK: - Hashable Extension
-
-extension AlgorithmStep: Hashable where Algorithm: Hashable, Algorithm.Element: Hashable {
-    // NO-OP
-}
-
-// MARK: - Identifiable Extension
-
-extension AlgorithmStep: Identifiable where Algorithm: Hashable, Algorithm.Element: Hashable {
-    // Public Instance Interface
-    
-    public var id: Self {
-        self
-    }
-}

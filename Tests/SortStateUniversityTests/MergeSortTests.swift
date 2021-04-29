@@ -81,16 +81,15 @@ final class MergeSortTests: XCTestCase {
         
         perform(mergeSort) { previousSort, comparison, currentSort in
             var nextSort = currentSort
-            let nextStep = nextSort()
+            let _ = nextSort()
             
             var extraneousSort = nextSort
-            let extraneousStep = extraneousSort()
+            let _ = extraneousSort()
             
             // Then…
             
             XCTAssertNotEqual(previousSort, currentSort)
             XCTAssertEqual(nextSort, extraneousSort)
-            XCTAssertEqual(nextStep, extraneousStep)
         }
     }
     

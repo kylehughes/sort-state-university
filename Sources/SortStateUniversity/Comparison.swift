@@ -6,7 +6,7 @@
 //
 
 public struct Comparison<Algorithm> where Algorithm: SortStateUniversity.Algorithm {
-    public let source: Algorithm
+    public let sourceProvider: () -> Algorithm
     
     // MARK: Public Initialization
     
@@ -16,22 +16,22 @@ public struct Comparison<Algorithm> where Algorithm: SortStateUniversity.Algorit
     // but doesn't need to be stateful itself.
     
 
-    public init(source: Algorithm) {
-        self.source = source
+    public init(sourceProvider: @escaping () -> Algorithm) {
+        self.sourceProvider = sourceProvider
     }
     
     // MARK: Public Instance Interface
     
     public var left: Algorithm.Element {
-        source.peekAtElement(for: .left)!
+        sourceProvider().peekAtElement(for: .left)!
     }
     
     public var right: Algorithm.Element {
-        source.peekAtElement(for: .right)!
+        sourceProvider().peekAtElement(for: .right)!
     }
     
     public func callAsFunction(_ answer: Answer) -> Algorithm {
-        var algorithm = source
+        var algorithm = sourceProvider()
         algorithm.answer(answer)
         
         return algorithm
@@ -39,34 +39,6 @@ public struct Comparison<Algorithm> where Algorithm: SortStateUniversity.Algorit
     
     public func callAsFunction(_ bool: Bool) -> Algorithm {
         callAsFunction(Answer(from: bool))
-    }
-}
-
-// MARK: - Codable Extension
-
-extension Comparison: Codable where Algorithm: Codable, Algorithm.Element: Codable {
-    // NO-OP
-}
-
-// MARK: - Equatable Extension
-
-extension Comparison: Equatable where Algorithm: Equatable,  Algorithm.Element: Equatable {
-    // NO-OP
-}
-
-// MARK: - Hashable Extension
-
-extension Comparison: Hashable where Algorithm: Hashable,  Algorithm.Element: Hashable {
-    // NO-OP
-}
-
-// MARK: - Identifiable Extension
-
-extension Comparison: Identifiable where Algorithm: Hashable, Algorithm.Element: Hashable {
-    // MARK: Public Instance Interface
-    
-    public var id: Self {
-        self
     }
 }
 

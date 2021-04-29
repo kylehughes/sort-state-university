@@ -57,7 +57,8 @@ public struct MergeSort<Element>: Identifiable {
 
         switch ongoingMerge!() {
         case .comparison:
-            return .comparison(Comparison(source: self))
+            let copy = self
+            return .comparison(Comparison { copy })
         case let .finished(mergeOutput):
             currentIndex += 2 * partitionSize
             output = mergeOutput
