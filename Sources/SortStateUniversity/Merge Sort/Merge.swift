@@ -51,10 +51,6 @@ public struct Merge<Element>: Identifiable {
             outputIndex += 1
         }
     }
-    
-    private func makeComparison() -> Comparison<Self> {
-        Comparison(source: self, left: input[leftPartitionIndex], right: input[rightPartitionIndex])
-    }
 }
 
 // MARK: - Algorithm Extension
@@ -75,10 +71,10 @@ extension Merge: Algorithm {
             return .finished(output)
         }
         
-        return .comparison(makeComparison())
+        return .comparison(Comparison(source: self))
     }
     
-    public mutating func iterateForAnswer(_ answer: Comparison<Self>.Answer, element: Element) {
+    public mutating func answer(_ answer: Comparison<Self>.Answer) {
         switch answer {
         case .left:
             output[outputIndex] = input[leftPartitionIndex]
@@ -89,6 +85,15 @@ extension Merge: Algorithm {
         }
         
         outputIndex += 1
+    }
+    
+    public func peekAtElement(for answer: Comparison<Merge<Element>>.Answer) -> Element? {
+        switch answer {
+        case .left:
+            return input[leftPartitionIndex]
+        case .right:
+            return input[rightPartitionIndex]
+        }
     }
 }
 

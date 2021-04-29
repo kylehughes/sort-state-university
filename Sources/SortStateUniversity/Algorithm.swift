@@ -26,8 +26,9 @@ public protocol Algorithm: Identifiable {
     /// This value will never change.
     var input: [Element] { get }
     
+    mutating func answer(_ answer: Comparison<Self>.Answer)
     mutating func callAsFunction() -> AlgorithmStep<Self>
-    mutating func iterateForAnswer(_ answer: Comparison<Self>.Answer, element: Element)
+    func peekAtElement(for answer: Comparison<Self>.Answer) -> Element?
 }
 
 // MARK: - Default Implementation
