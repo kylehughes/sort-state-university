@@ -42,7 +42,6 @@ var parallelSpelunkMaxDepth = 0
 var parallelSpelunkMaxDepthNumWriteAttempts = 0
 
 private var newCache: [Int: Int] = [:]
-private let start = Date()
 
 //
 //countNumberOfNodesInTree(in: MergeSort(input: makeInput(length: 9)))
@@ -54,8 +53,9 @@ private let start = Date()
 for i in 1 ... .max {
     let input = makeInput(length: i)
     let mergeSort = MergeSort(input: input)
+    let start = Date()
     let output = cacheCalculateMaximumNumberOfComparisons(in: mergeSort)
-    print("\(i)\t->\t\(output)\t")
+    print("\(i) \(output)\t\t\(Date().timeIntervalSince(start))s")
     newCache.removeAll()
     appendToFile(n: i, maxComparisons: output)
 }
@@ -375,7 +375,7 @@ func spelunkCalculateMaximumNumberOfComparisons(in mergeSort: MergeSort<Int>, cu
 
 func appendToFile(n: Int, maxComparisons: Int) {
     ioQueue.async {
-        let newLine = "\n\(n)\t\(maxComparisons)\t\(dateFormatter.string(from: Date()))"
+        let newLine = "\n\(n) \(maxComparisons)"
         let url = URL(string: "file:///Users/kyle/mergesort.txt")!
         let existingContent = try! String(data: Data(contentsOf: url), encoding: .utf8)!
         let newContext = existingContent + newLine
