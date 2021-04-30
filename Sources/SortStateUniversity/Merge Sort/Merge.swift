@@ -85,12 +85,12 @@ extension MergeSort {
 }
 
 extension MergeSort.Merge: Hashable {
-//    public func hash(into hasher: inout Hasher) {
-//        hasher.combine(leftPartitionIndex)
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(leftPartitionIndex)
 //        hasher.combine(output)
 //        hasher.combine(outputIndex)
-//        hasher.combine(rightPartitionIndex)
-//    }
+        hasher.combine(rightPartitionIndex)
+    }
 }
 
 // MARK: - Merge.Constraints Definition

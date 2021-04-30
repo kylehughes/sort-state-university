@@ -8,6 +8,8 @@
 import Foundation
 import SortStateUniversity
 
+/// - SeeAlso: https://oeis.org/A003071
+
 // MARK: - Script
 
 let parallelRecursionQueue = DispatchQueue(label: "parallelRecursion", attributes: [.concurrent], target: .global())
@@ -39,7 +41,8 @@ var maxDepth = 0
 var parallelSpelunkMaxDepth = 0
 var parallelSpelunkMaxDepthNumWriteAttempts = 0
 
-private var newCache: [MergeSort<Int>.Merge?: Int] = [:]
+private var newCache: [Int: Int] = [:]
+private let start = Date()
 
 //
 //countNumberOfNodesInTree(in: MergeSort(input: makeInput(length: 9)))
@@ -48,13 +51,13 @@ private var newCache: [MergeSort<Int>.Merge?: Int] = [:]
 
 // MARK: Holy Shit Breakthrough Caching Recursion
 
-for i in 1...100 {
+for i in 1 ... .max {
     let input = makeInput(length: i)
     let mergeSort = MergeSort(input: input)
     let output = cacheCalculateMaximumNumberOfComparisons(in: mergeSort)
-    print("\(i)\t->\t\(output)")
+    print("\(i)\t->\t\(output)\t")
     newCache.removeAll()
-//    appendToFile(n: i, maxComparisons: output)
+    appendToFile(n: i, maxComparisons: output)
 }
 
 // MARK: Normal Recursion
@@ -226,7 +229,7 @@ func calculateMaximumNumberOfComparisons(in mergeSort: MergeSort<Int>) -> Int {
 }
 
 func cacheCalculateMaximumNumberOfComparisons(in mergeSort: MergeSort<Int>) -> Int {
-    let cacheKey = mergeSort.ongoingMerge
+    let cacheKey = mergeSort.ongoingMerge.hashValue
     
     if let existingDepth = newCache[cacheKey] {
         return existingDepth
