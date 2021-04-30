@@ -59,15 +59,6 @@ public struct Merge<Element>: Identifiable {
         leftPartitionIndex <= middleIndex && rightPartitionIndex <= toIndex
     }
     
-    public func getElement(for answer: Comparison<Self>.Answer) -> Element {
-        switch answer {
-        case .left:
-            return elementProvider(leftPartitionIndex)
-        case .right:
-            return elementProvider(rightPartitionIndex)
-        }
-    }
-    
     // MARK: Private Instance Interface
     
     private mutating func flushLeftPartition() {
@@ -99,9 +90,7 @@ extension Merge: Algorithm {
             return .finished(output)
         }
 
-        return .comparison(
-            Comparison(source: self, elementProvider: getElement)
-        )
+        return .comparison(Comparison(source: self))
     }
     
     public mutating func answer(_ answer: Comparison<Self>.Answer) {
@@ -117,7 +106,7 @@ extension Merge: Algorithm {
         outputIndex += 1
     }
     
-    public func peekAtElement(for answer: Comparison<Merge<Element>>.Answer) -> Element? {
+    public func peekAtElement(for answer: Comparison<Self>.Answer) -> Element {
         switch answer {
         case .left:
             return elementProvider(leftPartitionIndex)

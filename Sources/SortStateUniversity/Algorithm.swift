@@ -24,7 +24,7 @@ public protocol Algorithm: Identifiable {
     
     mutating func answer(_ answer: Comparison<Self>.Answer)
     mutating func callAsFunction() -> AlgorithmStep<Self>
-    func peekAtElement(for answer: Comparison<Self>.Answer) -> Element?
+    func peekAtElement(for answer: Comparison<Self>.Answer) -> Element
 }
 
 // MARK: - Default Implementation
@@ -34,6 +34,15 @@ extension Algorithm {
     
     public static func calculateNumberOfComparisonsInWorstCase(for n: Int) -> NumberOfComparisons {
         .ceiling(for: n, using: complexity)
+    }
+    
+    // MARK: Public Instance Interface
+    
+    public func answering(_ answer: Comparison<Self>.Answer) -> Self {
+        var copy = self
+        copy.answer(answer)
+        
+        return copy
     }
 }
 

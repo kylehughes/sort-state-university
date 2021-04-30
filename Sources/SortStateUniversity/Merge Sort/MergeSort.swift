@@ -58,17 +58,7 @@ public struct MergeSort<Element>: Identifiable {
 
         switch ongoingMerge!() {
         case .comparison:
-            let ongoingMerge = ongoingMerge!
-            return .comparison(
-                Comparison(source: self) {
-                    switch $0 {
-                    case .left:
-                        return ongoingMerge.getElement(for: .left)
-                    case .right:
-                        return ongoingMerge.getElement(for:.right)
-                    }
-                }
-            )
+            return .comparison(Comparison(source: self))
         case let .finished(mergeOutput):
             currentIndex += 2 * partitionSize
             let mergeInput = output
@@ -139,12 +129,12 @@ extension MergeSort: Algorithm {
         }
     }
     
-    public func peekAtElement(for answer: Comparison<MergeSort<Element>>.Answer) -> Element? {
+    public func peekAtElement(for answer: Comparison<MergeSort<Element>>.Answer) -> Element {
         switch answer {
         case .left:
-            return ongoingMerge?.peekAtElement(for: .left)
+            return ongoingMerge!.peekAtElement(for: .left)
         case .right:
-            return ongoingMerge?.peekAtElement(for: .right)
+            return ongoingMerge!.peekAtElement(for: .right)
         }
     }
 }

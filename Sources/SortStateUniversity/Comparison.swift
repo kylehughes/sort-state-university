@@ -7,25 +7,23 @@
 
 public struct Comparison<Algorithm> where Algorithm: SortStateUniversity.Algorithm {
     public typealias ElementProvider = (Answer) -> Algorithm.Element
-    public typealias SourceProvider = () -> Algorithm
+    public typealias NextAlgorithmProvider = (Answer) -> Algorithm
     
     public let elementProvider: ElementProvider
-    public let sourceProvider: SourceProvider
+    public let nextAlgorithmProvider: NextAlgorithmProvider
     
     // MARK: Public Initialization
     
-    public init(source: Algorithm, elementProvider: @escaping ElementProvider) {
+    public init(source: Algorithm) {
         self.init(
-            sourceProvider: {
-                source
-            },
-            elementProvider: elementProvider
+            nextAlgorithmProvider: source.answering,
+            elementProvider: source.peekAtElement
         )
     }
 
-    public init(sourceProvider: @escaping SourceProvider, elementProvider: @escaping ElementProvider) {
+    public init(nextAlgorithmProvider: @escaping NextAlgorithmProvider, elementProvider: @escaping ElementProvider) {
+        self.nextAlgorithmProvider = nextAlgorithmProvider
         self.elementProvider = elementProvider
-        self.sourceProvider = sourceProvider
     }
     
     // MARK: Public Instance Interface
@@ -39,10 +37,7 @@ public struct Comparison<Algorithm> where Algorithm: SortStateUniversity.Algorit
     }
     
     public func callAsFunction(_ answer: Answer) -> Algorithm {
-        var algorithm = sourceProvider()
-        algorithm.answer(answer)
-        
-        return algorithm
+        nextAlgorithmProvider(answer)
     }
     
     public func callAsFunction(_ bool: Bool) -> Algorithm {
