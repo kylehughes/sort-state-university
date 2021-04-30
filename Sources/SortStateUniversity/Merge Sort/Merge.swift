@@ -9,10 +9,11 @@ import Foundation
 
 public struct Merge<Element>: Identifiable {
     public typealias Elements = Array<Element>
+    public typealias InputProvider = () -> Elements
     
     public let fromIndex: Elements.Index
     public let id: UUID
-    public let input: Elements
+    public let inputProvider: InputProvider
     public let middleIndex: Elements.Index
     public let toIndex: Elements.Index
     
@@ -23,15 +24,20 @@ public struct Merge<Element>: Identifiable {
     
     // MARK: Public Initialization
     
-    public init(input: Elements, fromIndex: Elements.Index, middleIndex: Elements.Index, toIndex: Elements.Index) {
-        self.input = input
+    public init(
+        fromIndex: Elements.Index,
+        middleIndex: Elements.Index,
+        toIndex: Elements.Index,
+        inputProvider: @escaping InputProvider
+    ) {
         self.fromIndex = fromIndex
         self.middleIndex = middleIndex
         self.toIndex = toIndex
+        self.inputProvider = inputProvider
         
         id = UUID()
         leftPartitionIndex = fromIndex
-        output = input
+        output = inputProvider()
         outputIndex = fromIndex
         rightPartitionIndex = middleIndex + 1
     }
@@ -46,7 +52,7 @@ public struct Merge<Element>: Identifiable {
     
     private mutating func flushLeftPartition() {
         while leftPartitionIndex <= middleIndex {
-            output[outputIndex] = input[leftPartitionIndex]
+            output[outputIndex] = inputProvider()[leftPartitionIndex]
             leftPartitionIndex += 1
             outputIndex += 1
         }
@@ -56,6 +62,9 @@ public struct Merge<Element>: Identifiable {
 // MARK: - Algorithm Extension
 
 extension Merge: Algorithm {
+    public var input: [Element] {
+        inputProvider()
+    }
     // MARK: Public Static Interface
     
     public static var complexity: Complexity {
@@ -77,10 +86,10 @@ extension Merge: Algorithm {
     public mutating func answer(_ answer: Comparison<Self>.Answer) {
         switch answer {
         case .left:
-            output[outputIndex] = input[leftPartitionIndex]
+            output[outputIndex] = inputProvider()[leftPartitionIndex]
             leftPartitionIndex += 1
         case .right:
-            output[outputIndex] = input[rightPartitionIndex]
+            output[outputIndex] = inputProvider()[rightPartitionIndex]
             rightPartitionIndex += 1
         }
         
@@ -90,27 +99,9 @@ extension Merge: Algorithm {
     public func peekAtElement(for answer: Comparison<Merge<Element>>.Answer) -> Element? {
         switch answer {
         case .left:
-            return input[leftPartitionIndex]
+            return inputProvider()[leftPartitionIndex]
         case .right:
-            return input[rightPartitionIndex]
+            return inputProvider()[rightPartitionIndex]
         }
     }
-}
-
-// MARK: - Codable Extension
-
-extension Merge: Codable where Element: Codable {
-    // NO-OP
-}
-
-// MARK: - Equatable Extension
-
-extension Merge: Equatable where Element: Equatable {
-    // NO-OP
-}
-
-// MARK: - Hashable Extension
-
-extension Merge: Hashable where Element: Hashable {
-    // NO-OP
 }

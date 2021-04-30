@@ -45,7 +45,11 @@ public struct MergeSort<Element>: Identifiable {
         let fromIndex = currentIndex
         let middleIndex = fromIndex + partitionSize - 1
         let toIndex = min(fromIndex + (2 * partitionSize) - 1, input.endIndex - 1)
-        ongoingMerge = Merge(input: output, fromIndex: fromIndex, middleIndex: middleIndex, toIndex: toIndex)
+        let output = output
+        
+        ongoingMerge = Merge(fromIndex: fromIndex, middleIndex: middleIndex, toIndex: toIndex) {
+            output
+        }
         
         return self()
     }
@@ -129,22 +133,4 @@ extension MergeSort: Algorithm {
             return ongoingMerge?.peekAtElement(for: .right)
         }
     }
-}
-
-// MARK: - Codable Extension
-
-extension MergeSort: Codable where Element: Codable {
-    // NO-OP
-}
-
-// MARK: - Equatable Extension
-
-extension MergeSort: Equatable where Element: Equatable {
-    // NO-OP
-}
-
-// MARK: - Hashable Extension
-
-extension MergeSort: Hashable where Element: Hashable {
-    // NO-OP
 }
