@@ -15,7 +15,7 @@ public struct MergeSort<Element>: Identifiable {
     public let input: Elements
     
     public private(set) var currentIndex: Elements.Index
-    public private(set) var ongoingMerge: Merge<Element>?
+    public private(set) var ongoingMerge: Merge?
     public private(set) var output: Elements
     public private(set) var partitionSize: Int
     
@@ -46,7 +46,7 @@ public struct MergeSort<Element>: Identifiable {
         let middleIndex = fromIndex + partitionSize - 1
         let toIndex = min(fromIndex + (2 * partitionSize) - 1, input.endIndex - 1)
         
-        ongoingMerge = Merge(fromIndex: fromIndex, middleIndex: middleIndex, toIndex: toIndex, input: output)
+        ongoingMerge = Merge(parent: self, fromIndex: fromIndex, middleIndex: middleIndex, toIndex: toIndex)
         
         return self()
     }
@@ -55,19 +55,20 @@ public struct MergeSort<Element>: Identifiable {
         guard ongoingMerge != nil else {
             return nil
         }
-
-        switch ongoingMerge!() {
-        case .comparison:
+        
+        guard let transactions = ongoingMerge!() else {
             return .comparison(Comparison(source: self))
-        case let .finished(mergeOutput):
-            currentIndex += 2 * partitionSize
-            let mergeInput = output
-            for transaction in mergeOutput {
-                output[transaction.outputIndex] = mergeInput[transaction.inputIndex]
-            }
-            ongoingMerge = nil
-            return nil
         }
+        
+        let mergeInput = output
+        for transaction in transactions {
+            output[transaction.outputIndex] = mergeInput[transaction.inputIndex]
+        }
+        
+        currentIndex += 2 * partitionSize
+        ongoingMerge = nil
+        
+        return nil
     }
     
     private mutating func iteratePartitionLoop() -> AlgorithmStep<Self>? {
@@ -85,10 +86,6 @@ public struct MergeSort<Element>: Identifiable {
 // MARK: - Algorithm Extension
 
 extension MergeSort: Algorithm {
-    // MARK: Public Typealiases
-    
-    public typealias Output = Elements
-    
     // MARK: Public Static Interface
     
     public static var complexity: Complexity {

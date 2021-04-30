@@ -11,7 +11,6 @@ public protocol Algorithm: Identifiable {
     
     /// A type that represents the element that the algorithm is sorting.
     associatedtype Element
-    associatedtype Output
     
     // MARK: Static Interface
     
@@ -21,6 +20,8 @@ public protocol Algorithm: Identifiable {
     static func calculateNumberOfComparisonsInWorstCase(for n: Int) -> NumberOfComparisons
 
     // MARK: Instance Interface
+    
+    var input: [Element] { get }
     
     mutating func answer(_ answer: Comparison<Self>.Answer)
     mutating func callAsFunction() -> AlgorithmStep<Self>
@@ -51,7 +52,7 @@ extension Algorithm {
 extension Algorithm {
     // MARK: Public Instance Interface
     
-//    public var numberOfComparisonsInWorstCase: NumberOfComparisons {
-//        Self.calculateNumberOfComparisonsInWorstCase(for: input.count)
-//    }
+    public var numberOfComparisonsInWorstCase: NumberOfComparisons {
+        Self.calculateNumberOfComparisonsInWorstCase(for: input.count)
+    }
 }
