@@ -7,7 +7,7 @@
 
 public enum AlgorithmStep<Algorithm> where Algorithm: SortStateUniversity.Algorithm {
     case comparison(Comparison<Algorithm>)
-    case finished([Algorithm.Element])
+    case finished(Algorithm.Output)
     
     // MARK: Public Instance Interface
     
@@ -51,7 +51,7 @@ public enum AlgorithmStep<Algorithm> where Algorithm: SortStateUniversity.Algori
         return false
     }
     
-    public var output: [Algorithm.Element]? {
+    public var output: Algorithm.Output? {
         guard case let .finished(output) = self else {
             return nil
         }

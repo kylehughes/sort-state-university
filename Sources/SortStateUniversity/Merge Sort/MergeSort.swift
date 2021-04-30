@@ -45,11 +45,8 @@ public struct MergeSort<Element>: Identifiable {
         let fromIndex = currentIndex
         let middleIndex = fromIndex + partitionSize - 1
         let toIndex = min(fromIndex + (2 * partitionSize) - 1, input.endIndex - 1)
-        let output = output
         
-        ongoingMerge = Merge(fromIndex: fromIndex, middleIndex: middleIndex, toIndex: toIndex) {
-            output
-        }
+        ongoingMerge = Merge(fromIndex: fromIndex, middleIndex: middleIndex, toIndex: toIndex, input: output)
         
         return self()
     }
@@ -64,7 +61,10 @@ public struct MergeSort<Element>: Identifiable {
             return .comparison(Comparison(source: self))
         case let .finished(mergeOutput):
             currentIndex += 2 * partitionSize
-            output = mergeOutput
+            let mergeInput = output
+            for transaction in mergeOutput {
+                output[transaction.outputIndex] = mergeInput[transaction.inputIndex]
+            }
             ongoingMerge = nil
             return nil
         }
@@ -85,6 +85,10 @@ public struct MergeSort<Element>: Identifiable {
 // MARK: - Algorithm Extension
 
 extension MergeSort: Algorithm {
+    // MARK: Public Typealiases
+    
+    public typealias Output = Elements
+    
     // MARK: Public Static Interface
     
     public static var complexity: Complexity {

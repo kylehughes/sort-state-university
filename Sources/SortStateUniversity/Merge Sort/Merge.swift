@@ -18,11 +18,22 @@ public struct Merge<Element>: Identifiable {
     public let toIndex: Elements.Index
     
     public private(set) var leftPartitionIndex: Elements.Index
-    public private(set) var output: Elements
+    public private(set) var output: Output
     public private(set) var outputIndex: Elements.Index
     public private(set) var rightPartitionIndex: Elements.Index
     
     // MARK: Public Initialization
+    
+    public init(
+        fromIndex: Elements.Index,
+        middleIndex: Elements.Index,
+        toIndex: Elements.Index,
+        input: Elements
+    ) {
+        self.init(fromIndex: fromIndex, middleIndex: middleIndex, toIndex: toIndex) {
+            input
+        }
+    }
     
     public init(
         fromIndex: Elements.Index,
@@ -37,7 +48,7 @@ public struct Merge<Element>: Identifiable {
         
         id = UUID()
         leftPartitionIndex = fromIndex
-        output = inputProvider()
+        output = []
         outputIndex = fromIndex
         rightPartitionIndex = middleIndex + 1
     }
@@ -52,7 +63,7 @@ public struct Merge<Element>: Identifiable {
     
     private mutating func flushLeftPartition() {
         while leftPartitionIndex <= middleIndex {
-            output[outputIndex] = inputProvider()[leftPartitionIndex]
+            output.append(Transaction(inputIndex: leftPartitionIndex, outputIndex: outputIndex))
             leftPartitionIndex += 1
             outputIndex += 1
         }
@@ -62,9 +73,8 @@ public struct Merge<Element>: Identifiable {
 // MARK: - Algorithm Extension
 
 extension Merge: Algorithm {
-    public var input: [Element] {
-        inputProvider()
-    }
+    public typealias Output = [Transaction]
+    
     // MARK: Public Static Interface
     
     public static var complexity: Complexity {
@@ -72,6 +82,10 @@ extension Merge: Algorithm {
     }
     
     // MARK: Public Instance Interface
+    
+    public var input: [Element] {
+        inputProvider()
+    }
     
     public mutating func callAsFunction() -> AlgorithmStep<Self> {
         guard arePartitionIndicesInBounds else {
@@ -86,10 +100,10 @@ extension Merge: Algorithm {
     public mutating func answer(_ answer: Comparison<Self>.Answer) {
         switch answer {
         case .left:
-            output[outputIndex] = inputProvider()[leftPartitionIndex]
+            output.append(Transaction(inputIndex: leftPartitionIndex, outputIndex: outputIndex))
             leftPartitionIndex += 1
         case .right:
-            output[outputIndex] = inputProvider()[rightPartitionIndex]
+            output.append(Transaction(inputIndex: rightPartitionIndex, outputIndex: outputIndex))
             rightPartitionIndex += 1
         }
         
@@ -110,23 +124,14 @@ extension Merge: Algorithm {
 
 extension Merge {
     public struct Transaction {
-        public let inputIndex: InputIndex
+        public let inputIndex: Elements.Index
         public let outputIndex: Elements.Index
         
         // MARK: Public Initialization
         
-        public init(inputIndex: InputIndex, outputIndex: Elements.Index) {
+        public init(inputIndex: Elements.Index, outputIndex: Elements.Index) {
             self.inputIndex = inputIndex
             self.outputIndex = outputIndex
         }
-    }
-}
-
-// MARK: - Merge.Transaction.InputIndex Definition
-
-extension Merge {
-    public enum InputIndex {
-        case left(Elements.Index)
-        case right(Elements.Index)
     }
 }
