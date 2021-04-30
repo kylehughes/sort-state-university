@@ -11,6 +11,12 @@ public struct Comparison<Algorithm> where Algorithm: SortStateUniversity.Algorit
     public let sourceProvider: SourceProvider
     
     // MARK: Public Initialization
+    
+    public init(source: Algorithm) {
+        self.init {
+            source
+        }
+    }
 
     public init(sourceProvider: @escaping SourceProvider) {
         self.sourceProvider = sourceProvider

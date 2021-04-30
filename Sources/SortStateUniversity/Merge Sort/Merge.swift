@@ -71,9 +71,7 @@ extension Merge: Algorithm {
             return .finished(output)
         }
         
-        let copy = self
-        
-        return .comparison(Comparison { copy })
+        return .comparison(Comparison(source: self))
     }
     
     public mutating func answer(_ answer: Comparison<Self>.Answer) {
