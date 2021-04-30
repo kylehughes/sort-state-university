@@ -105,3 +105,28 @@ extension Merge: Algorithm {
         }
     }
 }
+
+// MARK: - Merge.Transaction Definition
+
+extension Merge {
+    public struct Transaction {
+        public let inputIndex: InputIndex
+        public let outputIndex: Elements.Index
+        
+        // MARK: Public Initialization
+        
+        public init(inputIndex: InputIndex, outputIndex: Elements.Index) {
+            self.inputIndex = inputIndex
+            self.outputIndex = outputIndex
+        }
+    }
+}
+
+// MARK: - Merge.Transaction.InputIndex Definition
+
+extension Merge {
+    public enum InputIndex {
+        case left(Elements.Index)
+        case right(Elements.Index)
+    }
+}
