@@ -6,30 +6,36 @@
 //
 
 public struct Comparison<Algorithm> where Algorithm: SortStateUniversity.Algorithm {
+    public typealias ElementProvider = (Answer) -> Algorithm.Element
     public typealias SourceProvider = () -> Algorithm
     
+    public let elementProvider: ElementProvider
     public let sourceProvider: SourceProvider
     
     // MARK: Public Initialization
     
-    public init(source: Algorithm) {
-        self.init {
-            source
-        }
+    public init(source: Algorithm, elementProvider: @escaping ElementProvider) {
+        self.init(
+            sourceProvider: {
+                source
+            },
+            elementProvider: elementProvider
+        )
     }
 
-    public init(sourceProvider: @escaping SourceProvider) {
+    public init(sourceProvider: @escaping SourceProvider, elementProvider: @escaping ElementProvider) {
+        self.elementProvider = elementProvider
         self.sourceProvider = sourceProvider
     }
     
     // MARK: Public Instance Interface
     
     public var left: Algorithm.Element {
-        sourceProvider().peekAtElement(for: .left)!
+        elementProvider(.left)
     }
     
     public var right: Algorithm.Element {
-        sourceProvider().peekAtElement(for: .right)!
+        elementProvider(.right)
     }
     
     public func callAsFunction(_ answer: Answer) -> Algorithm {

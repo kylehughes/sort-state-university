@@ -22,11 +22,6 @@ public protocol Algorithm: Identifiable {
 
     // MARK: Instance Interface
     
-    /// The elements to be sorted.
-    ///
-    /// This value will never change.
-    var input: [Element] { get }
-    
     mutating func answer(_ answer: Comparison<Self>.Answer)
     mutating func callAsFunction() -> AlgorithmStep<Self>
     func peekAtElement(for answer: Comparison<Self>.Answer) -> Element?
@@ -47,7 +42,7 @@ extension Algorithm {
 extension Algorithm {
     // MARK: Public Instance Interface
     
-    public var numberOfComparisonsInWorstCase: NumberOfComparisons {
-        Self.calculateNumberOfComparisonsInWorstCase(for: input.count)
-    }
+//    public var numberOfComparisonsInWorstCase: NumberOfComparisons {
+//        Self.calculateNumberOfComparisonsInWorstCase(for: input.count)
+//    }
 }

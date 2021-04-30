@@ -8,12 +8,12 @@
 import Foundation
 
 public struct Merge<Element>: Identifiable {
+    public typealias ElementProvider = (Elements.Index) -> Element
     public typealias Elements = Array<Element>
-    public typealias InputProvider = () -> Elements
     
+    public let elementProvider: ElementProvider
     public let fromIndex: Elements.Index
     public let id: UUID
-    public let inputProvider: InputProvider
     public let middleIndex: Elements.Index
     public let toIndex: Elements.Index
     
@@ -31,7 +31,7 @@ public struct Merge<Element>: Identifiable {
         input: Elements
     ) {
         self.init(fromIndex: fromIndex, middleIndex: middleIndex, toIndex: toIndex) {
-            input
+            input[$0]
         }
     }
     
@@ -39,12 +39,12 @@ public struct Merge<Element>: Identifiable {
         fromIndex: Elements.Index,
         middleIndex: Elements.Index,
         toIndex: Elements.Index,
-        inputProvider: @escaping InputProvider
+        elementProvider: @escaping ElementProvider
     ) {
         self.fromIndex = fromIndex
         self.middleIndex = middleIndex
         self.toIndex = toIndex
-        self.inputProvider = inputProvider
+        self.elementProvider = elementProvider
         
         id = UUID()
         leftPartitionIndex = fromIndex
@@ -57,6 +57,15 @@ public struct Merge<Element>: Identifiable {
     
     public var arePartitionIndicesInBounds: Bool {
         leftPartitionIndex <= middleIndex && rightPartitionIndex <= toIndex
+    }
+    
+    public func getElement(for answer: Comparison<Self>.Answer) -> Element {
+        switch answer {
+        case .left:
+            return elementProvider(leftPartitionIndex)
+        case .right:
+            return elementProvider(rightPartitionIndex)
+        }
     }
     
     // MARK: Private Instance Interface
@@ -82,19 +91,17 @@ extension Merge: Algorithm {
     }
     
     // MARK: Public Instance Interface
-    
-    public var input: [Element] {
-        inputProvider()
-    }
-    
+
     public mutating func callAsFunction() -> AlgorithmStep<Self> {
         guard arePartitionIndicesInBounds else {
             flushLeftPartition()
             
             return .finished(output)
         }
-        
-        return .comparison(Comparison(source: self))
+
+        return .comparison(
+            Comparison(source: self, elementProvider: getElement)
+        )
     }
     
     public mutating func answer(_ answer: Comparison<Self>.Answer) {
@@ -113,9 +120,9 @@ extension Merge: Algorithm {
     public func peekAtElement(for answer: Comparison<Merge<Element>>.Answer) -> Element? {
         switch answer {
         case .left:
-            return inputProvider()[leftPartitionIndex]
+            return elementProvider(leftPartitionIndex)
         case .right:
-            return inputProvider()[rightPartitionIndex]
+            return elementProvider(rightPartitionIndex)
         }
     }
 }
