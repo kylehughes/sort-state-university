@@ -46,7 +46,7 @@ public struct MergeSort<Element>: Identifiable {
         let middleIndex = fromIndex + partitionSize - 1
         let toIndex = min(fromIndex + (2 * partitionSize) - 1, input.endIndex - 1)
         
-        ongoingMerge = Merge(parent: self, fromIndex: fromIndex, middleIndex: middleIndex, toIndex: toIndex)
+        ongoingMerge = Merge(fromIndex: fromIndex, middleIndex: middleIndex, toIndex: toIndex)
         
         return self()
     }
@@ -60,11 +60,7 @@ public struct MergeSort<Element>: Identifiable {
             return .comparison(Comparison(source: self))
         }
         
-        let mergeInput = output
-        for transaction in transactions {
-            output[transaction.outputIndex] = mergeInput[transaction.inputIndex]
-        }
-        
+        perform(transactions)
         currentIndex += 2 * partitionSize
         ongoingMerge = nil
         
@@ -80,6 +76,14 @@ public struct MergeSort<Element>: Identifiable {
         }
         
         return nil
+    }
+    
+    private mutating func perform(_ transactions: Set<Merge.Transaction>) {
+        let input = output
+        
+        for transaction in transactions {
+            output[transaction.outputIndex] = input[transaction.inputIndex]
+        }
     }
 }
 
@@ -126,12 +130,16 @@ extension MergeSort: Algorithm {
         }
     }
     
-    public func peekAtElement(for answer: Comparison<MergeSort<Element>>.Answer) -> Element {
+    public func peekAtElement(for answer: Comparison<MergeSort<Element>>.Answer) -> Element? {
+        guard let ongoingMerge = ongoingMerge else {
+            return nil
+        }
+        
         switch answer {
         case .left:
-            return ongoingMerge!.peekAtElement(for: .left)
+            return output[ongoingMerge.leftPartitionIndex]
         case .right:
-            return ongoingMerge!.peekAtElement(for: .right)
+            return output[ongoingMerge.rightPartitionIndex]
         }
     }
 }

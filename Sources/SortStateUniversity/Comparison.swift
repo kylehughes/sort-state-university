@@ -15,10 +15,9 @@ public struct Comparison<Algorithm> where Algorithm: SortStateUniversity.Algorit
     // MARK: Public Initialization
     
     public init(source: Algorithm) {
-        self.init(
-            nextAlgorithmProvider: source.answering,
-            elementProvider: source.peekAtElement
-        )
+        self.init(nextAlgorithmProvider: source.answering) {
+            source.peekAtElement(for: $0)!
+        }
     }
 
     public init(nextAlgorithmProvider: @escaping NextAlgorithmProvider, elementProvider: @escaping ElementProvider) {

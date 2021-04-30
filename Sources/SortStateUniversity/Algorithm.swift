@@ -25,7 +25,7 @@ public protocol Algorithm: Identifiable {
     
     mutating func answer(_ answer: Comparison<Self>.Answer)
     mutating func callAsFunction() -> AlgorithmStep<Self>
-    func peekAtElement(for answer: Comparison<Self>.Answer) -> Element
+    func peekAtElement(for answer: Comparison<Self>.Answer) -> Element?
 }
 
 // MARK: - Default Implementation
