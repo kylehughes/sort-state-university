@@ -39,23 +39,34 @@ var maxDepth = 0
 var parallelSpelunkMaxDepth = 0
 var parallelSpelunkMaxDepthNumWriteAttempts = 0
 
-private var newCache: [Int: Int] = [:]
+private var newCache: [MergeSort<Int>.Merge?: Int] = [:]
 
 //
 //countNumberOfNodesInTree(in: MergeSort(input: makeInput(length: 9)))
 //
 //print(counter)
 
-// MARK: Normal Recursion
+// MARK: Holy Shit Breakthrough Caching Recursion
 
 for i in 1...100 {
     let input = makeInput(length: i)
     let mergeSort = MergeSort(input: input)
-    let output = calculateMaximumNumberOfComparisons(in: mergeSort)
+    let output = cacheCalculateMaximumNumberOfComparisons(in: mergeSort)
     print("\(i)\t->\t\(output)")
     newCache.removeAll()
 //    appendToFile(n: i, maxComparisons: output)
 }
+
+// MARK: Normal Recursion
+
+//for i in 1...100 {
+//    let input = makeInput(length: i)
+//    let mergeSort = MergeSort(input: input)
+//    let output = calculateMaximumNumberOfComparisons(in: mergeSort)
+//    print("\(i)\t->\t\(output)")
+//    newCache.removeAll()
+////    appendToFile(n: i, maxComparisons: output)
+//}
 
 //DispatchQueue.concurrentPerform(iterations: 100) {
 //    let input = makeInput(length: $0)
@@ -201,7 +212,21 @@ func iterativelyCalculateMaximumNumberOfComparisons(in mergeSort: MergeSort<Int>
 }
 
 func calculateMaximumNumberOfComparisons(in mergeSort: MergeSort<Int>) -> Int {
-    let cacheKey = mergeSort.variables.hashValue
+    var mergeSort = mergeSort
+    
+    switch mergeSort() {
+    case let .comparison(comparison):
+        return max(
+            calculateMaximumNumberOfComparisons(in: comparison(.left)),
+            calculateMaximumNumberOfComparisons(in: comparison(.right))
+        ) + 1
+    case .finished:
+        return 0
+    }
+}
+
+func cacheCalculateMaximumNumberOfComparisons(in mergeSort: MergeSort<Int>) -> Int {
+    let cacheKey = mergeSort.ongoingMerge
     
     if let existingDepth = newCache[cacheKey] {
         return existingDepth
@@ -212,8 +237,8 @@ func calculateMaximumNumberOfComparisons(in mergeSort: MergeSort<Int>) -> Int {
     switch mergeSort() {
     case let .comparison(comparison):
         let depth = max(
-            calculateMaximumNumberOfComparisons(in: comparison(.left)),
-            calculateMaximumNumberOfComparisons(in: comparison(.right))
+            cacheCalculateMaximumNumberOfComparisons(in: comparison(.left)),
+            cacheCalculateMaximumNumberOfComparisons(in: comparison(.right))
         ) + 1
         newCache[cacheKey] = depth
         return depth
@@ -221,7 +246,7 @@ func calculateMaximumNumberOfComparisons(in mergeSort: MergeSort<Int>) -> Int {
         return 0
     }
 }
-//
+
 func spelunkCalculateMaximumNumberOfComparisons(in mergeSort: MergeSort<Int>, currentDepth: Int = 0) {
     var mergeSort = mergeSort
 

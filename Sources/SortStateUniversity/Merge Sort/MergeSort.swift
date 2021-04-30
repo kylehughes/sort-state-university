@@ -14,57 +14,63 @@ public struct MergeSort<Element>: Identifiable {
     public let id: UUID
     public let input: Elements
     
-    public private(set) var variables: Variables
+    public private(set) var currentIndex: Elements.Index
+    public private(set) var ongoingMerge: Merge?
+    public private(set) var output: Elements
+    public private(set) var partitionSize: Int
     
     // MARK: Public Initialization
     
     public init(input: Elements) {
         self.input = input
         
+        currentIndex = input.startIndex
         id = UUID()
-        variables = Variables(input: input)
+        ongoingMerge = nil
+        output = input
+        partitionSize = 1
     }
     
     // MARK: Private Instance Interface
     
     private func finish() -> AlgorithmStep<Self>? {
-        guard variables.partitionSize < input.endIndex else {
-            return .finished(variables.output)
+        guard partitionSize < input.endIndex else {
+            return .finished(output)
         }
         
         return nil
     }
     
     private mutating func iterateCursorLoop() -> AlgorithmStep<Self> {
-        let fromIndex = variables.currentIndex
-        let middleIndex = fromIndex + variables.partitionSize - 1
-        let toIndex = min(fromIndex + (2 * variables.partitionSize) - 1, input.endIndex - 1)
+        let fromIndex = currentIndex
+        let middleIndex = fromIndex + partitionSize - 1
+        let toIndex = min(fromIndex + (2 * partitionSize) - 1, input.endIndex - 1)
         
-        variables.ongoingMerge = Merge(fromIndex: fromIndex, middleIndex: middleIndex, toIndex: toIndex)
+        ongoingMerge = Merge(fromIndex: fromIndex, middleIndex: middleIndex, toIndex: toIndex)
         
         return self()
     }
     
     private mutating func iterateMerge() -> AlgorithmStep<Self>? {
-        guard variables.ongoingMerge != nil else {
+        guard ongoingMerge != nil else {
             return nil
         }
         
-        guard let transactions = variables.ongoingMerge!() else {
+        guard let transactions = ongoingMerge!() else {
             return .comparison(Comparison(source: self))
         }
         
         perform(transactions)
-        variables.currentIndex += 2 * variables.partitionSize
-        variables.ongoingMerge = nil
+        currentIndex += 2 * partitionSize
+        ongoingMerge = nil
         
         return nil
     }
     
     private mutating func iteratePartitionLoop() -> AlgorithmStep<Self>? {
-        guard variables.currentIndex < input.endIndex - variables.partitionSize else {
-            variables.currentIndex = variables.output.startIndex
-            variables.partitionSize *= 2
+        guard currentIndex < input.endIndex - partitionSize else {
+            currentIndex = output.startIndex
+            partitionSize *= 2
             
             return self()
         }
@@ -73,10 +79,10 @@ public struct MergeSort<Element>: Identifiable {
     }
     
     private mutating func perform(_ transactions: Set<Merge.Transaction>) {
-        let input = variables.output
+        let input = output
         
         for transaction in transactions {
-            variables.output[transaction.outputIndex] = input[transaction.inputIndex]
+            output[transaction.outputIndex] = input[transaction.inputIndex]
         }
     }
 }
@@ -118,54 +124,22 @@ extension MergeSort: Algorithm {
     public mutating func answer(_ answer: Comparison<Self>.Answer) {
         switch answer {
         case .left:
-            variables.ongoingMerge?.answer(.left)
+            ongoingMerge?.answer(.left)
         case .right:
-            variables.ongoingMerge?.answer(.right)
+            ongoingMerge?.answer(.right)
         }
     }
     
     public func peekAtElement(for answer: Comparison<MergeSort<Element>>.Answer) -> Element? {
-        guard let ongoingMerge = variables.ongoingMerge else {
+        guard let ongoingMerge = ongoingMerge else {
             return nil
         }
         
         switch answer {
         case .left:
-            return variables.output[ongoingMerge.leftPartitionIndex]
+            return output[ongoingMerge.leftPartitionIndex]
         case .right:
-            return variables.output[ongoingMerge.rightPartitionIndex]
+            return output[ongoingMerge.rightPartitionIndex]
         }
-    }
-}
-
-// MARK: - Variables Definition
-
-extension MergeSort {
-    public struct Variables {
-        public var currentIndex: Elements.Index
-        public var ongoingMerge: Merge?
-        public var output: Elements
-        public var partitionSize: Int
-        
-        // MARK: Public Initialization
-        
-        public init(input: Elements) {
-            currentIndex = input.startIndex
-            ongoingMerge = nil
-            output = input
-            partitionSize = 1
-        }
-    }
-}
-
-extension MergeSort.Variables: Equatable where Element: Equatable {
-    
-}
-
-extension MergeSort.Variables: Hashable where Element: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(currentIndex)
-        hasher.combine(ongoingMerge)
-        hasher.combine(partitionSize)
     }
 }

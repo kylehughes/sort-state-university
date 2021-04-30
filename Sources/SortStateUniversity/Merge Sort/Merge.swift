@@ -8,7 +8,7 @@
 import Foundation
 
 extension MergeSort {
-    public struct Merge: Codable, Equatable, Hashable {
+    public struct Merge: Codable, Equatable {
         public let constraints: Constraints
         
         public private(set) var leftPartitionIndex: MergeSort.Elements.Index
@@ -82,6 +82,15 @@ extension MergeSort {
             }
         }
     }
+}
+
+extension MergeSort.Merge: Hashable {
+//    public func hash(into hasher: inout Hasher) {
+//        hasher.combine(leftPartitionIndex)
+//        hasher.combine(output)
+//        hasher.combine(outputIndex)
+//        hasher.combine(rightPartitionIndex)
+//    }
 }
 
 // MARK: - Merge.Constraints Definition
