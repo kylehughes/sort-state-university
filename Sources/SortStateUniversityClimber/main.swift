@@ -39,6 +39,8 @@ var maxDepth = 0
 var parallelSpelunkMaxDepth = 0
 var parallelSpelunkMaxDepthNumWriteAttempts = 0
 
+private var newCache: [Int: Int] = [:]
+
 //
 //countNumberOfNodesInTree(in: MergeSort(input: makeInput(length: 9)))
 //
@@ -46,13 +48,14 @@ var parallelSpelunkMaxDepthNumWriteAttempts = 0
 
 // MARK: Normal Recursion
 
-//for i in 1...100 {
-//    let input = makeInput(length: i)
-//    let mergeSort = MergeSort(input: input)
-//    let output = calculateMaximumNumberOfComparisons(in: mergeSort)
-//    print("\(i)\t->\t\(output)")
+for i in 1...100 {
+    let input = makeInput(length: i)
+    let mergeSort = MergeSort(input: input)
+    let output = calculateMaximumNumberOfComparisons(in: mergeSort)
+    print("\(i)\t->\t\(output)")
+    newCache.removeAll()
 //    appendToFile(n: i, maxComparisons: output)
-//}
+}
 
 //DispatchQueue.concurrentPerform(iterations: 100) {
 //    let input = makeInput(length: $0)
@@ -114,14 +117,14 @@ var parallelSpelunkMaxDepthNumWriteAttempts = 0
 
 // MARK: Spelunking
 
-for i in 1 ... 100 {
-    let input = makeInput(length: i)
-    let mergeSort = MergeSort(input: input)
-    spelunkCalculateMaximumNumberOfComparisons(in: mergeSort)
-    print("\(i)\t->\t\(maxDepth)")
-    appendToFile(n: i, maxComparisons: maxDepth)
-    maxDepth = 0
-}
+//for i in 1 ... 100 {
+//    let input = makeInput(length: i)
+//    let mergeSort = MergeSort(input: input)
+//    spelunkCalculateMaximumNumberOfComparisons(in: mergeSort)
+//    print("\(i)\t->\t\(maxDepth)")
+//    appendToFile(n: i, maxComparisons: maxDepth)
+//    maxDepth = 0
+//}
 
 //print(calculateNumberOfLeafNodes(n: 3))
 
@@ -198,14 +201,22 @@ func iterativelyCalculateMaximumNumberOfComparisons(in mergeSort: MergeSort<Int>
 }
 
 func calculateMaximumNumberOfComparisons(in mergeSort: MergeSort<Int>) -> Int {
+    let cacheKey = mergeSort.variables.hashValue
+    
+    if let existingDepth = newCache[cacheKey] {
+        return existingDepth
+    }
+    
     var mergeSort = mergeSort
     
     switch mergeSort() {
     case let .comparison(comparison):
-        return max(
-            calculateMaximumNumberOfComparisons(in: comparison.callAsFunction(.left)),
-            calculateMaximumNumberOfComparisons(in: comparison.callAsFunction(.right))
+        let depth = max(
+            calculateMaximumNumberOfComparisons(in: comparison(.left)),
+            calculateMaximumNumberOfComparisons(in: comparison(.right))
         ) + 1
+        newCache[cacheKey] = depth
+        return depth
     case .finished:
         return 0
     }

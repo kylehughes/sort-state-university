@@ -66,7 +66,7 @@ final class MergeSortTests: XCTestCase {
         
         // Then…
 
-        XCTAssertEqual(expectedOutput, finishedMergeSort.output)
+        XCTAssertEqual(expectedOutput, finishedMergeSort.variables.output)
         XCTAssertEqual(expectedOutput, mutableFinishedMergeSort().output)
     }
     

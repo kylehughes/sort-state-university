@@ -8,9 +8,8 @@
 import Foundation
 
 extension MergeSort {
-    public struct Merge: Codable, Equatable, Hashable, Identifiable {
+    public struct Merge: Codable, Equatable, Hashable {
         public let constraints: Constraints
-        public let id: UUID
         
         public private(set) var leftPartitionIndex: MergeSort.Elements.Index
         public private(set) var output: Set<Transaction>
@@ -30,7 +29,6 @@ extension MergeSort {
         public init(constraints: Constraints) {
             self.constraints = constraints
             
-            id = UUID()
             leftPartitionIndex = constraints.fromIndex
             output = []
             outputIndex = constraints.fromIndex
