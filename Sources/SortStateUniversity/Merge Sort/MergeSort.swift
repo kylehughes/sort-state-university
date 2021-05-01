@@ -100,7 +100,7 @@ extension MergeSort: Algorithm {
         /// This is a Swift port of the algorithm from D. E. Knuth, Art of Computer Programming, Vol. 3,
         /// Sections 5.2.4., Problem 14. (https://oeis.org/A003071)
         
-        let exponents = n.exponentsForDecomposedPowersOfTwo
+        let exponents = n.bitPositions
         
         guard let lastExponent = exponents.last else {
             return 0

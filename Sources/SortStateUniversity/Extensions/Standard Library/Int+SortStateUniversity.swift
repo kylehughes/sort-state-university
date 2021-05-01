@@ -10,7 +10,7 @@ import Foundation
 extension Int {
     // MARK: Public Instance Interface
     
-    public var exponentsForDecomposedPowersOfTwo: [Int] {
+    public var bitPositions: [Int] {
         var exponents: [Int] = []
         var exponent = 0
         var i = 1
