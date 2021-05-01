@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// An iterative, stateful implementation of merge sort.
+/// An stateful implementation of merge sort.
 public struct MergeSort<Element>: Identifiable {
     public typealias Elements = Array<Element>
     

@@ -40,6 +40,7 @@ public enum Complexity: Equatable, Hashable, CaseIterable {
     
     // MARK: Public Static Interface
     
+    /// A collection of all complexity values from least complex to most complex.
     public static let allCasesInOrder: [Complexity] = [
         .constant,
         .logarithmic,
