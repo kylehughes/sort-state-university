@@ -5,7 +5,7 @@
 //  Created by Kyle Hughes on 4/18/21.
 //
 
-/// A stateful sorting algorithm.
+/// A sorting algorithm implemented statefully.
 public protocol Algorithm: Identifiable {
     // MARK: Associated Types
     
