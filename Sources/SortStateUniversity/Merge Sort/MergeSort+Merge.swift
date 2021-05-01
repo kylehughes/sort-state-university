@@ -9,7 +9,9 @@ import Foundation
 
 extension MergeSort {
     public struct Merge: Codable, Equatable, Hashable {
-        public let constraints: Constraints
+        public let fromIndex: MergeSort.Elements.Index
+        public let middleIndex: MergeSort.Elements.Index
+        public let toIndex: MergeSort.Elements.Index
         
         public private(set) var leftPartitionIndex: MergeSort.Elements.Index
         public private(set) var output: Set<Transaction>
@@ -23,22 +25,20 @@ extension MergeSort {
             middleIndex: MergeSort.Elements.Index,
             toIndex: MergeSort.Elements.Index
         ) {
-            self.init(constraints: Constraints(fromIndex: fromIndex, middleIndex: middleIndex, toIndex: toIndex))
-        }
-        
-        public init(constraints: Constraints) {
-            self.constraints = constraints
+            self.fromIndex = fromIndex
+            self.middleIndex = middleIndex
+            self.toIndex = toIndex
             
-            leftPartitionIndex = constraints.fromIndex
+            leftPartitionIndex = fromIndex
             output = []
-            outputIndex = constraints.fromIndex
-            rightPartitionIndex = constraints.middleIndex + 1
+            outputIndex = fromIndex
+            rightPartitionIndex = middleIndex + 1
         }
         
         // MARK: Public Instance Interface
         
         public var arePartitionIndicesInBounds: Bool {
-            leftPartitionIndex <= constraints.middleIndex && rightPartitionIndex <= constraints.toIndex
+            leftPartitionIndex <= middleIndex && rightPartitionIndex <= toIndex
         }
         
         public var leftTransaction: Transaction {
@@ -75,7 +75,7 @@ extension MergeSort {
         // MARK: Private Instance Interface
         
         private mutating func flushLeftPartition() {
-            while leftPartitionIndex <= constraints.middleIndex {
+            while leftPartitionIndex <= middleIndex {
                 output.insert(leftTransaction)
                 leftPartitionIndex += 1
                 outputIndex += 1
@@ -91,28 +91,6 @@ extension MergeSort.Merge: Identifiable {
     
     public var id: ID {
         ID(for: self)
-    }
-}
-
-// MARK: - Merge.Constraints Definition
-
-extension MergeSort.Merge {
-    public struct Constraints: Codable, Equatable, Hashable {
-        public let fromIndex: MergeSort.Elements.Index
-        public let middleIndex: MergeSort.Elements.Index
-        public let toIndex: MergeSort.Elements.Index
-        
-        // MARK: Public Initialization
-        
-        public init(
-            fromIndex: MergeSort.Elements.Index,
-            middleIndex: MergeSort.Elements.Index,
-            toIndex: MergeSort.Elements.Index
-        ) {
-            self.fromIndex = fromIndex
-            self.middleIndex = middleIndex
-            self.toIndex = toIndex
-        }
     }
 }
 
