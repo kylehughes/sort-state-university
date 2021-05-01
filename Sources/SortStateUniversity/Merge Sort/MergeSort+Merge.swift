@@ -8,8 +8,9 @@
 import Foundation
 
 extension MergeSort {
-    public struct Merge: Codable, Equatable, Hashable {
+    public struct Merge: Codable, Equatable, Hashable, Identifiable {
         public let fromIndex: MergeSort.Elements.Index
+        public let id: UUID
         public let middleIndex: MergeSort.Elements.Index
         public let toIndex: MergeSort.Elements.Index
         
@@ -29,6 +30,7 @@ extension MergeSort {
             self.middleIndex = middleIndex
             self.toIndex = toIndex
             
+            id = UUID()
             leftPartitionIndex = fromIndex
             output = []
             outputIndex = fromIndex
@@ -80,36 +82,6 @@ extension MergeSort {
                 leftPartitionIndex += 1
                 outputIndex += 1
             }
-        }
-    }
-}
-
-// MARK: - Identifiable Extension
-
-extension MergeSort.Merge: Identifiable {
-    // MARK: Public Instance Interface
-    
-    public var id: ID {
-        ID(for: self)
-    }
-}
-
-// MARK: - MergeSort.Merge.ID Definition
-
-extension MergeSort.Merge {
-    public struct ID: Codable, Equatable, Hashable {
-        public let leftPartitionIndex: MergeSort.Elements.Index
-        public let rightPartitionIndex: MergeSort.Elements.Index
-        
-        // MARK: Public Initialization
-        
-        public init(for merge: MergeSort.Merge) {
-            self.init(leftPartitionIndex: merge.leftPartitionIndex, rightPartitionIndex: merge.rightPartitionIndex)
-        }
-        
-        public init(leftPartitionIndex: MergeSort.Elements.Index, rightPartitionIndex: MergeSort.Elements.Index) {
-            self.leftPartitionIndex = leftPartitionIndex
-            self.rightPartitionIndex = rightPartitionIndex
         }
     }
 }

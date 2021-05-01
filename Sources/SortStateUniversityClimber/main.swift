@@ -233,7 +233,7 @@ func calculateMaximumNumberOfComparisons(in mergeSort: MergeSort<Int>) -> Int {
 }
 
 func cacheCalculateMaximumNumberOfComparisons(in mergeSort: MergeSort<Int>) -> Int {
-    let cacheKey = (mergeSort.ongoingMerge?.id).hashValue
+    let cacheKey = (mergeSort.ongoingMerge?.treeID).hashValue
     
     if let existingDepth = newCache[cacheKey] {
         return existingDepth
