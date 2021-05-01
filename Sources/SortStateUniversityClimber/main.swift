@@ -8,7 +8,11 @@
 import Foundation
 import SortStateUniversity
 
+/// - SeeAlso: https://en.wikipedia.org/wiki/Merge_sort
+/// - SeeAlso: https://en.wikipedia.org/wiki/Sorting_number
 /// - SeeAlso: https://oeis.org/A003071
+/// - SeeAlso: https://oeis.org/A061338
+/// - SeeAlso: https://doc.lagout.org/science/0_Computer%20Science/2_Algorithms/The%20Art%20of%20Computer%20Programming%20%28vol.%203_%20Sorting%20and%20Searching%29%20%282nd%20ed.%29%20%5BKnuth%201998-05-04%5D.pdf
 
 // MARK: - Script
 
