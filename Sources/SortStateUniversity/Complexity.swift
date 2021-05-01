@@ -49,40 +49,6 @@ public enum Complexity: Equatable, Hashable, CaseIterable {
         .exponential,
         .factorial,
     ]
-    
-    // MARK: Public Instance Interface
-
-    public func calculateWorstCase(for n: Int) -> Int {
-        switch self {
-        case .constant:
-            return 1
-        case .exponential:
-            let n = Double(n)
-            return Self.makeInt(for: exp2(n))
-        case .factorial:
-            return Self.calculateFactorial(n)
-        case .linear:
-            return n
-        case .linearithmic:
-            let n = Double(n)
-            return Self.makeInt(for: n * log2(n))
-        case .logarithmic:
-            let n = Double(n)
-            return Self.makeInt(for: log2(n))
-        case .quadratic:
-            return n * n
-        }
-    }
-    
-    // MARK: Private Static Interface
-    
-    private static func calculateFactorial<N: Numeric>(_ n: N) -> N {
-        n == 0 ? 1 : n * calculateFactorial(n - 1)
-    }
-    
-    private static func makeInt(for double: Double) -> Int {
-        Int(ceil(double))
-    }
 }
 
 // MARK: - Comparable Extension
