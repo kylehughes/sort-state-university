@@ -8,7 +8,7 @@
 import Foundation
 
 extension MergeSort {
-    public struct Merge: Codable, Equatable {
+    public struct Merge: Codable, Equatable, Hashable {
         public let constraints: Constraints
         
         public private(set) var leftPartitionIndex: MergeSort.Elements.Index
@@ -84,12 +84,13 @@ extension MergeSort {
     }
 }
 
-extension MergeSort.Merge: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(leftPartitionIndex)
-//        hasher.combine(output)
-//        hasher.combine(outputIndex)
-        hasher.combine(rightPartitionIndex)
+// MARK: - Identifiable Extension
+
+extension MergeSort.Merge: Identifiable {
+    // MARK: Public Instance Interface
+    
+    public var id: ID {
+        ID(for: self)
     }
 }
 
@@ -115,7 +116,27 @@ extension MergeSort.Merge {
     }
 }
 
-// MARK: - Merge.Transaction Definition
+// MARK: - MergeSort.Merge.ID Definition
+
+extension MergeSort.Merge {
+    public struct ID: Codable, Equatable, Hashable {
+        public let leftPartitionIndex: MergeSort.Elements.Index
+        public let rightPartitionIndex: MergeSort.Elements.Index
+        
+        // MARK: Public Initialization
+        
+        public init(for merge: MergeSort.Merge) {
+            self.init(leftPartitionIndex: merge.leftPartitionIndex, rightPartitionIndex: merge.rightPartitionIndex)
+        }
+        
+        public init(leftPartitionIndex: MergeSort.Elements.Index, rightPartitionIndex: MergeSort.Elements.Index) {
+            self.leftPartitionIndex = leftPartitionIndex
+            self.rightPartitionIndex = rightPartitionIndex
+        }
+    }
+}
+
+// MARK: - MergeSort.Merge.Transaction Definition
 
 extension MergeSort.Merge {
     public struct Transaction: Codable, Equatable, Hashable {

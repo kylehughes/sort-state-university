@@ -47,26 +47,22 @@ var parallelSpelunkMaxDepthNumWriteAttempts = 0
 
 private var newCache: [Int: Int] = [:]
 
-//
-//countNumberOfNodesInTree(in: MergeSort(input: makeInput(length: 9)))
-//
-//print(counter)
+//for i in 1 ... 100 {
+//    print(i, MergeSort<Int>.calculateMaximumNumberOfComparisonsInWorstCase(for: i))
+//}
 
 // MARK: Holy Shit Breakthrough Caching Recursion
 
-//for i in 1 ... .max {
-//    let input = makeInput(length: i)
-//    let mergeSort = MergeSort(input: input)
-//    let start = Date()
-//    let output = cacheCalculateMaximumNumberOfComparisons(in: mergeSort)
-//    print("\(i) \(output)\t\t\(Date().timeIntervalSince(start))s")
-//    newCache.removeAll()
-//    appendToFile(n: i, maxComparisons: output)
-//}
-
-for i in 1 ... 100 {
-    print(i, MergeSort<Int>.calculateMaximumNumberOfComparisonsInWorstCase(for: i))
+for i in 1 ... .max {
+    let input = makeInput(length: i)
+    let mergeSort = MergeSort(input: input)
+    let start = Date()
+    let output = cacheCalculateMaximumNumberOfComparisons(in: mergeSort)
+    print("\(i) \(output)\t\t\(Date().timeIntervalSince(start))s")
+    newCache.removeAll()
+    appendToFile(n: i, maxComparisons: output)
 }
+
 
 // MARK: Normal Recursion
 
@@ -237,7 +233,7 @@ func calculateMaximumNumberOfComparisons(in mergeSort: MergeSort<Int>) -> Int {
 }
 
 func cacheCalculateMaximumNumberOfComparisons(in mergeSort: MergeSort<Int>) -> Int {
-    let cacheKey = mergeSort.ongoingMerge.hashValue
+    let cacheKey = (mergeSort.ongoingMerge?.id).hashValue
     
     if let existingDepth = newCache[cacheKey] {
         return existingDepth
