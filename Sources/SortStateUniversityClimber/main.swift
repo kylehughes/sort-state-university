@@ -54,14 +54,18 @@ private var newCache: [Int: Int] = [:]
 
 // MARK: Holy Shit Breakthrough Caching Recursion
 
-for i in 1 ... .max {
-    let input = makeInput(length: i)
-    let mergeSort = MergeSort(input: input)
-    let start = Date()
-    let output = cacheCalculateMaximumNumberOfComparisons(in: mergeSort)
-    print("\(i) \(output)\t\t\(Date().timeIntervalSince(start))s")
-    newCache.removeAll()
-    appendToFile(n: i, maxComparisons: output)
+//for i in 1 ... .max {
+//    let input = makeInput(length: i)
+//    let mergeSort = MergeSort(input: input)
+//    let start = Date()
+//    let output = cacheCalculateMaximumNumberOfComparisons(in: mergeSort)
+//    print("\(i) \(output)\t\t\(Date().timeIntervalSince(start))s")
+//    newCache.removeAll()
+//    appendToFile(n: i, maxComparisons: output)
+//}
+
+for i in 1 ... 100 {
+    print(i, MergeSort<Int>.calculateMaximumNumberOfComparisonsInWorstCase(for: i))
 }
 
 // MARK: Normal Recursion

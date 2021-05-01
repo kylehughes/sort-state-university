@@ -96,30 +96,27 @@ extension MergeSort: Algorithm {
         .linearithmic
     }
     
-    public static func calculateNumberOfComparisonsInWorstCase(for n: Int) -> NumberOfComparisons {
-        switch n {
-        case 0:
-            return .exact(0)
-        case 1:
-            return .exact(0)
-        case 2:
-            return .exact(1)
-        case 3:
-            return .exact(3)
-        case 4:
-            return .exact(5)
-        case 5:
-            return .exact(9)
-        default:
-            return .ceiling(for: n, using: complexity)
+    public static func calculateMaximumNumberOfComparisonsInWorstCase(for n: Int) -> Int {
+        /// This is a Swift port of the algorithm from D. E. Knuth, Art of Computer Programming, Vol. 3,
+        /// Sections 5.2.4., Problem 14. (https://oeis.org/A003071)
+        
+        let exponents = n.exponentsForDecomposedPowersOfTwo
+        
+        guard let lastExponent = exponents.last else {
+            return 0
         }
+        
+        var sum = 0
+        
+        for index in exponents.indices {
+            let exponent = exponents[index]
+            sum += (exponent + index) * 2.pow(exponent)
+        }
+        
+        return 1 - 2.pow(lastExponent) + sum
     }
     
     // MARK: Public Instance Interface
-    
-    public mutating func callAsFunction() -> AlgorithmStep<Self> {
-        finish() ?? iterateMerge() ?? iteratePartitionLoop() ?? iterateCursorLoop()
-    }
     
     public mutating func answer(_ answer: Comparison<Self>.Answer) {
         switch answer {
@@ -128,6 +125,10 @@ extension MergeSort: Algorithm {
         case .right:
             ongoingMerge?.answer(.right)
         }
+    }
+    
+    public mutating func callAsFunction() -> AlgorithmStep<Self> {
+        finish() ?? iterateMerge() ?? iteratePartitionLoop() ?? iterateCursorLoop()
     }
     
     public func peekAtElement(for answer: Comparison<MergeSort<Element>>.Answer) -> Element? {

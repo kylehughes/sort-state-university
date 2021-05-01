@@ -17,7 +17,7 @@ public protocol Algorithm: Identifiable {
     /// The runtime complexity of the algorithm.
     static var complexity: Complexity { get }
     
-    static func calculateNumberOfComparisonsInWorstCase(for n: Int) -> NumberOfComparisons
+    static func calculateMaximumNumberOfComparisonsInWorstCase(for n: Int) -> Int
 
     // MARK: Instance Interface
     
@@ -31,28 +31,16 @@ public protocol Algorithm: Identifiable {
 // MARK: - Default Implementation
 
 extension Algorithm {
-    // MARK: Public Static Interface
-    
-    public static func calculateNumberOfComparisonsInWorstCase(for n: Int) -> NumberOfComparisons {
-        .ceiling(for: n, using: complexity)
-    }
-    
     // MARK: Public Instance Interface
+    
+    public var numberOfComparisonsInWorstCase: Int {
+        Self.calculateMaximumNumberOfComparisonsInWorstCase(for: input.count)
+    }
     
     public func answering(_ answer: Comparison<Self>.Answer) -> Self {
         var copy = self
         copy.answer(answer)
         
         return copy
-    }
-}
-
-// MARK: - Bespoke Implementation
-
-extension Algorithm {
-    // MARK: Public Instance Interface
-    
-    public var numberOfComparisonsInWorstCase: NumberOfComparisons {
-        Self.calculateNumberOfComparisonsInWorstCase(for: input.count)
     }
 }
