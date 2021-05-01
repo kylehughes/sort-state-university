@@ -13,7 +13,7 @@ import Foundation
 /// of elements the algorithm is operating on.
 ///
 /// Algorithms that have the same complexity have running times that are close enough for the sake of analysis but
-/// in practice may differ slightly.
+/// may differ slight in practice.
 ///
 /// - SeeAlso: https://en.wikipedia.org/wiki/Big_O_notation
 public enum Complexity: Equatable, Hashable, CaseIterable {
