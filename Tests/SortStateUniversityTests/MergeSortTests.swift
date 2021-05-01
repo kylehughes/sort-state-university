@@ -88,8 +88,8 @@ final class MergeSortTests: XCTestCase {
             
             // Then…
             
-//            XCTAssertNotEqual(previousSort, currentSort)
-//            XCTAssertEqual(nextSort, extraneousSort)
+            XCTAssertNotEqual(previousSort, currentSort)
+            XCTAssertEqual(nextSort, extraneousSort)
         }
     }
     

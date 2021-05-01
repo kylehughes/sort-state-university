@@ -144,3 +144,21 @@ extension MergeSort: Algorithm {
         }
     }
 }
+
+// MARK: - Codable Extension
+
+extension MergeSort: Codable where Element: Codable {
+    // NO-OP
+}
+
+// MARK: - Equatable Extension
+
+extension MergeSort: Equatable where Element: Equatable {
+    // NO-OP
+}
+
+// MARK: - Hashable Extension
+
+extension MergeSort: Hashable where Element: Hashable {
+    // NO-OP
+}
