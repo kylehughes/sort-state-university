@@ -2,9 +2,16 @@
 
 *Stateful sorting algorithms for Swift.*
 
-🚧 This project is unreleased and in development 🚧
+🚧 This project is in development and technically unreleased. It is available for preview. 🚧
 
-## Support Platforms
+## Introduction
+
+### The Name
+
+I came up with "sort state" and thought it would be funny to append "university", a la "Washington State University". The project is not
+intended to be educational but I am sure it can be.
+
+## Supported Platforms
 
 - iOS 14.0+
 - macOS 11.0+
