@@ -10,7 +10,10 @@ import XCTest
 @testable import SortStateUniversity
 
 final class MergeSortTests: XCTestCase {
-    private let inputRange = 0 ... 100
+    typealias Sort = MergeSort<Int>
+    typealias TestHarness = SortTestHarness<Sort>
+    
+    private let harness = TestHarness(sortFactory: Sort.makeForTest)
 }
 
 // MARK: - Bespoke Interface Tests
@@ -19,22 +22,17 @@ extension MergeSortTests {
     // MARK: Tests
     
     func test_outputAfterTransactions_afterSorting() {
-        let mergeSort = MergeSort<Int>.makeForTest(inputLength: 100, inputState: .shuffled)
-        let finishedMergeSort = perform(mergeSort)
-        
-        XCTAssertEqual(finishedMergeSort.outputAfterTransactions, finishedMergeSort.output)
+        let sort = harness.perform(inputState: .shuffled)
+        XCTAssertEqual(sort.outputAfterTransactions, sort.output)
     }
     
     func test_outputAfterTransactions_beforeSorting() {
-        let mergeSort = MergeSort<Int>.makeForTest(inputLength: 100, inputState: .shuffled)
-        
-        XCTAssertEqual(mergeSort.outputAfterTransactions, mergeSort.output)
+        let sort = harness.makeSort(inputState: .shuffled)
+        XCTAssertEqual(sort.outputAfterTransactions, sort.output)
     }
     
     func test_outputAfterTransactions_duringSorting() throws {
-        let mergeSort = MergeSort<Int>.makeForTest(inputLength: 100, inputState: .shuffled)
-        
-        try perform(mergeSort) { previousSort, comparison, currentSort in
+        try harness.perform(inputState: .shuffled) { previousSort, comparison, currentSort in
             let ongoingMerge = try XCTUnwrap(currentSort.ongoingMerge)
             XCTAssertEqual(currentSort.outputAfterTransactions, currentSort.output.performing(ongoingMerge.output))
         }
@@ -47,106 +45,27 @@ extension MergeSortTests {
     // MARK: Tests
     
     func test_algorithm_bestCase() {
-        inputRange.forEach {
-            testAlgorithm(inputLength: $0, inputState: .bestCase)
-        }
+        harness.testAlgorithm(inputState: .bestCase)
     }
     
     func test_algorithm_shuffled() {
-        inputRange.forEach {
-            testAlgorithm(inputLength: $0, inputState: .shuffled)
-        }
+        harness.testAlgorithm(inputState: .shuffled)
     }
     
     func test_algorithm_worstCase() {
-        inputRange.forEach {
-            testAlgorithm(inputLength: $0, inputState: .worstCase)
-        }
+        harness.testAlgorithm(inputState: .worstCase)
     }
     
     func test_idempotency_bestCase() {
-        inputRange.forEach {
-            testIdempotency(inputLength: $0, inputState: .bestCase)
-        }
+        harness.testIdempotency(inputState: .bestCase)
     }
     
     func test_idempotency_shuffled() {
-        inputRange.forEach {
-            testIdempotency(inputLength: $0, inputState: .shuffled)
-        }
+        harness.testIdempotency(inputState: .shuffled)
     }
     
     func test_idempotency_worstCase() {
-        inputRange.forEach {
-            testIdempotency(inputLength: $0, inputState: .worstCase)
-        }
-    }
-    
-    // MARK: Private Tests
-    
-    private func testAlgorithm(inputLength: Int, inputState: InputState) {
-        let mergeSort = MergeSort<Int>.makeForTest(inputLength: inputLength, inputState: inputState)
-        let expectedOutput = mergeSort.input.sorted()
-        
-        let finishedMergeSort = perform(mergeSort) { previousSort, comparison, currentSort in
-            // The test uses the Comparable implementation for convenience so we want to double-check that the sort
-            // will still be correct when the non-Comparable interface is used.
-            if comparison.left < comparison.right {
-                XCTAssertEqual(comparison(.left), currentSort)
-            } else {
-                XCTAssertEqual(comparison(.right), currentSort)
-            }
-        }
-        
-        var mutableFinishedMergeSort = finishedMergeSort
-
-        XCTAssertEqual(finishedMergeSort.output, expectedOutput)
-        XCTAssertEqual(mutableFinishedMergeSort().output, expectedOutput)
-    }
-    
-    private func testIdempotency(inputLength: Int, inputState: InputState) {
-        let mergeSort = MergeSort<Int>.makeForTest(inputLength: inputLength, inputState: inputState)
-        
-        perform(mergeSort) { previousSort, comparison, currentSort in
-            var nextSort = currentSort
-            let _ = nextSort()
-            
-            var extraneousSort = nextSort
-            let _ = extraneousSort()
-            
-            XCTAssertNotEqual(currentSort, previousSort)
-            XCTAssertEqual(extraneousSort, nextSort)
-        }
-    }
-    
-    // MARK: Private Helpers
-    
-    private typealias ComparisonCompletion<Element> = (
-        MergeSort<Element>?,
-        Comparison<MergeSort<Element>>,
-        MergeSort<Element>
-    ) throws -> Void
-    where
-        Element: Comparable
-
-    @discardableResult
-    private func perform<Element>(
-        _ mergeSort: MergeSort<Element>,
-        comparisonCompletion: ComparisonCompletion<Element>? = nil
-    ) rethrows -> MergeSort<Element>
-    where
-        Element: Comparable
-    {
-        var mergeSort = mergeSort
-        var previousMergeSort: MergeSort<Element>? = nil
-        
-        while let comparison = mergeSort().comparison {
-            mergeSort = comparison()
-            try comparisonCompletion?(previousMergeSort, comparison, mergeSort)
-            previousMergeSort = mergeSort
-        }
-        
-        return mergeSort
+        harness.testIdempotency(inputState: .worstCase)
     }
 }
 
@@ -155,21 +74,28 @@ extension MergeSortTests {
 extension MergeSortTests {
     // MARK: Tests
     
+    func test_answer_whileFinished() {
+        harness.testAnswerWhileFinished()
+    }
+    
     func test_calculateMaximumNumberOfComparisonsInWorstCase() {
-        inputRange.forEach {
-            XCTAssertEqual(MergeSort<Int>.calculateMaximumNumberOfComparisonsInWorstCase(for: $0), answers[$0])
-        }
+        harness.testCalculateMaximumNumberOfComparisonsInWorstCase(with: answers)
     }
     
     func test_complexity() {
-        XCTAssertEqual(MergeSort<Int>.complexity, .linearithmic)
+        harness.testComplexity(expected: .linearithmic)
     }
     
-    func test_peekAtElement_withoutOngoingMerge() {
-        let mergeSort = MergeSort<Int>.makeForTest(inputLength: 100, inputState: .shuffled)
-        
-        XCTAssertNil(mergeSort.peekAtElement(for:.left))
-        XCTAssertNil(mergeSort.peekAtElement(for:.right))
+    func test_label() {
+        harness.testLabel(expected: .merge)
+    }
+    
+    func test_peekAtElement() {
+        harness.testPeekAtElement()
+    }
+    
+    func test_peekAtElement_whileFinished() {
+        harness.testPeekAtElementWhileFinished()
     }
     
     // MARK: Private Helpers

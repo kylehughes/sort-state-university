@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// A divide-and-conquer sorting algorithm, implemented statefully.
+/// A divide-and-conquer sorting algorithm.
 ///
 /// - SeeAlso: https://en.wikipedia.org/wiki/Merge_sort
 public struct MergeSort<Element>: Identifiable {
@@ -64,6 +64,8 @@ public struct MergeSort<Element>: Identifiable {
         ongoingMerge = nil
         output = input
         partitionSize = 1
+        
+        _ = self()
     }
     
     // MARK: Public Instance Interface
@@ -145,6 +147,11 @@ extension MergeSort: SortingAlgorithm {
     /// The runtime complexity of the algorithm.
     public static var complexity: Complexity {
         .linearithmic
+    }
+    
+    /// The unique name of the sorting algorithm.
+    public static var label: SortingAlgorithmLabel {
+        .merge
     }
     
     /// Returns the number of comparisons that the algorithm will perform, in the worst case, given an input

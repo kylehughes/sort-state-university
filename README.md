@@ -17,8 +17,14 @@ called to produce the next step, and so on, until the output is produced.
 
 Sort State University brings this dream to life.
 
+### Provided Algorithms
+
+- Insertion Sort
+- Merge Sort
+
 ### Use Cases
 
+- Asynchronous sorting
 - Sorting visualizations
 - Et cetera
 
@@ -27,18 +33,19 @@ implementations.
 
 ### The Name
 
-I knew that "sort" and "state" had to be in the name. It seemed natural and funny to append "university."
+I knew that "sort" and "state" had to be in the name. It seemed natural and funny to append "university." There is nothing inherently
+educational about this framework.
 
 ## Usage
 
 ### Create an Algorithm
 
-The input to an algorithm does not need to conform to `Comparable` because the answers to the comparisons are supplied
-by the caller.
-
 ```swift
 var algorithm = MergeSort(input: elements)
 ```
+
+The input to an algorithm does not need to conform to `Comparable` because the answers to the comparisons are supplied
+by the caller.
 
 ### Advance the Algorithm
 
@@ -56,11 +63,11 @@ case let .finished(output):
 
 ### Answer the Comparison
 
-A comparison is a decision about the inherent order of two elements. The answer to a comparison will produce the next 
-state of the algorithm. The caller is responsible for consistently applying the inherent order to the comparisons.
+A comparison is a decision about the inherent order of two elements. The caller is responsible for consistently applying the inherent 
+order to the comparisons. For example, the "inherent order" could be a user's personal preference, so the answer to the comparions 
+would be whichever element the user prefers.
 
-For example, the "inherent order" could be a user's personal preference, so the answer to the comparions would
-be whichever element the user prefers.
+A comparison can be answered directly to produce the next state of the sorting algorithm.
 
 ```swift
 algorithm = comparison(.left)
@@ -70,6 +77,19 @@ or
 
 ```swift
 algorithm = comparison(.right)
+```
+
+The answer to a comparison can also be provided to, and mutate, the algorithm directly. Both approaches produce the same result but 
+their calling patterns suit different use cases.
+
+```swift
+algorithm.answer(.left)
+```
+
+or 
+
+```swift
+algorithm.answer(.right)
 ```
 
 ### Handle the Sorted Output

@@ -23,6 +23,9 @@ public protocol SortingAlgorithm: Identifiable {
     /// The runtime complexity of the algorithm.
     static var complexity: Complexity { get }
     
+    /// The unique label of the algorithm.
+    static var label: SortingAlgorithmLabel { get }
+    
     /// Returns the number of comparisons that the algorithm will perform, in the worst case, given an input
     /// with `n` elements.
     ///
@@ -34,7 +37,7 @@ public protocol SortingAlgorithm: Identifiable {
     /// - Parameter n: The number of elements.
     /// - Returns: The number of comparisons that the algorithm will perform in the worst case.
     static func calculateMaximumNumberOfComparisonsInWorstCase(for n: Int) -> Int
-
+    
     // MARK: Instance Interface
     
     /// The given elements that the algorithm is sorting.
