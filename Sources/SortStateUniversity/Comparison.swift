@@ -16,21 +16,12 @@
 ///
 /// A comparison is technically a lense over an algorithm. It has no bespoke state itself.
 public struct Comparison<Algorithm> where Algorithm: SortStateUniversity.SortingAlgorithm {
-    internal typealias ElementProvider = (Side) -> Algorithm.Element
-    internal typealias NextAlgorithmProvider = (Side) -> Algorithm
-    
-    private let elementProvider: ElementProvider
-    private let nextAlgorithmProvider: NextAlgorithmProvider
+    private let source: Algorithm
 
     // MARK: Internal Initialization
-    
-    internal init(nextAlgorithmProvider: @escaping NextAlgorithmProvider, elementProvider: @escaping ElementProvider) {
-        self.nextAlgorithmProvider = nextAlgorithmProvider
-        self.elementProvider = elementProvider
-    }
-    
+
     internal init(source: Algorithm) {
-        self.init(nextAlgorithmProvider: source.answering, elementProvider: source.peekAtElementUnsafely)
+        self.source = source
     }
     
     // MARK: Public Instance Interface
@@ -39,14 +30,14 @@ public struct Comparison<Algorithm> where Algorithm: SortStateUniversity.Sorting
     ///
     /// Corresponds to `Answer.left`.
     public var left: Algorithm.Element {
-        elementProvider(.left)
+        source.peekAtElementUnsafely(for: .left)
     }
     
     /// The right element in the comparison.
     ///
     /// Corresponds to `Answer.right`.
     public var right: Algorithm.Element {
-        elementProvider(.right)
+        source.peekAtElementUnsafely(for: .right)
     }
     
     /// Accesses the element for the specified side.
@@ -54,7 +45,7 @@ public struct Comparison<Algorithm> where Algorithm: SortStateUniversity.Sorting
     /// - Parameter side: The side whose element will be accessed.
     /// - Returns: The element for the specified side.
     public subscript(side: Side) -> Algorithm.Element {
-        elementProvider(side)
+        source.peekAtElementUnsafely(for: side)
     }
     
     /// Answers the comparison with the given side.
@@ -68,7 +59,7 @@ public struct Comparison<Algorithm> where Algorithm: SortStateUniversity.Sorting
     /// - Parameter answer: The side that wins the comparison.
     /// - Returns: The state of the algorithm after the comparison.
     public func callAsFunction(_ answer: Side) -> Algorithm {
-        nextAlgorithmProvider(answer)
+        source.answering(answer)
     }
     
     /// Answers the comparison with whether or not the left side won.
@@ -95,6 +86,24 @@ extension Comparison where Algorithm.Element: Comparable {
     public func callAsFunction() -> Algorithm {
         self(left < right)
     }
+}
+
+// MARK: - Codable Extension
+
+extension Comparison: Codable where Algorithm: Codable {
+    // NO-OP
+}
+
+// MARK: - Equatable Extension
+
+extension Comparison: Equatable where Algorithm: Equatable {
+    // NO-OP
+}
+
+// MARK: - Hashable Extension
+
+extension Comparison: Hashable where Algorithm: Hashable {
+    // NO-OP
 }
 
 // MARK: - Comparison.Side Definition
