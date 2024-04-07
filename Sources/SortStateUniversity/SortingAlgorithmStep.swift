@@ -96,3 +96,21 @@ public enum SortingAlgorithmStep<Algorithm> where Algorithm: SortStateUniversity
         return output
     }
 }
+
+// MARK: - Codable Extension
+
+extension SortingAlgorithmStep: Codable where Algorithm: Codable, Algorithm.Element: Codable {
+    // NO-OP
+}
+
+// MARK: - Equatable Extension
+
+extension SortingAlgorithmStep: Equatable where Algorithm: Equatable, Algorithm.Element: Equatable {
+    // NO-OP
+}
+
+// MARK: - Hashable Extension
+
+extension SortingAlgorithmStep: Hashable where Algorithm: Hashable, Algorithm.Element: Hashable {
+    // NO-OP
+}
