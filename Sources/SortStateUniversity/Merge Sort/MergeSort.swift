@@ -241,9 +241,15 @@ extension MergeSort: SortingAlgorithm {
     }
 }
 
-// MARK: - Codable Extension
+// MARK: - Decodable Extension
 
-extension MergeSort: Codable where Element: Codable {
+extension MergeSort: Decodable where Element: Decodable {
+    // NO-OP
+}
+
+// MARK: - Encodable Extension
+
+extension MergeSort: Encodable where Element: Encodable {
     // NO-OP
 }
 

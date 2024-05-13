@@ -195,9 +195,15 @@ extension InsertionSort: SortingAlgorithm {
     }
 }
 
-// MARK: - Codable Extension
+// MARK: - Decodable Extension
 
-extension InsertionSort: Codable where Element: Codable {
+extension InsertionSort: Decodable where Element: Decodable {
+    // NO-OP
+}
+
+// MARK: - Encodable Extension
+
+extension InsertionSort: Encodable where Element: Encodable {
     // NO-OP
 }
 
