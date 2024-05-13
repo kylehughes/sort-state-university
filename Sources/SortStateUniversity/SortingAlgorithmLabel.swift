@@ -39,11 +39,11 @@ extension SortingAlgorithmLabel {
         .merge,
     ]
     
-    // MARK: Individual Sorts
+    // MARK: Built-In Sorting Algorithms
     
-    /// The label of the `InsertionSort` algorithm.
+    /// The label of the ``InsertionSort`` algorithm.
     public static let insertion = SortingAlgorithmLabel(id: "insertion", name: "Insertion Sort")
     
-    /// The label of the `MergeSort` algorithm.
+    /// The label of the ``MergeSort`` algorithm.
     public static let merge = SortingAlgorithmLabel(id: "merge", name: "Merge Sort")
 }
