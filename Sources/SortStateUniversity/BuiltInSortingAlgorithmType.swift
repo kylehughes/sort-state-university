@@ -6,16 +6,16 @@
 //
 
 /// Enumeration of all sorting algorithms that are built into the library.
-public enum BuiltInSortingAlgorithmType: CaseIterable, Equatable, Hashable {
+public enum BuiltInSortingAlgorithmType: String, CaseIterable, Equatable, Hashable {
     /// A simple sorting algorithm that sorts its elements one at a time.
     ///
     /// - SeeAlso: ``InsertionSort``
-    case insertion
+    case insertion = "insertion"
     
     /// A divide-and-conquer sorting algorithm.
     ///
     /// - SeeAlso: ``MergeSort``
-    case merge
+    case merge = "merge"
     
     // MARK: Public Static Interface
     
