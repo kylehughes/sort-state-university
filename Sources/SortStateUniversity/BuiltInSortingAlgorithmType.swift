@@ -6,7 +6,7 @@
 //
 
 /// Enumeration of all sorting algorithms that are built into the library.
-public enum BuiltInSortingAlgorithmType: Equatable, Hashable {
+public enum BuiltInSortingAlgorithmType: CaseIterable, Equatable, Hashable {
     /// A simple sorting algorithm that sorts its elements one at a time.
     ///
     /// - SeeAlso: ``InsertionSort``
@@ -16,6 +16,11 @@ public enum BuiltInSortingAlgorithmType: Equatable, Hashable {
     ///
     /// - SeeAlso: ``MergeSort``
     case merge
+    
+    // MARK: Public Static Interface
+    
+    /// A collection of all values in this type, in alphabetical order (in American English).
+    public static let allCasesInAlphabeticalOrder: [Self] = [.insertion, .merge,]
     
     // MARK: Public Instance Interface
     
