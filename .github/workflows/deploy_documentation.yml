@@ -39,7 +39,7 @@ jobs:
             -destination 'generic/platform=iOS';
           mkdir _site;
           $(xcrun --find docc) process-archive \
-            transform-for-static-hosting /tmp/DerivedData/Build/Products/Debug-iphoneos/sort-state-university.doccarchive \
+            transform-for-static-hosting /tmp/DerivedData/Build/Products/Debug-iphoneos/SortStateUniversity.doccarchive \
             --hosting-base-path sort-state-university \
             --output-path _site;
       - name: Create index.html
