@@ -90,9 +90,15 @@ extension Comparison where Algorithm.Element: Comparable {
     }
 }
 
-// MARK: - Codable Extension
+// MARK: - Decodable Extension
 
-extension Comparison: Codable where Algorithm: Codable {
+extension Comparison: Decodable where Algorithm: Decodable {
+    // NO-OP
+}
+
+// MARK: - Encodable Extension
+
+extension Comparison: Encodable where Algorithm: Encodable {
     // NO-OP
 }
 
