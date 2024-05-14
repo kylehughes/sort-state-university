@@ -1,29 +1,23 @@
-# - macOS Image Resources: https://github.com/actions/virtual-environments/tree/main/images/macos
-
 name: Test
 
 on:
   push:
+    branches:
+      - main
   pull_request:
     branches:
-      - "**:**" # PRs from forks have a prefix with `owner:`
+      - main
+  workflow_dispatch:
+
+concurrency: 
+  group: ${{ github.ref_name }}
+  cancel-in-progress: true
 
 jobs:
   get-environment-details:
     name: Get Environment Details
-    runs-on: macOS-10.15
-    strategy:
-          matrix:
-            xcode:
-              - "12.0.1"
-              - "12.1"
-              - "12.2"
-              - "12.3"
-              - "12.4"
+    runs-on: macOS-12
     steps:
-      - name: Select Xcode ${{ matrix.xcode }}
-        run: sudo xcode-select --switch /Applications/Xcode_${{ matrix.xcode }}.app
-
       - name: Print OS SDKs
         run: xcodebuild -version -sdk
 
@@ -33,39 +27,20 @@ jobs:
           xcrun simctl list
   
   test-iOS:
-      name: Test on iOS 14
-      runs-on: macOS-10.15
-      strategy:
-          matrix:
-            # We assume that Xcode minor version == iOS minor version
-            destination: 
-              - "name=iPhone 11 Pro"
-            xcode:
-              - "12.0.1"
-              - "12.1"
-              - "12.2"
-              - "12.3"
-              - "12.4"
+      name: Test on Latest iOS
+      runs-on: macOS-12
       steps:
         - name: Checkout project
           uses: actions/checkout@master
 
-        - name: Select Xcode ${{ matrix.xcode }}
-          run: sudo xcode-select --switch /Applications/Xcode_${{ matrix.xcode }}.app
-
         - name: Run tests
           run: |
             set -o pipefail
-            xcodebuild clean test -scheme sort-state-university -sdk iphonesimulator -destination "${{ matrix.destination }}" -configuration Debug -enableCodeCoverage YES | xcpretty -c
-
-        - name: Upload code coverage
-          uses: codecov/codecov-action@v1
-          with:
-            fail_ci_if_error: true
+            xcodebuild clean test -scheme sort-state-university -sdk iphonesimulator -destination "name=iPhone 14 Pro" -configuration Debug -enableCodeCoverage YES | xcpretty -c
 
   test-macOS:
-    name: Test on macOS 10.15
-    runs-on: macOS-10.15
+    name: Test on Latest macOS
+    runs-on: macOS-12
     steps:
       - name: Checkout Project
         uses: actions/checkout@master
@@ -74,52 +49,25 @@ jobs:
         run: swift test
 
   test-tvOS:
-    name: Test on tvOS 14
-    runs-on: macOS-10.15
-    strategy:
-        matrix:
-          # We assume that Xcode minor version == tvOS minor version
-          destination: 
-            - "name=Apple TV 4K"
-          xcode:
-            - "12.0.1"
-            - "12.1"
-            - "12.2"
-            - "12.3"
+    name: Test on Latest tvOS
+    runs-on: macOS-12
     steps:
       - name: Checkout project
         uses: actions/checkout@master
 
-      - name: Select Xcode ${{ matrix.xcode }}
-        run: sudo xcode-select --switch /Applications/Xcode_${{ matrix.xcode }}.app
+      - name: Run tests
+        run: |
+          set -o pipefail
+          xcodebuild clean test -scheme sort-state-university -sdk appletvsimulator -destination "name=Apple TV 4K (3rd generation)" -configuration Debug -enableCodeCoverage YES | xcpretty -c
+      
+  test-watchOS:
+    name: Test on Latest watchOS
+    runs-on: macOS-12
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@master
 
       - name: Run tests
         run: |
           set -o pipefail
-          xcodebuild clean test -scheme sort-state-university -sdk appletvsimulator -destination "${{ matrix.destination }}" -configuration Debug -enableCodeCoverage YES | xcpretty -c
-
-      - name: Upload code coverage
-        uses: codecov/codecov-action@v1
-        with:
-          fail_ci_if_error: true
-      
-  # test-watchOS:
-  #   name: Build for watchOS 7
-  #   runs-on: macOS-10.15
-  #   strategy:
-  #       matrix:
-  #         destination: 
-  #           - "name=Apple Watch Series 6 - 44mm"
-  #         xcode:
-  #           - "12.4"
-  #   steps:
-  #     - name: Checkout project
-  #       uses: actions/checkout@master
-
-  #     - name: Select Xcode ${{ matrix.xcode }}
-  #       run: sudo xcode-select --switch /Applications/Xcode_${{ matrix.xcode }}.app
-
-  #     - name: Run tests
-  #       run: |
-  #         set -o pipefail
-  #         xcodebuild -scheme sort-state-university -destination "${{ matrix.destination }}" -configuration Debug build | xcpretty -c
+          xcodebuild clean test -scheme sort-state-university -sdk watchsimulator -destination "name=Apple Watch Ultra (49mm)" -configuration Debug -enableCodeCoverage YES | xcpretty -c
