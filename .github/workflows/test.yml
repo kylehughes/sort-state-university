@@ -16,7 +16,7 @@ concurrency:
 jobs:
   get-environment-details:
     name: Get Environment Details
-    runs-on: macOS-12
+    runs-on: macOS-14
     steps:
       - name: Print OS SDKs
         run: xcodebuild -version -sdk
@@ -28,7 +28,7 @@ jobs:
   
   test-iOS:
       name: Test on Latest iOS
-      runs-on: macOS-12
+      runs-on: macOS-14
       steps:
         - name: Checkout project
           uses: actions/checkout@master
@@ -40,7 +40,7 @@ jobs:
 
   test-macOS:
     name: Test on Latest macOS
-    runs-on: macOS-12
+    runs-on: macOS-14
     steps:
       - name: Checkout Project
         uses: actions/checkout@master
@@ -50,7 +50,7 @@ jobs:
 
   test-tvOS:
     name: Test on Latest tvOS
-    runs-on: macOS-12
+    runs-on: macOS-14
     steps:
       - name: Checkout project
         uses: actions/checkout@master
@@ -62,7 +62,7 @@ jobs:
       
   test-watchOS:
     name: Test on Latest watchOS
-    runs-on: macOS-12
+    runs-on: macOS-14
     steps:
       - name: Checkout project
         uses: actions/checkout@master
