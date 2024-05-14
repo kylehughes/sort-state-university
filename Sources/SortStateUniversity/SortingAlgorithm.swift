@@ -26,17 +26,32 @@ public protocol SortingAlgorithm: Identifiable {
     /// The unique label of the algorithm.
     static var label: SortingAlgorithmLabel { get }
     
-    /// Returns the number of comparisons that the algorithm will perform, in the worst case, given an input
-    /// with `n` elements.
+    /// Returns the average number of comparisons that the algorithm will perform given an input with `n` elements.
     ///
-    /// The algorithm may require fewer total comparisons than returned depending on the state of the input and the
-    /// answers to the comparisons. The algorithm is guaranteed to not require more comparisons than returned.
-    ///
-    /// This value is provably correct and precise. It is not an estimate.
+    /// The algorithm may require more or less comparisons depending on the state of the input and the answers to the
+    /// comparisons.
     ///
     /// - Parameter n: The number of elements.
-    /// - Returns: The number of comparisons that the algorithm will perform in the worst case.
-    static func calculateMaximumNumberOfComparisonsInWorstCase(for n: Int) -> Int
+    /// - Returns: The average number of comparisons that the algorithm will perform.
+    static func averageNumberOfComparisons(for n: Int) -> Int
+    
+    /// Returns the maximum number of comparisons that the algorithm will perform given an input with `n` elements.
+    ///
+    /// The algorithm may require less comparisons depending on the state of the input and the answers to the
+    /// comparisons.
+    ///
+    /// - Parameter n: The number of elements.
+    /// - Returns: The maximum number of comparisons that the algorithm will perform.
+    static func maximumNumberOfComparisons(for n: Int) -> Int
+    
+    /// Returns the minimum number of comparisons that the algorithm will perform given an input with `n` elements.
+    ///
+    /// The algorithm may require more comparisons depending on the state of the input and the answers to the
+    /// comparisons.
+    ///
+    /// - Parameter n: The number of elements.
+    /// - Returns: The minimum number of comparisons that the algorithm will perform.
+    static func minimumNumberOfComparisons(for n: Int) -> Int
     
     // MARK: Instance Interface
     
@@ -95,12 +110,28 @@ public protocol SortingAlgorithm: Identifiable {
 extension SortingAlgorithm {
     // MARK: Public Instance Interface
     
-    /// The number of comparisons that the algorithm will perform in the worst case.
+    /// The average number of comparisons that the algorithm will perform.
     ///
-    /// The algorithm may require fewer total comparisons than returned depending on the state of the input and the
-    /// answers to the comparisons. The algorithm is guaranteed to not require more comparisons than returned.
-    public var numberOfComparisonsInWorstCase: Int {
-        Self.calculateMaximumNumberOfComparisonsInWorstCase(for: input.count)
+    /// The algorithm may require more or less comparisons depending on the state of the input and the answers to the
+    /// comparisons.
+    public var averageNumberOfComparisons: Int {
+        Self.averageNumberOfComparisons(for: input.count)
+    }
+    
+    /// The maximum number of comparisons that the algorithm will perform.
+    ///
+    /// The algorithm may require less comparisons depending on the state of the input and the answers to the
+    /// comparisons.
+    public var maximumNumberOfComparisons: Int {
+        Self.maximumNumberOfComparisons(for: input.count)
+    }
+    
+    /// The minimum number of comparisons that the algorithm will perform.
+    ///
+    /// The algorithm may require more comparisons depending on the state of the input and the answers to the
+    /// comparisons.
+    public var minimumNumberOfComparisons: Int {
+        Self.minimumNumberOfComparisons(for: input.count)
     }
     
     /// Returns the current algorithm after answering the current comparison with the given answer.

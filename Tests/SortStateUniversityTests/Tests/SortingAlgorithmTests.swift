@@ -22,8 +22,8 @@ extension SortingAlgorithmTests {
     func test_numberOfComparisonsInWorstCase() {
         for i in 0 ... 100 {
             XCTAssertEqual(
-                MergeSort<Int>.makeForTest(inputLength: i, inputState: .shuffled).numberOfComparisonsInWorstCase,
-                MergeSort<Int>.calculateMaximumNumberOfComparisonsInWorstCase(for: i)
+                MergeSort<Int>.makeForTest(inputLength: i, inputState: .shuffled).maximumNumberOfComparisons,
+                MergeSort<Int>.maximumNumberOfComparisons(for: i)
             )
         }
     }

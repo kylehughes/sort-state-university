@@ -105,7 +105,7 @@ final class SortTestHarness<Sort> where Sort: SortingAlgorithm, Sort:Equatable, 
     
     internal func testCalculateMaximumNumberOfComparisonsInWorstCase(with answers: [Sort.Element: Int]) {
         inputRange.forEach {
-            XCTAssertEqual(Sort.calculateMaximumNumberOfComparisonsInWorstCase(for: $0), answers[$0])
+            XCTAssertEqual(Sort.maximumNumberOfComparisons(for: $0), answers[$0])
         }
     }
     

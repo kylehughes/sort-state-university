@@ -154,20 +154,40 @@ extension MergeSort: SortingAlgorithm {
         .merge
     }
     
-    /// Returns the number of comparisons that the algorithm will perform, in the worst case, given an input
-    /// with `n` elements.
+    /// Returns the average number of comparisons that the algorithm will perform given an input with `n` elements.
     ///
-    /// The algorithm may require fewer total comparisons than returned depending on the state of the input and the
-    /// answers to the comparisons. The algorithm is guaranteed to not require more comparisons than returned.
+    /// The algorithm may require more or less comparisons depending on the state of the input and the answers to the
+    /// comparisons.
+    ///
+    /// The average case for merge sort is asymptotically `n log2(n) - O(n)`. For practical purposes, we use `n log2(n)`
+    /// for large `n`, which provides a good approximation.
+    ///
+    /// - Parameter n: The number of elements.
+    /// - Returns: The average number of comparisons that the algorithm will perform.
+    public static func averageNumberOfComparisons(for n: Int) -> Int {
+        // This is a Swift port of the algorithm from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and
+        // Stein, Chapter 2, Section 2.3.
+        
+        guard 1 < n else {
+            return 0
+        }
+        
+        return Int(Double(n) * log2(Double(n)))
+    }
+    
+    /// Returns the maximum number of comparisons that the algorithm will perform given an input with `n` elements.
+    ///
+    /// The algorithm may require less comparisons depending on the state of the input and the answers to the
+    /// comparisons. The algorithm is guaranteed to not require more comparisons than returned.
     ///
     /// This value is provably correct and precise. It is not an estimate.
     ///
     /// - SeeAlso: https://oeis.org/A003071
     /// - Parameter n: The number of elements.
     /// - Returns: The number of comparisons that the algorithm will perform in the worst case.
-    public static func calculateMaximumNumberOfComparisonsInWorstCase(for n: Int) -> Int {
-        /// This is a Swift port of the algorithm from D. E. Knuth, Art of Computer Programming, Vol. 3,
-        /// Sections 5.2.4., Problem 14. (https://oeis.org/A003071)
+    public static func maximumNumberOfComparisons(for n: Int) -> Int {
+        // This is a Swift port of the algorithm from D. E. Knuth, Art of Computer Programming, Vol. 3, Sections 5.2.4.,
+        // Problem 14. (https://oeis.org/A003071)
         
         let bitNumbers = n.bitNumbers.sorted(by: >)
         
@@ -183,6 +203,39 @@ extension MergeSort: SortingAlgorithm {
         }
         
         return 1 - 2.pow(lastBitNumber) + sum
+    }
+    
+    /// Returns the minimum number of comparisons that the algorithm will perform given an input with `n` elements.
+    ///
+    /// The algorithm may require more comparisons depending on the state of the input and the answers to the
+    /// comparisons.
+    ///
+    /// This value is provably correct and precise. It is not an estimate.
+    ///
+    /// - Parameter n: The number of elements.
+    /// - Returns: The minimum number of comparisons that the algorithm will perform.
+    public static func minimumNumberOfComparisons(for n: Int) -> Int {
+        // This is a Swift port of the algorithm from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and
+        // Stein, Chapter 2, Section 2.3.
+        
+        guard 1 < n else {
+            return 0
+        }
+            
+        var comparisons = 0
+        var currentSize = 1
+        
+        while currentSize < n {
+            comparisons += (n / (currentSize * 2)) * currentSize
+            
+            if currentSize < n % (currentSize * 2) {
+                comparisons += n % currentSize
+            }
+            
+            currentSize *= 2
+        }
+        
+        return comparisons
     }
     
     // MARK: Public Instance Interface
