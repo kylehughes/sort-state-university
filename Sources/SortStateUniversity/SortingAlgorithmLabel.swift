@@ -22,6 +22,7 @@ public struct SortingAlgorithmLabel: Codable, Equatable, Hashable, Identifiable 
     /// Creates a new label for a sorting algorithm.
     ///
     /// - Parameter name: The name of the sorting algorithm.
+    @inlinable
     public init(id: String, name: String) {
         self.id = id
         self.name = name

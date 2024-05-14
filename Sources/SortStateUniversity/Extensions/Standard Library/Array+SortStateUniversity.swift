@@ -8,6 +8,7 @@
 extension Array {
     // MARK: Internal Instance Interface
     
+    @usableFromInline
     internal mutating func perform(_ transactions: Set<MergeSort<Element>.Merge.Transaction>) {
         let input = self
         
@@ -16,6 +17,7 @@ extension Array {
         }
     }
     
+    @usableFromInline
     internal func performing(_ transactions: Set<MergeSort<Element>.Merge.Transaction>) -> Self {
         var copy = self
         copy.perform(transactions)

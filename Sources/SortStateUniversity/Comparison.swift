@@ -69,6 +69,7 @@ public struct Comparison<Algorithm> where Algorithm: SortStateUniversity.Sorting
     ///
     /// This function is provided for convenience when there is already a Boolean value that can be used for the
     /// comparison. Otherwise, `callAsFunction(_ answer: Side)` should be preferred for readability.
+    @inlinable
     public func callAsFunction(_ bool: Bool) -> Algorithm {
         callAsFunction(bool ? .left : .right)
     }
@@ -83,6 +84,7 @@ extension Comparison where Algorithm.Element: Comparable {
     ///
     /// The returned algorithm will be the algorithm at its next state, after the comparison is made. The algorithm
     /// can be executed to continue producing comparisons and eventually the sorted output.
+    @inlinable
     public func callAsFunction() -> Algorithm {
         self(left < right)
     }

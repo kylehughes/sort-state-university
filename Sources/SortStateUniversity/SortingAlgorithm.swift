@@ -114,6 +114,7 @@ extension SortingAlgorithm {
     ///
     /// The algorithm may require more or less comparisons depending on the state of the input and the answers to the
     /// comparisons.
+    @inlinable
     public var averageNumberOfComparisons: Int {
         Self.averageNumberOfComparisons(for: input.count)
     }
@@ -122,6 +123,7 @@ extension SortingAlgorithm {
     ///
     /// The algorithm may require less comparisons depending on the state of the input and the answers to the
     /// comparisons.
+    @inlinable
     public var maximumNumberOfComparisons: Int {
         Self.maximumNumberOfComparisons(for: input.count)
     }
@@ -130,6 +132,7 @@ extension SortingAlgorithm {
     ///
     /// The algorithm may require more comparisons depending on the state of the input and the answers to the
     /// comparisons.
+    @inlinable
     public var minimumNumberOfComparisons: Int {
         Self.minimumNumberOfComparisons(for: input.count)
     }
@@ -142,6 +145,7 @@ extension SortingAlgorithm {
     ///
     /// - Parameter answer: The answer to the current comparison.
     /// - Returns: The algorithm after applying the answer to the current comparison.
+    @inlinable
     public func answering(_ answer: Comparison<Self>.Side) -> Self {
         var copy = self
         copy.answer(answer)
@@ -161,6 +165,7 @@ extension SortingAlgorithm {
     /// - Precondition: The algorithm is at a point of comparison.
     /// - Parameter answer: The answer that represents the side of the comparison to peek at.
     /// - Returns: The element that represents the given side of the current comparison.
+    @usableFromInline
     internal func peekAtElementUnsafely(for answer: Comparison<Self>.Side) -> Element {
         peekAtElement(for: answer)!
     }

@@ -83,6 +83,7 @@ public struct MergeSort<Element>: Identifiable {
     /// If there is no ongoing merge then this value will be equal to `output`.
     ///
     /// - SeeAlso: `MergeSort.Merge.output`
+    @inlinable
     public var outputAfterTransactions: Elements {
         guard let ongoingMerge = ongoingMerge else {
             return output
@@ -145,11 +146,13 @@ extension MergeSort: SortingAlgorithm {
     // MARK: Public Static Interface
     
     /// The runtime complexity of the algorithm.
+    @inlinable
     public static var complexity: Complexity {
         .linearithmic
     }
     
     /// The unique name of the sorting algorithm.
+    @inlinable
     public static var label: SortingAlgorithmLabel {
         .merge
     }
@@ -164,6 +167,7 @@ extension MergeSort: SortingAlgorithm {
     ///
     /// - Parameter n: The number of elements.
     /// - Returns: The average number of comparisons that the algorithm will perform.
+    @inlinable
     public static func averageNumberOfComparisons(for n: Int) -> Int {
         // This is a Swift port of the algorithm from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and
         // Stein, Chapter 2, Section 2.3.
@@ -185,6 +189,7 @@ extension MergeSort: SortingAlgorithm {
     /// - SeeAlso: https://oeis.org/A003071
     /// - Parameter n: The number of elements.
     /// - Returns: The number of comparisons that the algorithm will perform in the worst case.
+    @inlinable
     public static func maximumNumberOfComparisons(for n: Int) -> Int {
         // This is a Swift port of the algorithm from D. E. Knuth, Art of Computer Programming, Vol. 3, Sections 5.2.4.,
         // Problem 14. (https://oeis.org/A003071)
@@ -214,6 +219,7 @@ extension MergeSort: SortingAlgorithm {
     ///
     /// - Parameter n: The number of elements.
     /// - Returns: The minimum number of comparisons that the algorithm will perform.
+    @inlinable
     public static func minimumNumberOfComparisons(for n: Int) -> Int {
         // This is a Swift port of the algorithm from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and
         // Stein, Chapter 2, Section 2.3.

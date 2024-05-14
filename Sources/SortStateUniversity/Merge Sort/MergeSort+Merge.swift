@@ -18,7 +18,6 @@ extension MergeSort {
     ///
     /// The right partition is the elements in the source array between (`middleIndex`, `toIndex`).
     public struct Merge: Codable, Equatable, Hashable, Identifiable {
-        
         /// The position of the first element in the left paritition.
         public let fromIndex: MergeSort.Elements.Index
         
@@ -91,6 +90,7 @@ extension MergeSort {
         /// within the bounds of their respective partitions.
         ///
         /// This value is `false` if either side is out of bounds.
+        @inlinable
         public var arePartitionIndicesInBounds: Bool {
             leftPartitionIndex <= middleIndex && rightPartitionIndex <= toIndex
         }
@@ -174,6 +174,7 @@ extension MergeSort.Merge {
         /// - Parameter inputIndex: The position of the element in the source array when the merge started.
         /// - Parameter outputIndex: The position the element should be moved to in the source array when the merge is
         ///   finished.
+        @inlinable
         public init(inputIndex: MergeSort.Elements.Index, outputIndex: MergeSort.Elements.Index) {
             self.inputIndex = inputIndex
             self.outputIndex = outputIndex

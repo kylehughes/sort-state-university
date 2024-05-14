@@ -16,6 +16,7 @@ extension Int {
     /// obtained in the "least significant bit" form for applying `sorted(by: >)` to the return value.
     ///
     /// - SeeAlso: https://en.wikipedia.org/wiki/Bit_numbering
+    @inlinable
     public var bitNumbers: [Int] {
         var exponents: [Int] = []
         var exponent = 0
@@ -39,6 +40,7 @@ extension Int {
     
     // MARK: Internal Instance Interface
     
+    @usableFromInline
     internal func pow(_ exponent: Int) -> Int {
         Int(powf(Float(self), Float(exponent)))
     }

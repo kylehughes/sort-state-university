@@ -57,6 +57,7 @@ public enum Complexity: Equatable, Hashable, CaseIterable {
 extension Complexity: Comparable {
     // MARK: Public Static Interface
     
+    @inlinable
     public static func < (lhs: Self, rhs: Self) -> Bool {
         allCasesInOrder.firstIndex(of: lhs)! < allCasesInOrder.firstIndex(of: rhs)!
     }

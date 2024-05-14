@@ -97,11 +97,13 @@ extension InsertionSort: SortingAlgorithm {
     // MARK: Public Static Interface
     
     /// The runtime complexity of the algorithm.
+    @inlinable
     public static var complexity: Complexity {
         .quadratic
     }
     
     /// The unique name of the sorting algorithm.
+    @inlinable
     public static var label: SortingAlgorithmLabel {
         .insertion
     }
@@ -115,6 +117,7 @@ extension InsertionSort: SortingAlgorithm {
     ///
     /// - Parameter n: The number of elements.
     /// - Returns: The average number of comparisons that the algorithm will perform.
+    @inlinable
     public static func averageNumberOfComparisons(for n: Int) -> Int {
         // This is a Swift port of the algorithm from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and
         // Stein, Chapter 2, Section 2.1.
@@ -136,6 +139,7 @@ extension InsertionSort: SortingAlgorithm {
     ///
     /// - Parameter n: The number of elements.
     /// - Returns: The maximum number of comparisons that the algorithm will perform.
+    @inlinable
     public static func maximumNumberOfComparisons(for n: Int) -> Int {
         // This is a Swift port of the algorithm from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and
         // Stein, Chapter 2, Section 2.1.
@@ -157,6 +161,7 @@ extension InsertionSort: SortingAlgorithm {
     ///
     /// - Parameter n: The number of elements.
     /// - Returns: The minimum number of comparisons that the algorithm will perform.
+    @inlinable
     public static func minimumNumberOfComparisons(for n: Int) -> Int {
         // This is a Swift port of the algorithm from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and
         // Stein, Chapter 2, Section 2.1.

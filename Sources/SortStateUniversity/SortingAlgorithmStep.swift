@@ -40,6 +40,7 @@ public enum SortingAlgorithmStep<Algorithm> where Algorithm: SortStateUniversity
     ///
     /// If the step is of case `comparison` then this value will be the comparison at this step in the sorting
     /// algorithm, otherwise this value will be `nil`.
+    @inlinable
     public var comparison: Comparison<Algorithm>? {
         guard case let .comparison(comparison) = self else {
             return nil
@@ -49,6 +50,7 @@ public enum SortingAlgorithmStep<Algorithm> where Algorithm: SortStateUniversity
     }
     
     /// A Boolean value indicating whether the step is of case `comparison`.
+    @inlinable
     public var isComparison: Bool {
         guard case .comparison = self else {
             return false
@@ -58,6 +60,7 @@ public enum SortingAlgorithmStep<Algorithm> where Algorithm: SortStateUniversity
     }
     
     /// A Boolean value indicating whether the step is of case `finished`.
+    @inlinable
     public var isFinished: Bool {
         guard case .finished = self else {
             return false
@@ -67,6 +70,7 @@ public enum SortingAlgorithmStep<Algorithm> where Algorithm: SortStateUniversity
     }
     
     /// A Boolean value indicating whether the step is not of case `comparison`.
+    @inlinable
     public var isNotComparison: Bool {
         guard case .comparison = self else {
             return true
@@ -76,6 +80,7 @@ public enum SortingAlgorithmStep<Algorithm> where Algorithm: SortStateUniversity
     }
     
     /// A Boolean value indicating whether the step is not of case `finished`.
+    @inlinable
     public var isNotFinished: Bool {
         guard case .finished = self else {
             return true
@@ -88,6 +93,7 @@ public enum SortingAlgorithmStep<Algorithm> where Algorithm: SortStateUniversity
     ///
     /// If the step is of case `finished` then this value will be the output of the sorting algorithm, otherwise this
     /// value will be `nil`.
+    @inlinable
     public var output: [Algorithm.Element]? {
         guard case let .finished(output) = self else {
             return nil
