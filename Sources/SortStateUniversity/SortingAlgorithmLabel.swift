@@ -31,15 +31,7 @@ public struct SortingAlgorithmLabel: Codable, Equatable, Hashable, Identifiable 
 
 // MARK: - Constants
 
-extension SortingAlgorithmLabel {
-    // MARK: Collections
-    
-    /// The labels of all sorting algorithms that are built into the library.
-    public static let allBuiltIn: [SortingAlgorithmLabel] = [
-        .insertion,
-        .merge,
-    ]
-    
+extension SortingAlgorithmLabel {    
     // MARK: Built-In Sorting Algorithms
     
     /// The label of the ``InsertionSort`` algorithm.
