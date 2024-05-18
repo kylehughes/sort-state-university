@@ -9,81 +9,116 @@ import XCTest
 
 @testable import SortStateUniversity
 
-final class InsertionSortTests: XCTestCase {
-    typealias Sort = InsertionSort<Int>
-    typealias TestHarness = SortTestHarness<Sort>
+final class InsertionSortTests: AbstractSortingAlgorithmTests<InsertionSort<Int>> {
+    // MARK: AbstractSortingAlgorithmTests Implementation
     
-    private let harness = TestHarness(sortFactory: Sort.makeForTest)
-}
-
-// MARK: - Bespoke Interface Tests
-
-extension InsertionSortTests {
-    // MARK: Tests
-}
-
-// MARK: - Algorithm Stability Tests
-
-extension InsertionSortTests {
-    // MARK: Tests
-    
-    func test_algorithm_bestCase() {
-        harness.testAlgorithm(inputState: .bestCase)
+    override var expectedAverageNumberOfComparisons: [Int : Int] {
+        [
+            0: 0,
+            1: 0,
+            2: 0,
+            3: 1,
+            4: 3,
+            5: 5,
+            6: 7,
+            7: 10,
+            8: 14,
+            9: 18,
+            10: 22,
+            11: 27,
+            12: 33,
+            13: 39,
+            14: 45,
+            15: 52,
+            16: 60,
+            17: 68,
+            18: 76,
+            19: 85,
+            20: 95,
+            21: 105,
+            22: 115,
+            23: 126,
+            24: 138,
+            25: 150,
+            26: 162,
+            27: 175,
+            28: 189,
+            29: 203,
+            30: 217,
+            31: 232,
+            32: 248,
+            33: 264,
+            34: 280,
+            35: 297,
+            36: 315,
+            37: 333,
+            38: 351,
+            39: 370,
+            40: 390,
+            41: 410,
+            42: 430,
+            43: 451,
+            44: 473,
+            45: 495,
+            46: 517,
+            47: 540,
+            48: 564,
+            49: 588,
+            50: 612,
+            51: 637,
+            52: 663,
+            53: 689,
+            54: 715,
+            55: 742,
+            56: 770,
+            57: 798,
+            58: 826,
+            59: 855,
+            60: 885,
+            61: 915,
+            62: 945,
+            63: 976,
+            64: 1008,
+            65: 1040,
+            66: 1072,
+            67: 1105,
+            68: 1139,
+            69: 1173,
+            70: 1207,
+            71: 1242,
+            72: 1278,
+            73: 1314,
+            74: 1350,
+            75: 1387,
+            76: 1425,
+            77: 1463,
+            78: 1501,
+            79: 1540,
+            80: 1580,
+            81: 1620,
+            82: 1660,
+            83: 1701,
+            84: 1743,
+            85: 1785,
+            86: 1827,
+            87: 1870,
+            88: 1914,
+            89: 1958,
+            90: 2002,
+            91: 2047,
+            92: 2093,
+            93: 2139,
+            94: 2185,
+            95: 2232,
+            96: 2280,
+            97: 2328,
+            98: 2376,
+            99: 2425,
+            100: 2475,
+        ]
     }
     
-    func test_algorithm_shuffled() {
-        harness.testAlgorithm(inputState: .shuffled)
-    }
-    
-    func test_algorithm_worstCase() {
-        harness.testAlgorithm(inputState: .worstCase)
-    }
-    
-    func test_idempotency_bestCase() {
-        harness.testIdempotency(inputState: .bestCase)
-    }
-    
-    func test_idempotency_shuffled() {
-        harness.testIdempotency(inputState: .shuffled)
-    }
-    
-    func test_idempotency_worstCase() {
-        harness.testIdempotency(inputState: .worstCase)
-    }
-}
-
-// MARK: - SortingAlgorithm Tests
-
-extension InsertionSortTests {
-    // MARK: Tests
-    
-    func test_answer_whileFinished() {
-        harness.testAnswerWhileFinished()
-    }
-    
-    func test_calculateMaximumNumberOfComparisonsInWorstCase() {
-        harness.testCalculateMaximumNumberOfComparisonsInWorstCase(with: answers)
-    }
-    
-    func test_complexity() {
-        harness.testComplexity(expected: .quadratic)
-    }
-    
-    func test_label() {
-        harness.testLabel(expected: .insertion)
-    }
-    
-    func test_peekAtElement() {
-        harness.testPeekAtElement()
-    }
-    
-    func test_peekAtElement_whileFinished() {
-        harness.testPeekAtElementWhileFinished()
-    }
-    
-    // MARK: Private Helpers
-    
-    private var answers: [Int: Int] {
+    override var expectedMaximumNumberOfComparisons: [Int : Int] {
         [
             0: 0,
             1: 0,
@@ -187,5 +222,127 @@ extension InsertionSortTests {
             99: 4851,
             100: 4950,
         ]
+    }
+    
+    override var expectedMinimumNumberOfComparisons: [Int : Int] {
+        [
+            0: 0,
+            1: 0,
+            2: 1,
+            3: 2,
+            4: 3,
+            5: 4,
+            6: 5,
+            7: 6,
+            8: 7,
+            9: 8,
+            10: 9,
+            11: 10,
+            12: 11,
+            13: 12,
+            14: 13,
+            15: 14,
+            16: 15,
+            17: 16,
+            18: 17,
+            19: 18,
+            20: 19,
+            21: 20,
+            22: 21,
+            23: 22,
+            24: 23,
+            25: 24,
+            26: 25,
+            27: 26,
+            28: 27,
+            29: 28,
+            30: 29,
+            31: 30,
+            32: 31,
+            33: 32,
+            34: 33,
+            35: 34,
+            36: 35,
+            37: 36,
+            38: 37,
+            39: 38,
+            40: 39,
+            41: 40,
+            42: 41,
+            43: 42,
+            44: 43,
+            45: 44,
+            46: 45,
+            47: 46,
+            48: 47,
+            49: 48,
+            50: 49,
+            51: 50,
+            52: 51,
+            53: 52,
+            54: 53,
+            55: 54,
+            56: 55,
+            57: 56,
+            58: 57,
+            59: 58,
+            60: 59,
+            61: 60,
+            62: 61,
+            63: 62,
+            64: 63,
+            65: 64,
+            66: 65,
+            67: 66,
+            68: 67,
+            69: 68,
+            70: 69,
+            71: 70,
+            72: 71,
+            73: 72,
+            74: 73,
+            75: 74,
+            76: 75,
+            77: 76,
+            78: 77,
+            79: 78,
+            80: 79,
+            81: 80,
+            82: 81,
+            83: 82,
+            84: 83,
+            85: 84,
+            86: 85,
+            87: 86,
+            88: 87,
+            89: 88,
+            90: 89,
+            91: 90,
+            92: 91,
+            93: 92,
+            94: 93,
+            95: 94,
+            96: 95,
+            97: 96,
+            98: 97,
+            99: 98,
+            100: 99,
+        ]
+    }
+    
+    override var expectedComplexity: Complexity {
+        .quadratic
+    }
+    
+    override var expectedLabel: SortingAlgorithmLabel {
+        .insertion
+    }
+    
+    override var inputFactory: any SortingAlgorithmInputFactory {
+        DefaultSortingAlgorithmInputFactory()
+    }
+    
+    override func target(for input: [Int]) -> InsertionSort<Int> {
+        InsertionSort(input: input)
     }
 }

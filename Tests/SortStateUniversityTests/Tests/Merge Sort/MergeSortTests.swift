@@ -9,98 +9,120 @@ import XCTest
 
 @testable import SortStateUniversity
 
-final class MergeSortTests: XCTestCase {
-    typealias Sort = MergeSort<Int>
-    typealias TestHarness = SortTestHarness<Sort>
+final class MergeSortTests: AbstractSortingAlgorithmTests<MergeSort<Int>> {
+    // MARK: AbstractSortingAlgorithmTests Implementation
     
-    private let harness = TestHarness(sortFactory: Sort.makeForTest)
-}
-
-// MARK: - Bespoke Interface Tests
-
-extension MergeSortTests {
-    // MARK: Tests
-    
-    func test_outputAfterTransactions_afterSorting() {
-        let sort = harness.perform(inputState: .shuffled)
-        XCTAssertEqual(sort.outputAfterTransactions, sort.output)
+    override var expectedAverageNumberOfComparisons: [Int : Int] {
+        [
+            0: 0,
+            1: 0,
+            2: 2,
+            3: 4,
+            4: 8,
+            5: 11,
+            6: 15,
+            7: 19,
+            8: 24,
+            9: 28,
+            10: 33,
+            11: 38,
+            12: 43,
+            13: 48,
+            14: 53,
+            15: 58,
+            16: 64,
+            17: 69,
+            18: 75,
+            19: 80,
+            20: 86,
+            21: 92,
+            22: 98,
+            23: 104,
+            24: 110,
+            25: 116,
+            26: 122,
+            27: 128,
+            28: 134,
+            29: 140,
+            30: 147,
+            31: 153,
+            32: 160,
+            33: 166,
+            34: 172,
+            35: 179,
+            36: 186,
+            37: 192,
+            38: 199,
+            39: 206,
+            40: 212,
+            41: 219,
+            42: 226,
+            43: 233,
+            44: 240,
+            45: 247,
+            46: 254,
+            47: 261,
+            48: 268,
+            49: 275,
+            50: 282,
+            51: 289,
+            52: 296,
+            53: 303,
+            54: 310,
+            55: 317,
+            56: 325,
+            57: 332,
+            58: 339,
+            59: 347,
+            60: 354,
+            61: 361,
+            62: 369,
+            63: 376,
+            64: 384,
+            65: 391,
+            66: 398,
+            67: 406,
+            68: 413,
+            69: 421,
+            70: 429,
+            71: 436,
+            72: 444,
+            73: 451,
+            74: 459,
+            75: 467,
+            76: 474,
+            77: 482,
+            78: 490,
+            79: 497,
+            80: 505,
+            81: 513,
+            82: 521,
+            83: 529,
+            84: 536,
+            85: 544,
+            86: 552,
+            87: 560,
+            88: 568,
+            89: 576,
+            90: 584,
+            91: 592,
+            92: 600,
+            93: 608,
+            94: 616,
+            95: 624,
+            96: 632,
+            97: 640,
+            98: 648,
+            99: 656,
+            100: 664,
+        ]
     }
     
-    func test_outputAfterTransactions_beforeSorting() {
-        let sort = harness.makeSort(inputState: .shuffled)
-        XCTAssertEqual(sort.outputAfterTransactions, sort.output)
+    override var expectedComplexity: Complexity {
+        .linearithmic
     }
     
-    func test_outputAfterTransactions_duringSorting() throws {
-        try harness.perform(inputState: .shuffled) { previousSort, comparison, currentSort in
-            let ongoingMerge = try XCTUnwrap(currentSort.ongoingMerge)
-            XCTAssertEqual(currentSort.outputAfterTransactions, currentSort.output.performing(ongoingMerge.output))
-        }
-    }
-}
-
-// MARK: - Algorithm Stability Tests
-
-extension MergeSortTests {
-    // MARK: Tests
-    
-    func test_algorithm_bestCase() {
-        harness.testAlgorithm(inputState: .bestCase)
-    }
-    
-    func test_algorithm_shuffled() {
-        harness.testAlgorithm(inputState: .shuffled)
-    }
-    
-    func test_algorithm_worstCase() {
-        harness.testAlgorithm(inputState: .worstCase)
-    }
-    
-    func test_idempotency_bestCase() {
-        harness.testIdempotency(inputState: .bestCase)
-    }
-    
-    func test_idempotency_shuffled() {
-        harness.testIdempotency(inputState: .shuffled)
-    }
-    
-    func test_idempotency_worstCase() {
-        harness.testIdempotency(inputState: .worstCase)
-    }
-}
-
-// MARK: - SortingAlgorithm Tests
-
-extension MergeSortTests {
-    // MARK: Tests
-    
-    func test_answer_whileFinished() {
-        harness.testAnswerWhileFinished()
-    }
-    
-    func test_calculateMaximumNumberOfComparisonsInWorstCase() {
-        harness.testCalculateMaximumNumberOfComparisonsInWorstCase(with: answers)
-    }
-    
-    func test_complexity() {
-        harness.testComplexity(expected: .linearithmic)
-    }
-    
-    func test_label() {
-        harness.testLabel(expected: .merge)
-    }
-    
-    func test_peekAtElement() {
-        harness.testPeekAtElement()
-    }
-    
-    func test_peekAtElement_whileFinished() {
-        harness.testPeekAtElementWhileFinished()
-    }
-    
-    // MARK: Private Helpers
-    
-    private var answers: [Int: Int] {
+    override var expectedMaximumNumberOfComparisons: [Int : Int] {
         [
             0: 0,
             1: 0,
@@ -204,5 +226,146 @@ extension MergeSortTests {
             99: 585,
             100: 589,
         ]
+    }
+    
+    override var expectedLabel: SortingAlgorithmLabel {
+        .merge
+    }
+    
+    override var expectedMinimumNumberOfComparisons: [Int : Int] {
+        [
+            0: 0,
+            1: 0,
+            2: 1,
+            3: 2,
+            4: 4,
+            5: 5,
+            6: 7,
+            7: 9,
+            8: 12,
+            9: 13,
+            10: 15,
+            11: 17,
+            12: 20,
+            13: 22,
+            14: 25,
+            15: 28,
+            16: 32,
+            17: 33,
+            18: 35,
+            19: 37,
+            20: 40,
+            21: 42,
+            22: 45,
+            23: 48,
+            24: 52,
+            25: 54,
+            26: 57,
+            27: 60,
+            28: 64,
+            29: 67,
+            30: 71,
+            31: 75,
+            32: 80,
+            33: 81,
+            34: 83,
+            35: 85,
+            36: 88,
+            37: 90,
+            38: 93,
+            39: 96,
+            40: 100,
+            41: 102,
+            42: 105,
+            43: 108,
+            44: 112,
+            45: 115,
+            46: 119,
+            47: 123,
+            48: 128,
+            49: 130,
+            50: 133,
+            51: 136,
+            52: 140,
+            53: 143,
+            54: 147,
+            55: 151,
+            56: 156,
+            57: 159,
+            58: 163,
+            59: 167,
+            60: 172,
+            61: 176,
+            62: 181,
+            63: 186,
+            64: 192,
+            65: 193,
+            66: 195,
+            67: 197,
+            68: 200,
+            69: 202,
+            70: 205,
+            71: 208,
+            72: 212,
+            73: 214,
+            74: 217,
+            75: 220,
+            76: 224,
+            77: 227,
+            78: 231,
+            79: 235,
+            80: 240,
+            81: 242,
+            82: 245,
+            83: 248,
+            84: 252,
+            85: 255,
+            86: 259,
+            87: 263,
+            88: 268,
+            89: 271,
+            90: 275,
+            91: 279,
+            92: 284,
+            93: 288,
+            94: 293,
+            95: 298,
+            96: 304,
+            97: 306,
+            98: 309,
+            99: 312,
+            100: 316,
+        ]
+    }
+    
+    override var inputFactory: any SortingAlgorithmInputFactory {
+        DefaultSortingAlgorithmInputFactory()
+    }
+    
+    override func target(for input: [Int]) -> MergeSort<Int> {
+        MergeSort(input: input)
+    }
+}
+
+// MARK: - Bespoke Interface Tests
+
+extension MergeSortTests {
+    // MARK: Tests
+    
+    func test_outputAfterTransactions_afterSorting() {
+        let sort = perform(inputCase: .worst, inputCount: defaultSortingAlgorithmTestInputCount)
+        XCTAssertEqual(sort.outputAfterTransactions, sort.output)
+    }
+    
+    func test_outputAfterTransactions_beforeSorting() {
+        let sort = perform(inputCase: .worst, inputCount: defaultSortingAlgorithmTestInputCount)
+        XCTAssertEqual(sort.outputAfterTransactions, sort.output)
+    }
+    
+    func test_outputAfterTransactions_duringSorting() throws {
+        try perform(inputCase: .worst, inputCount: defaultSortingAlgorithmTestInputCount) { previousSort, comparison, currentSort in
+            let ongoingMerge = try XCTUnwrap(currentSort.ongoingMerge)
+            XCTAssertEqual(currentSort.outputAfterTransactions, currentSort.output.performing(ongoingMerge.output))
+        }
     }
 }

@@ -20,7 +20,8 @@ extension SortingAlgorithmStepTests {
     // MARK: Tests
     
     func test_comparison() {
-        var mergeSort = MergeSort<Int>.makeForTest(inputLength: 10, inputState: .shuffled)
+        let input = DefaultSortingAlgorithmInputFactory().make(.worst, count: 10)
+        var mergeSort = MergeSort<Int>(input: input)
         let step = mergeSort()
         
         XCTAssertNotNil(step.comparison)
@@ -34,7 +35,8 @@ extension SortingAlgorithmStepTests {
     }
     
     func test_finished() {
-        var mergeSort = MergeSort<Int>.makeForTest(inputLength: 1, inputState: .shuffled)
+        let input = DefaultSortingAlgorithmInputFactory().make(.worst, count: 1)
+        var mergeSort = MergeSort<Int>(input: input)
         let step = mergeSort()
         
         XCTAssertNotNil(step.output)
