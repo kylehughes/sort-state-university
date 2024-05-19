@@ -44,7 +44,7 @@ jobs:
             --output-path _site;
       - name: Create index.html
         run: |
-          echo "<script>window.location.href += \"documentation/sort-state-university\"</script>" > _site/index.html;
+          echo "<script>window.location.href += \"documentation/sortstateuniversity\"</script>" > _site/index.html;
       - name: Upload Documentation Artifact to GitHub Pages
         uses: actions/upload-pages-artifact@v1
       - name: Deploy to GitHub Pages
