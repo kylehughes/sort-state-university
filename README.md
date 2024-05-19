@@ -1,8 +1,8 @@
 # Sort State University
 
+[![Platforms](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fkylehughes%2Fsort-state-university%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/kylehughes/sort-state-university)
+[![Swift Versions](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fkylehughes%2Fsort-state-university%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/kylehughes/sort-state-university)
 [![Test](https://github.com/kylehughes/sort-state-university/actions/workflows/test.yml/badge.svg)](https://github.com/kylehughes/sort-state-university/actions/workflows/test.yml)
-[![Code Coverage](https://codecov.io/gh/kylehughes/sort-state-university/branch/main/graph/badge.svg)](https://codecov.io/gh/kylehughes/sort-state-university)
-[![Documentation](https://kylehughes.github.io/sort-state-university/badge.svg)](https://kylehughes.github.io/sort-state-university/)
 
 *Stateful sorting algorithms for Swift.*
 
@@ -10,10 +10,10 @@
 
 Imagine…
 
-A sorting algorithm is a value type that can be called as a function. Its state represents a specific moment in the execution of the
-algorithm. Each call will advance the algorithm and produce a step: either a comparison to be answered, or the final sorted 
-output. The comparison will produce the next value of the algorithm when given an answer. The next value of the algorithm can be 
-called to produce the next step, and so on, until the output is produced.
+A sorting algorithm is a value type that can be called as a function. Its state represents a specific moment in the 
+execution of the algorithm. Each call will advance the algorithm and produce a step: either a comparison to be answered,
+or the final sorted output. The comparison will produce the next value of the algorithm when given an answer. The next 
+value of the algorithm can be called to produce the next step, and so on, until the output is produced.
 
 Sort State University brings this dream to life.
 
@@ -28,13 +28,13 @@ Sort State University brings this dream to life.
 - Sorting visualizations
 - Et cetera
 
-The sorting algorithms in this framework are not designed for performance and are not intended to be used for general-purpose
-implementations. 
+The sorting algorithms in this framework are not designed for performance and are not intended to be used for 
+general-purpose implementations. 
 
 ### The Name
 
-I knew that "sort" and "state" had to be in the name. It seemed natural and funny to append "university." There is nothing inherently
-educational about this framework.
+I knew that "sort" and "state" had to be in the name. It seemed natural and funny to append "university." There is 
+nothing inherently educational about this framework.
 
 ## Usage
 
@@ -63,9 +63,9 @@ case let .finished(output):
 
 ### Answer the Comparison
 
-A comparison is a decision about the inherent order of two elements. The caller is responsible for consistently applying the inherent 
-order to the comparisons. For example, the "inherent order" could be a user's personal preference, so the answer to the comparions 
-would be whichever element the user prefers.
+A comparison is a decision about the inherent order of two elements. The caller is responsible for consistently applying
+the inherent order to the comparisons. For example, the "inherent order" could be a user's personal preference, so the 
+answer to the comparions would be whichever element the user prefers.
 
 A comparison can be answered directly to produce the next state of the sorting algorithm.
 
@@ -79,8 +79,8 @@ or
 algorithm = comparison(.right)
 ```
 
-The answer to a comparison can also be provided to, and mutate, the algorithm directly. Both approaches produce the same result but 
-their calling patterns suit different use cases.
+The answer to a comparison can also be provided to, and mutate, the algorithm directly. Both approaches produce the same
+result but their calling patterns suit different use cases.
 
 ```swift
 algorithm.answer(.left)
@@ -120,9 +120,7 @@ dependencies: [
 
 ## Documentation
 
-[Documentation is available here](https://kylehughes.github.io/sort-state-university). 
-
-Generated with [jazzy](https://github.com/realm/jazzy). Hosted by [GitHub Pages](https://pages.github.com).
+[Documentation is available on GitHub Pages](https://kylehughes.github.io/sort-state-university).
 
 ## Contributions
 
@@ -132,12 +130,12 @@ This framework is a personal hobby. Feel free to copy pieces, or to fork, but do
 
 ## Author
 
-Kyle Hughes
+[Kyle Hughes](https://kylehugh.es)
 
-[![my twitter][social_twitter_image]][social_twitter_url]
+[![my Mastodon][social_image]][social_url]
 
-[social_twitter_image]: https://img.shields.io/badge/Twitter-@KyleHughes-blue.svg
-[social_twitter_url]: https://www.twitter.com/KyleHughes
+[social_image]: https://img.shields.io/mastodon/follow/109356914477272810?domain=https%3A%2F%2Fmister.computer&style=social
+[social_url]: https://mister.computer/@kyle
 
 ## License
 
