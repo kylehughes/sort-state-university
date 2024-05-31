@@ -12,7 +12,7 @@
 ///
 /// The elements that are sorted do not need to conform to `Comparable` because the evaluation of the comparison is left
 /// to the caller.
-public protocol SortingAlgorithm: Identifiable {
+public protocol SortingAlgorithm<Element>: Identifiable {
     // MARK: Associated Types
     
     /// A type that represents the element that the algorithm is sorting.
