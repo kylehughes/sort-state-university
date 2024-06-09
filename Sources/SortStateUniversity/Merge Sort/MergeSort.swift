@@ -248,7 +248,7 @@ extension MergeSort: SortingAlgorithm {
     
     @inlinable
     public var isFinished: Bool {
-        partitionSize < input.endIndex
+        input.endIndex <= partitionSize
     }
     
     /// Answers the current comparison with the given side.
