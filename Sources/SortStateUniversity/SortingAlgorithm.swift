@@ -60,6 +60,11 @@ public protocol SortingAlgorithm<Element>: Identifiable {
     /// This value is constant and will not change after instantiation.
     var input: [Element] { get }
     
+    /// Whether or not the algorithm is finished.
+    ///
+    /// If `input` is sorted then it is possible for the algorithm to not be finished but for `output` to be sorted.
+    var isFinished: Bool { get }
+    
     /// The current result of applying the sorting algorithm to `input`.
     ///
     /// This value is "live" and will change as the algorithm is executed. When the algorithm is finished this value

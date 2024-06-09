@@ -246,6 +246,11 @@ extension MergeSort: SortingAlgorithm {
     
     // MARK: Public Instance Interface
     
+    @inlinable
+    public var isFinished: Bool {
+        partitionSize < input.endIndex
+    }
+    
     /// Answers the current comparison with the given side.
     ///
     /// The algorithm is advanced to the state that follows the answer.
