@@ -174,7 +174,8 @@ where
     @inlinable
     public func test_peekAtElement() {
         let input = [1, 2]
-        let sort = target(for: input)
+        var sort = target(for: input)
+        _ = sort()
         
         XCTAssertEqual(sort.peekAtElement(for: .left), 1)
         XCTAssertEqual(sort.peekAtElement(for: .right), 2)

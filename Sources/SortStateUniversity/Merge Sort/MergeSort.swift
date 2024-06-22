@@ -64,8 +64,6 @@ public struct MergeSort<Element>: Identifiable {
         ongoingMerge = nil
         output = input
         partitionSize = 1
-        
-        _ = self()
     }
     
     // MARK: Public Instance Interface
