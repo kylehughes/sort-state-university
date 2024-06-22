@@ -17,10 +17,15 @@ public enum BuiltInSortingAlgorithmType: String, CaseIterable, Equatable, Hashab
     /// - SeeAlso: ``MergeSort``
     case merge = "merge"
     
+    /// A divide-and-conquer sorting algorithm using a pivot for partitioning.
+    ///
+    /// - SeeAlso: ``Quicksort``
+    case quicksort = "quicksort"
+    
     // MARK: Public Static Interface
     
     /// A collection of all values in this type, in alphabetical order (in American English).
-    public static let allCasesInAlphabeticalOrder: [Self] = [.insertion, .merge,]
+    public static let allCasesInAlphabeticalOrder: [Self] = [.insertion, .merge, .quicksort,]
     
     // MARK: Public Instance Interface
     
@@ -30,6 +35,7 @@ public enum BuiltInSortingAlgorithmType: String, CaseIterable, Equatable, Hashab
         switch self {
         case .insertion: .insertion
         case .merge: .merge
+        case .quicksort: .quicksort
         }
     }
 }

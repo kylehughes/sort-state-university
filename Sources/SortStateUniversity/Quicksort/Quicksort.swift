@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// A divide-and-conquer sorting algorithm that uses a pivot element for partitioning the input array.
+/// A divide-and-conquer sorting algorithm using a pivot for partitioning.
 ///
 /// - SeeAlso: https://en.wikipedia.org/wiki/Quicksort
 public struct Quicksort<Element>: Identifiable {
@@ -171,7 +171,7 @@ extension Quicksort: SortingAlgorithm {
             return .finished(output)
         }
         
-        guard partition.currentIndex >= partition.high else {
+        guard partition.high <= partition.currentIndex else {
             return .comparison(Comparison(source: self))
         }
         
