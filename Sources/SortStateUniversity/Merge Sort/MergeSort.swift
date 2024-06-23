@@ -289,8 +289,9 @@ extension MergeSort: SortingAlgorithm {
     /// - Parameter answer: The answer that represents the side of the comparison to peek at.
     /// - Returns: The element that represents the given side of the current comparison, or `nil` if the algorithm
     ///   is not at a point of comparison.
+    @inlinable
     public func peekAtElement(for answer: Comparison<MergeSort<Element>>.Side) -> Element? {
-        guard let ongoingMerge = ongoingMerge else {
+        guard let ongoingMerge = ongoingMerge, !isFinished else {
             return nil
         }
         
