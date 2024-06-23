@@ -152,7 +152,7 @@ extension MergeSort: SortingAlgorithm {
     /// The unique name of the sorting algorithm.
     @inlinable
     public static var label: SortingAlgorithmLabel {
-        .merge
+        .mergeSort
     }
     
     /// Returns the average number of comparisons that the algorithm will perform given an input with `n` elements.

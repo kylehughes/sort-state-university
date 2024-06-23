@@ -229,7 +229,7 @@ final class MergeSortTests: AbstractSortingAlgorithmTests<MergeSort<Int>> {
     }
     
     override var expectedLabel: SortingAlgorithmLabel {
-        .merge
+        .mergeSort
     }
     
     override var expectedMinimumNumberOfComparisons: [Int : Int] {

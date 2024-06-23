@@ -10,12 +10,12 @@ public enum BuiltInSortingAlgorithmType: String, CaseIterable, Equatable, Hashab
     /// A simple sorting algorithm that sorts its elements one at a time.
     ///
     /// - SeeAlso: ``InsertionSort``
-    case insertion = "insertion"
+    case insertionSort = "insertion-sort"
     
     /// A divide-and-conquer sorting algorithm.
     ///
     /// - SeeAlso: ``MergeSort``
-    case merge = "merge"
+    case mergeSort = "merge-sort"
     
     /// A divide-and-conquer sorting algorithm using a pivot for partitioning.
     ///
@@ -25,7 +25,7 @@ public enum BuiltInSortingAlgorithmType: String, CaseIterable, Equatable, Hashab
     // MARK: Public Static Interface
     
     /// A collection of all values in this type, in alphabetical order (in American English).
-    public static let allCasesInAlphabeticalOrder: [Self] = [.insertion, .merge, .quicksort,]
+    public static let allCasesInAlphabeticalOrder: [Self] = [.insertionSort, .mergeSort, .quicksort,]
     
     // MARK: Public Instance Interface
     
@@ -33,8 +33,8 @@ public enum BuiltInSortingAlgorithmType: String, CaseIterable, Equatable, Hashab
     @inlinable
     public var label: SortingAlgorithmLabel {
         switch self {
-        case .insertion: .insertion
-        case .merge: .merge
+        case .insertionSort: .insertionSort
+        case .mergeSort: .mergeSort
         case .quicksort: .quicksort
         }
     }

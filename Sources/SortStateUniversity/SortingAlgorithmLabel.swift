@@ -35,10 +35,10 @@ extension SortingAlgorithmLabel {
     // MARK: Built-In Sorting Algorithms
     
     /// The label of the ``InsertionSort`` algorithm.
-    public static let insertion = SortingAlgorithmLabel(id: "insertion", name: "Insertion Sort")
+    public static let insertionSort = SortingAlgorithmLabel(id: "insertion-sort", name: "Insertion Sort")
     
     /// The label of the ``MergeSort`` algorithm.
-    public static let merge = SortingAlgorithmLabel(id: "merge", name: "Merge Sort")
+    public static let mergeSort = SortingAlgorithmLabel(id: "merge-sort", name: "Merge Sort")
     
     /// The label of the ``Quicksort`` algorithm.
     public static let quicksort = SortingAlgorithmLabel(id: "quicksort", name: "Quicksort")

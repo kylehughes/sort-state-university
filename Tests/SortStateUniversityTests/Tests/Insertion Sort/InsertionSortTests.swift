@@ -335,7 +335,7 @@ final class InsertionSortTests: AbstractSortingAlgorithmTests<InsertionSort<Int>
     }
     
     override var expectedLabel: SortingAlgorithmLabel {
-        .insertion
+        .insertionSort
     }
     
     override var inputFactory: any SortingAlgorithmInputFactory {
