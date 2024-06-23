@@ -12,7 +12,7 @@ public enum BuiltInSortingAlgorithmType: String, CaseIterable, Equatable, Hashab
     /// - SeeAlso: ``InsertionSort``
     case insertionSort = "insertion-sort"
     
-    /// A divide-and-conquer sorting algorithm.
+    /// A divide-and-conquer sorting algorithm that recursively splits and merges sublists.
     ///
     /// - SeeAlso: ``MergeSort``
     case mergeSort = "merge-sort"

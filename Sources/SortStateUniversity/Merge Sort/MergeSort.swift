@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// A divide-and-conquer sorting algorithm.
+/// A divide-and-conquer sorting algorithm that recursively splits and merges sublists.
 ///
 /// - SeeAlso: https://en.wikipedia.org/wiki/Merge_sort
 public struct MergeSort<Element>: Identifiable {
@@ -33,14 +33,14 @@ public struct MergeSort<Element>: Identifiable {
     /// a merge will always be ongoing and a value will always be returned.
     public private(set) var ongoingMerge: Merge?
     
-    /// The current result of applying the sorting algorithm to `input`.
+    /// The current result of applying the sorting algorithm to ``input``.
     ///
     /// This value is "live" and will change as the algorithm is executed. When the algorithm is finished this value
-    /// will contain the sorted result of `input`. It is primarily exposed to allow the internals of the algorithm to
+    /// will contain the sorted result of ``input``. It is primarily exposed to allow the internals of the algorithm to
     /// be observed.
     ///
     /// This value should not be used as the final output of the algorithm unless it is known that the algorithm has
-    /// finished. It may be easier to perform `callAsFunction()` and respond to the step that is returned – the output
+    /// finished. It may be easier to perform ``callAsFunction()`` and respond to the step that is returned – the output
     /// will be reported through that function if the algorithm is finished.
     ///
     /// - SeeAlso: `outputAfterTransactions`
@@ -48,7 +48,7 @@ public struct MergeSort<Element>: Identifiable {
     
     /// The number of elements in each partition being merged.
     ///
-    /// The algorithm is finished when this value is greater-than-or-equal-to the number of elements in `input`.
+    /// The algorithm is finished when this value is greater-than-or-equal-to the number of elements in ``input``.
     public private(set) var partitionSize: Int
     
     // MARK: Public Initialization
@@ -68,17 +68,17 @@ public struct MergeSort<Element>: Identifiable {
     
     // MARK: Public Instance Interface
     
-    /// The value of `output` after applying the uncommitted transactions from the ongoing merge.
+    /// The value of ``output`` after applying the uncommitted transactions from the ongoing merge.
     ///
-    /// This should not be used for general access to `output`.
+    /// This should not be used for general access to ``output``.
     ///
-    /// This is useful for observing the merging process happen to `output`. Due to implementation details, the outcome
-    /// of a single merge will only be applied after all of the comparisons for that merge have been answered. Thus,
-    /// `output` will only update in `partitionSize * 2`-sized chunks. This value allows a caller to inspect `output`
-    /// with all of the in-flight transactions from the merge applied, which will show the merge happen step-by-step to
-    /// the partitions within `output`.
+    /// This is useful for observing the merging process happen to ``output``. Due to implementation details, the
+    /// outcome of a single merge will only be applied after all of the comparisons for that merge have been answered.
+    /// Thus, ``output`` will only update in `partitionSize * 2`-sized chunks. This value allows a caller to inspect
+    /// ``output`` with all of the in-flight transactions from the merge applied, which will show the merge happen
+    /// step-by-step to the partitions within ``output``.
     ///
-    /// If there is no ongoing merge then this value will be equal to `output`.
+    /// If there is no ongoing merge then this value will be equal to ``output``.
     ///
     /// - SeeAlso: `MergeSort.Merge.output`
     @inlinable
@@ -143,13 +143,11 @@ public struct MergeSort<Element>: Identifiable {
 extension MergeSort: SortingAlgorithm {
     // MARK: Public Static Interface
     
-    /// The runtime complexity of the algorithm.
     @inlinable
     public static var complexity: Complexity {
         .linearithmic
     }
     
-    /// The unique name of the sorting algorithm.
     @inlinable
     public static var label: SortingAlgorithmLabel {
         .mergeSort
@@ -249,13 +247,6 @@ extension MergeSort: SortingAlgorithm {
         input.endIndex <= partitionSize
     }
     
-    /// Answers the current comparison with the given side.
-    ///
-    /// The algorithm is advanced to the state that follows the answer.
-    ///
-    /// If the algorithm is not at a point of comparison then this function will have no effect.
-    ///
-    /// - Parameter answer: The answer to the current comparison.
     public mutating func answer(_ answer: Comparison<Self>.Side) {
         switch answer {
         case .left:
@@ -265,41 +256,23 @@ extension MergeSort: SortingAlgorithm {
         }
     }
     
-    /// Executes the algorithm in its current state and, if possible, advances it to the next state and returns the
-    /// step to the caller.
-    ///
-    /// When the algorithm is not finished this function will return the next comparison that needs to
-    /// be answered to continue the algorithm. When the algorithm is finished this function will return the sorted
-    /// output.
-    ///
-    /// This function is idempotent: for a given state of the algorithm, calling this function will always produce
-    /// the same result and will always leave the algorithm in the same – possibly new – state. Performing this
-    /// function consecutively on the same algorithm will have no additional affect.
-    ///
-    /// - Returns: The next step in the algorithm: either the next comparison to answer, or the sorted output.
     public mutating func callAsFunction() -> SortingAlgorithmStep<Self> {
         finish() ?? iterateMerge() ?? iteratePartitionLoop() ?? iterateCursorLoop()
     }
     
-    /// Returns the element that represents the given side of the current comparison.
-    ///
-    /// If the algorithm is not at a point of comparison then `nil` will be returned. For example, if the
-    /// algorithm has not started or is finished then `nil` will be returned.
-    ///
-    /// - Parameter answer: The answer that represents the side of the comparison to peek at.
-    /// - Returns: The element that represents the given side of the current comparison, or `nil` if the algorithm
-    ///   is not at a point of comparison.
     @inlinable
     public func peekAtElement(for answer: Comparison<MergeSort<Element>>.Side) -> Element? {
-        guard let ongoingMerge = ongoingMerge, !isFinished else {
+        guard let ongoingMerge = ongoingMerge else {
             return nil
         }
         
         switch answer {
-        case .left:
+        case .left where ongoingMerge.isLeftPartitionIndexInBounds:
             return output[ongoingMerge.leftPartitionIndex]
-        case .right:
+        case .right where ongoingMerge.isRightPartitionIndexInBounds:
             return output[ongoingMerge.rightPartitionIndex]
+        default:
+            return nil
         }
     }
 }

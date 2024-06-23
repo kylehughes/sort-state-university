@@ -14,9 +14,9 @@ extension MergeSort {
     /// elements. The partitions are defined by the bounds created from indices, and the output are transactions that
     /// need to be applied to the source array.
     ///
-    /// The left partition is the elements in the source array between [`fromIndex`, `middleIndex`].
+    /// The left partition is the elements in the source array between [`fromIndex``, `middleIndex`].
     ///
-    /// The right partition is the elements in the source array between (`middleIndex`, `toIndex`).
+    /// The right partition is the elements in the source array between (``middleIndex``, ``toIndex``).
     public struct Merge: Codable, Equatable, Hashable, Identifiable {
         /// The position of the first element in the left paritition.
         public let fromIndex: MergeSort.Elements.Index
@@ -45,14 +45,14 @@ extension MergeSort {
         /// to allow the internals of the merge to be observed.
         ///
         /// This value should not be used as the final output of the merge unless it is known that the algorithm has
-        /// finished. It may be easier to perform `callAsFunction()` and respond to the step that is returned – the
+        /// finished. It may be easier to perform ``callAsFunction()`` and respond to the step that is returned – the
         /// output will be reported through that function if the algorithm is finished.
         ///
         /// - SeeAlso: `MergeSort.outputAfterTransactions`
         public private(set) var output: Set<Transaction>
         
-        /// The position in the outut of the winner of the comparison between the elements at `leftPartitionIndex` and
-        /// `rightPartitionIndex`.
+        /// The position in the outut of the winner of the comparison between the elements at ``leftPartitionIndex`` and
+        /// ``rightPartitionIndex``.
         public private(set) var outputIndex: MergeSort.Elements.Index
         
         /// The current position of the element being compared on behalf of the right partition.
@@ -86,19 +86,40 @@ extension MergeSort {
         
         // MARK: Public Instance Interface
         
-        /// Returns a Boolean value indicating whether both the `leftPartitionIndex` and `rightPartitionIndex` are
+        /// Returns a `Boolean` value indicating whether both the ``leftPartitionIndex`` and ``rightPartitionIndex`` are
         /// within the bounds of their respective partitions.
         ///
         /// This value is `false` if either side is out of bounds.
+        ///
+        /// - SeeAlso: ``isLeftPartitionIndexInBounds``
+        /// - SeeAlso: ``isRightPartitionIndexInBounds``
         @inlinable
         public var arePartitionIndicesInBounds: Bool {
-            leftPartitionIndex <= middleIndex && rightPartitionIndex <= toIndex
+            isLeftPartitionIndexInBounds && isRightPartitionIndexInBounds
+        }
+        
+        /// Returns a `Boolean` value indicating whether or not ``leftPartitionIndex`` is within the bounds of the left
+        /// partition.
+        ///
+        /// The left partition index is in bounds if it is less than or equal to (``middleIndex``).
+        @inlinable
+        public var isLeftPartitionIndexInBounds: Bool {
+            leftPartitionIndex <= middleIndex
+        }
+        
+        /// Returns a `Boolean` value indicating whether or not ``rightPartitionIndex`` is within the bounds of the
+        /// right partition.
+        ///
+        /// The right partition index is in bounds if it is less than or equal to (``toIndex``).
+        @inlinable
+        public var isRightPartitionIndexInBounds: Bool {
+            rightPartitionIndex <= toIndex
         }
         
         /// Answers the current comparison with the given side.
         ///
-        /// The merge is advanced to the state that follows the answer. If the answer is `left` then the
-        /// `leftTransaction` will be added to `output`, otherwise the `rightTransaction` will be added to output.
+        /// The merge is advanced to the state that follows the answer. If the answer is ``left`` then the
+        /// ``leftTransaction`` will be added to ``output``, otherwise the ``rightTransaction` will be added to output.
         ///
         /// - Parameter answer: The answer to the current comparison.
         public mutating func answer(_ answer: Comparison<MergeSort>.Side) {
@@ -116,8 +137,8 @@ extension MergeSort {
         
         /// Returns the output of the merge if it is finished.
         ///
-        /// If the merge is finished then the returned value is equal to `output`. If the merge is not finished then the
-        /// returned value is equal to `nil`.
+        /// If the merge is finished then the returned value is equal to ``output``. If the merge is not finished then
+        /// the returned value is equal to `nil`.
         public mutating func callAsFunction() -> Set<Transaction>? {
             guard arePartitionIndicesInBounds else {
                 flushLeftPartition()
