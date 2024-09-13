@@ -33,7 +33,7 @@ public protocol SortingAlgorithm<Element>: Identifiable {
     ///
     /// - Parameter n: The number of elements.
     /// - Returns: The average number of comparisons that the algorithm will perform.
-    static func averageNumberOfComparisons(for n: Int) -> Int
+    static func averageNumberOfComparisons(for n: Int) -> Double
     
     /// Returns the maximum number of comparisons that the algorithm will perform given an input with `n` elements.
     ///
@@ -42,7 +42,7 @@ public protocol SortingAlgorithm<Element>: Identifiable {
     ///
     /// - Parameter n: The number of elements.
     /// - Returns: The maximum number of comparisons that the algorithm will perform.
-    static func maximumNumberOfComparisons(for n: Int) -> Int
+    static func maximumNumberOfComparisons(for n: Int) -> Double
     
     /// Returns the minimum number of comparisons that the algorithm will perform given an input with `n` elements.
     ///
@@ -51,7 +51,7 @@ public protocol SortingAlgorithm<Element>: Identifiable {
     ///
     /// - Parameter n: The number of elements.
     /// - Returns: The minimum number of comparisons that the algorithm will perform.
-    static func minimumNumberOfComparisons(for n: Int) -> Int
+    static func minimumNumberOfComparisons(for n: Int) -> Double
     
     // MARK: Instance Interface
     

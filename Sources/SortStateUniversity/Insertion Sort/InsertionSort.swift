@@ -108,69 +108,66 @@ extension InsertionSort: SortingAlgorithm {
         .insertionSort
     }
     
-    /// Returns the average number of comparisons that the algorithm will perform given an input with `n` elements.
+    /// Returns the average number of comparisons that insertion sort will perform given an input with `n` elements.
     ///
-    /// The algorithm may require more or less comparisons depending on the state of the input and the answers to the
-    /// comparisons.
+    /// The algorithm may require more or fewer comparisons depending on the initial order of the input elements.
     ///
-    /// The average case for insertion sort is approximately `n^2 / 4` comparisons.
+    /// For a randomly ordered input, the average number of comparisons in insertion sort is approximately `n²⁄4`.
     ///
+    /// - Note: Based on the average-case analysis of insertion sort as described in **Introduction to Algorithms**
+    ///   by Cormen, Leiserson, Rivest, and Stein (CLRS), 3rd Edition, Section 2.1.
+    /// - SeeAlso: [Introduction to Algorithms](https://mitpress.mit.edu/9780262033848/introduction-to-algorithms/)
     /// - Parameter n: The number of elements.
     /// - Returns: The average number of comparisons that the algorithm will perform.
     @inlinable
-    public static func averageNumberOfComparisons(for n: Int) -> Int {
-        // This is a Swift port of the algorithm from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and
-        // Stein, Chapter 2, Section 2.1.
-        
+    public static func averageNumberOfComparisons(for n: Int) -> Double {
         guard 1 < n else {
             return 0
         }
         
-        return n * (n - 1) / 4
+        return Double(n * (n - 1)) / 4
     }
 
-    /// Returns the maximum number of comparisons that the algorithm will perform given an input with `n` elements.
+    /// Returns the maximum number of comparisons that insertion sort will perform given an input with `n` elements.
     ///
-    /// The algorithm may require less comparisons depending on the state of the input and the answers to the
-    /// comparisons.
+    /// The algorithm may require fewer comparisons depending on the initial order of the input elements.
     ///
-    /// The maximum number of comparisons in insertion sort is when the input array is sorted in reverse order, which
-    /// is approximately `n^2 / 2` comparisons.
+    /// The maximum number of comparisons in insertion sort occurs when the input array is sorted in reverse order, 
+    /// which requires approximately `n²⁄2` comparisons.
     ///
+    /// - Note: Based on the worst-case analysis of insertion sort as described in **Introduction to Algorithms**
+    ///   by Cormen, Leiserson, Rivest, and Stein (CLRS), 3rd Edition, Section 2.1.
+    /// - SeeAlso: [Introduction to Algorithms](https://mitpress.mit.edu/9780262033848/introduction-to-algorithms/)
     /// - Parameter n: The number of elements.
     /// - Returns: The maximum number of comparisons that the algorithm will perform.
     @inlinable
-    public static func maximumNumberOfComparisons(for n: Int) -> Int {
-        // This is a Swift port of the algorithm from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and
-        // Stein, Chapter 2, Section 2.1.
-        
+    public static func maximumNumberOfComparisons(for n: Int) -> Double {
         guard 1 < n else {
             return 0
         }
         
-        return n * (n - 1) / 2
+        return Double(n * (n - 1) / 2)
     }
 
-    /// Returns the minimum number of comparisons that the algorithm will perform given an input with `n` elements.
+    /// Returns the minimum number of comparisons that insertion sort will perform given an input with `n` elements.
     ///
-    /// The algorithm may require more comparisons depending on the state of the input and the answers to the
-    /// comparisons.
+    /// The algorithm may require more comparisons depending on the initial order of the input elements.
     ///
-    /// The minimum number of comparisons in insertion sort is when the input array is already sorted, which is 
-    /// approximately `n - 1` comparisons.
+    /// The minimum number of comparisons in insertion sort occurs when the input array is already sorted, which 
+    /// requires `n - 1` comparisons.
     ///
+    /// - Note: Based on the best-case analysis of insertion sort as described in **Introduction to Algorithms**
+    ///   by Cormen, Leiserson, Rivest, and Stein (CLRS), 3rd Edition, Section 2.1.
+    /// - SeeAlso: [Introduction to Algorithms](https://mitpress.mit.edu/9780262033848/introduction-to-algorithms/)
     /// - Parameter n: The number of elements.
     /// - Returns: The minimum number of comparisons that the algorithm will perform.
     @inlinable
-    public static func minimumNumberOfComparisons(for n: Int) -> Int {
-        // This is a Swift port of the algorithm from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and
-        // Stein, Chapter 2, Section 2.1.
-        
+    public static func minimumNumberOfComparisons(for n: Int) -> Double {
         guard 1 < n else {
             return 0
         }
         
-        return n - 1
+        return Double(n - 1)
     }
     
     // MARK: Public Instance Interface
