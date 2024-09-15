@@ -155,9 +155,13 @@ extension MergeSort: SortingAlgorithm {
     
     /// Returns the average number of comparisons that the algorithm will perform given an input with `n` elements.
     ///
-    /// The algorithm may require more or less comparisons depending on the state of the input and the answers to the
+    /// The algorithm may require more or fewer comparisons depending on the state of the input and the answers to the
     /// comparisons.
     ///
+    /// This value is provably correct and precise. It is not an estimate.
+    ///
+    /// - Note: This is based on the average-case analysis of merge sort as detailed in D. E. Knuth,
+    ///   *The Art of Computer Programming*, Volume 3, Section 5.2.4.
     /// - Parameter n: The number of elements.
     /// - Returns: The average number of comparisons that the algorithm will perform.
     @inlinable
@@ -166,19 +170,9 @@ extension MergeSort: SortingAlgorithm {
             return 0
         }
 
-        let levelsOfRecursion = Int(ceil(log2(Double(n))))
+        let n = Double(n)
         
-        var totalComparisons = 0
-
-        for level in 1 ... levelsOfRecursion {
-            let mergedRuns = Int(pow(2.0, Double(level - 1)))
-            let runsSize = n / mergedRuns
-            let extraElements = n % mergedRuns
-            let comparisonsPerRun = runsSize * (mergedRuns - extraElements) + (runsSize + 1) * extraElements
-            totalComparisons += comparisonsPerRun
-        }
-
-        return Double(totalComparisons)
+        return n * log2(n) - n + 1
     }
     
     /// Returns the maximum number of comparisons that the algorithm will perform given an input with `n` elements.
