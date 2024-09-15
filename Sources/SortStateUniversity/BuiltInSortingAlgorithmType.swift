@@ -29,7 +29,17 @@ public enum BuiltInSortingAlgorithmType: String, CaseIterable, Equatable, Hashab
     
     // MARK: Public Instance Interface
     
-    /// The unique lable of the associated sorting algorithm.
+    /// The metatype, with an `Any` element, of the implementation of the associated sorting algorithm.
+    @inlinable
+    public var erasedMetatype: any SortingAlgorithm.Type {
+        switch self {
+        case .insertionSort: InsertionSort<Any>.self
+        case .mergeSort: MergeSort<Any>.self
+        case .quicksort: Quicksort<Any>.self
+        }
+    }
+    
+    /// The unique label of the associated sorting algorithm.
     @inlinable
     public var label: SortingAlgorithmLabel {
         switch self {
