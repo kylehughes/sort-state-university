@@ -74,7 +74,7 @@ extension Quicksort: SortingAlgorithm {
     /// - Parameter n: The number of elements.
     /// - Returns: The average number of comparisons that the algorithm will perform.
     @inlinable
-    public static func averageNumberOfComparisons(for n: Int) -> Int {
+    public static func averageNumberOfComparisons(for n: Int) -> Double {
         guard 1 < n else {
             return 0
         }
@@ -85,7 +85,7 @@ extension Quicksort: SortingAlgorithm {
             dynamicProgrammingTable[i] = i - 1 + 2 * (0..<i).reduce(0) { $0 + dynamicProgrammingTable[$1] } / i
         }
         
-        return dynamicProgrammingTable[n]
+        return Double(dynamicProgrammingTable[n])
     }
 
     /// Returns the maximum number of comparisons that the algorithm will perform given an input with `n` elements.
@@ -97,12 +97,12 @@ extension Quicksort: SortingAlgorithm {
     /// - Parameter n: The number of elements.
     /// - Returns: The maximum number of comparisons that the algorithm will perform.
     @inlinable
-    public static func maximumNumberOfComparisons(for n: Int) -> Int {
+    public static func maximumNumberOfComparisons(for n: Int) -> Double {
         guard 1 < n else {
             return 0
         }
         
-        return (n * (n - 1)) / 2
+        return Double((n * (n - 1))) / 2.0
     }
 
     /// Returns the minimum number of comparisons that the algorithm will perform given an input with `n` elements.
@@ -114,7 +114,7 @@ extension Quicksort: SortingAlgorithm {
     /// - Parameter n: The number of elements.
     /// - Returns: The minimum number of comparisons that the algorithm will perform.
     @inlinable
-    public static func minimumNumberOfComparisons(for n: Int) -> Int {
+    public static func minimumNumberOfComparisons(for n: Int) -> Double {
         guard 1 < n else {
             return 0
         }
@@ -127,7 +127,7 @@ extension Quicksort: SortingAlgorithm {
             size /= 2
         }
         
-        return result
+        return Double(result)
     }
     
     // MARK: Public Instance Interface

@@ -158,21 +158,27 @@ extension MergeSort: SortingAlgorithm {
     /// The algorithm may require more or less comparisons depending on the state of the input and the answers to the
     /// comparisons.
     ///
-    /// The average case for merge sort is asymptotically `n log2(n) - O(n)`. For practical purposes, we use `n log2(n)`
-    /// for large `n`, which provides a good approximation.
-    ///
     /// - Parameter n: The number of elements.
     /// - Returns: The average number of comparisons that the algorithm will perform.
     @inlinable
-    public static func averageNumberOfComparisons(for n: Int) -> Int {
-        // This is a Swift port of the algorithm from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and
-        // Stein, Chapter 2, Section 2.3.
-        
+    public static func averageNumberOfComparisons(for n: Int) -> Double {
         guard 1 < n else {
             return 0
         }
+
+        let levelsOfRecursion = Int(ceil(log2(Double(n))))
         
-        return Int(Double(n) * log2(Double(n)))
+        var totalComparisons = 0
+
+        for level in 1 ... levelsOfRecursion {
+            let mergedRuns = Int(pow(2.0, Double(level - 1)))
+            let runsSize = n / mergedRuns
+            let extraElements = n % mergedRuns
+            let comparisonsPerRun = runsSize * (mergedRuns - extraElements) + (runsSize + 1) * extraElements
+            totalComparisons += comparisonsPerRun
+        }
+
+        return Double(totalComparisons)
     }
     
     /// Returns the maximum number of comparisons that the algorithm will perform given an input with `n` elements.
@@ -182,14 +188,13 @@ extension MergeSort: SortingAlgorithm {
     ///
     /// This value is provably correct and precise. It is not an estimate.
     ///
-    /// - SeeAlso: https://oeis.org/A003071
+    /// - Note: This is a Swift port of the algorithm from D. E. Knuth, Art of Computer Programming, Vol. 3, 
+    ///   Sections 5.2.4., Problem 14.
+    /// - SeeAlso: [https://oeis.org/A003071](https://oeis.org/A003071)
     /// - Parameter n: The number of elements.
     /// - Returns: The number of comparisons that the algorithm will perform in the worst case.
     @inlinable
-    public static func maximumNumberOfComparisons(for n: Int) -> Int {
-        // This is a Swift port of the algorithm from D. E. Knuth, Art of Computer Programming, Vol. 3, Sections 5.2.4.,
-        // Problem 14. (https://oeis.org/A003071)
-        
+    public static func maximumNumberOfComparisons(for n: Int) -> Double {
         let bitNumbers = n.bitNumbers.sorted(by: >)
         
         guard let lastBitNumber = bitNumbers.last else {
@@ -203,7 +208,7 @@ extension MergeSort: SortingAlgorithm {
             sum += (bitNumber + index) * 2.pow(bitNumber)
         }
         
-        return 1 - 2.pow(lastBitNumber) + sum
+        return Double(1 - 2.pow(lastBitNumber) + sum)
     }
     
     /// Returns the minimum number of comparisons that the algorithm will perform given an input with `n` elements.
@@ -213,13 +218,12 @@ extension MergeSort: SortingAlgorithm {
     ///
     /// This value is provably correct and precise. It is not an estimate.
     ///
+    /// - Note: This is a Swift port of the algorithm from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, 
+    ///   and Stein, Chapter 2, Section 2.3.
     /// - Parameter n: The number of elements.
     /// - Returns: The minimum number of comparisons that the algorithm will perform.
     @inlinable
-    public static func minimumNumberOfComparisons(for n: Int) -> Int {
-        // This is a Swift port of the algorithm from "Introduction to Algorithms" by Cormen, Leiserson, Rivest, and
-        // Stein, Chapter 2, Section 2.3.
-        
+    public static func minimumNumberOfComparisons(for n: Int) -> Double {
         guard 1 < n else {
             return 0
         }
@@ -237,7 +241,7 @@ extension MergeSort: SortingAlgorithm {
             currentSize *= 2
         }
         
-        return comparisons
+        return Double(comparisons)
     }
     
     // MARK: Public Instance Interface

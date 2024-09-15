@@ -120,7 +120,7 @@ extension SortingAlgorithm {
     /// The algorithm may require more or less comparisons depending on the state of the input and the answers to the
     /// comparisons.
     @inlinable
-    public var averageNumberOfComparisons: Int {
+    public var averageNumberOfComparisons: Double {
         Self.averageNumberOfComparisons(for: input.count)
     }
     
@@ -129,7 +129,7 @@ extension SortingAlgorithm {
     /// The algorithm may require less comparisons depending on the state of the input and the answers to the
     /// comparisons.
     @inlinable
-    public var maximumNumberOfComparisons: Int {
+    public var maximumNumberOfComparisons: Double {
         Self.maximumNumberOfComparisons(for: input.count)
     }
     
@@ -138,7 +138,7 @@ extension SortingAlgorithm {
     /// The algorithm may require more comparisons depending on the state of the input and the answers to the
     /// comparisons.
     @inlinable
-    public var minimumNumberOfComparisons: Int {
+    public var minimumNumberOfComparisons: Double {
         Self.minimumNumberOfComparisons(for: input.count)
     }
     
