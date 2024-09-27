@@ -112,11 +112,17 @@ extension InsertionSort: SortingAlgorithm {
     ///
     /// The algorithm may require more or fewer comparisons depending on the initial order of the input elements.
     ///
-    /// For a randomly ordered input, the average number of comparisons in insertion sort is approximately `n²⁄4`.
+    /// The average number of comparisons in insertion sort is `(n² + 3n - 4) / 4`.
     ///
-    /// - Note: Based on the average-case analysis of insertion sort as described in **Introduction to Algorithms**
-    ///   by Cormen, Leiserson, Rivest, and Stein (CLRS), 3rd Edition, Section 2.1.
-    /// - SeeAlso: [Introduction to Algorithms](https://mitpress.mit.edu/9780262033848/introduction-to-algorithms/)
+    /// This calculation is based on the following analysis:
+    /// 1. Let X be the random variable equal to the number of comparisons used by insertion sort.
+    /// 2. X = X₂ + X₃ + ... + Xn, where Xᵢ is the number of comparisons to insert the ith element.
+    /// 3. E(X) = E(X₂) + E(X₃) + ... + E(Xn)
+    /// 4. E(Xᵢ) = (i + 1) / 2
+    /// 5. Therefore, E(X) = ∑(i=2 to n) of (i + 1) / 2 = (n² + 3n - 4) / 4
+    ///
+    /// - Note: Based on the average-case analysis of insertion sort as described in **Discrete Mathematics and
+    ///   Its Applications** by Kenneth H. Rosen, 8th Edition, Section 4.4.
     /// - Parameter n: The number of elements.
     /// - Returns: The average number of comparisons that the algorithm will perform.
     @inlinable
@@ -125,7 +131,7 @@ extension InsertionSort: SortingAlgorithm {
             return 0
         }
         
-        return Double(n * (n - 1)) / 4
+        return Double(n * n + 3 * n - 4) / 4
     }
 
     /// Returns the maximum number of comparisons that insertion sort will perform given an input with `n` elements.
