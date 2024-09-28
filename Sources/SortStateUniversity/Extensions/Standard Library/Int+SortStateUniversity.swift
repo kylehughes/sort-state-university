@@ -38,6 +38,17 @@ extension Int {
         return exponents
     }
     
+    @inlinable
+    public var harmonicNumber: Double {
+        var sum = 0.0
+        
+        for k in 1 ... self {
+            sum += 1.0 / Double(k)
+        }
+        
+        return sum
+    }
+    
     // MARK: Internal Instance Interface
     
     @usableFromInline

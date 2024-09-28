@@ -149,24 +149,7 @@ extension InsertionSort: SortingAlgorithm {
             return 0
         }
 
-        let nDouble = Double(n)
-        let harmonicNumber: Double = {
-            guard n < 10000 else {
-                /// We approximate the value for large values of n for the sake of performance.
-                return
-                    log(nDouble) +
-                    .eulerMascheroni +
-                    1.0 / (2.0 * nDouble) -
-                    1.0 / (12.0 * nDouble * nDouble) +
-                    1.0 / (120.0 * pow(nDouble, 4))
-            }
-            
-            return (1 ... n).reduce(0) { sum, k in
-                sum + 1.0 / Double(k)
-            }
-        }()
-
-        return nDouble * (harmonicNumber - 1.0)
+        return Double(n) * (n.harmonicNumber - 1.0)
     }
 
     /// Returns the maximum number of comparisons that insertion sort will perform given an input with `n` elements.

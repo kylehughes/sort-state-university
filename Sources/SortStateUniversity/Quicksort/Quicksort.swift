@@ -65,12 +65,32 @@ extension Quicksort: SortingAlgorithm {
         .quicksort
     }
     
-    /// Returns the average number of comparisons that the algorithm will perform given an input with `n` elements.
+    /// Returns the average number of comparisons that quicksort will perform given an input with `n` elements.
     ///
-    /// This calculation uses the exact recurrence relation for Quicksort's average case.
+    /// The average number of comparisons in quicksort is calculated using the formula `E[Cₙ] = 2(n + 1)Hₙ - 4n`, where
+    /// `Hₙ` is the nth harmonic number.
     ///
-    /// - SeeAlso: Sedgewick, R., & Flajolet, P. (1996). An Introduction to the Analysis of Algorithms.
-    ///   Addison-Wesley. Section 8.2: Quicksort.
+    /// This calculation is based on the following analysis:
+    ///
+    /// 1. **Indicator Random Variables:**
+    ///    - Define `I₍i,j₎` as an indicator random variable where `I₍i,j₎ = 1` if elements `i` and `j` are compared
+    ///      during the execution of quicksort, and `0` otherwise.
+    ///
+    /// 2. **Expected Number of Comparisons:**
+    ///    - The total expected number of comparisons is:
+    ///      ```
+    ///      E[Cₙ] = ∑_{1 ≤ i < j ≤ n} E[I₍i,j₎] = ∑_{1 ≤ i < j ≤ n} 2 / (j - i + 1)
+    ///      ```
+    ///
+    /// 3. **Simplifying Using Harmonic Numbers:**
+    ///    - The expected number of comparisons simplifies to:
+    ///      ```
+    ///      E[Cₙ] = 2(n + 1)Hₙ - 4n
+    ///      ```
+    ///      where `Hₙ` is the `n`th harmonic number.
+    ///
+    /// - Note: Based on the average-case analysis of quicksort as described in **Introduction to Algorithms** by
+    ///   Cormen, Leiserson, Rivest, and Stein.
     /// - Parameter n: The number of elements.
     /// - Returns: The average number of comparisons that the algorithm will perform.
     @inlinable
@@ -78,14 +98,10 @@ extension Quicksort: SortingAlgorithm {
         guard 1 < n else {
             return 0
         }
+
+        let nDouble = Double(n)
         
-        var dynamicProgrammingTable = Array(repeating: 0, count: n + 1)
-        
-        for i in 2...n {
-            dynamicProgrammingTable[i] = i - 1 + 2 * (0..<i).reduce(0) { $0 + dynamicProgrammingTable[$1] } / i
-        }
-        
-        return Double(dynamicProgrammingTable[n])
+        return 2 * (nDouble + 1) * n.harmonicNumber - 4 * nDouble
     }
 
     /// Returns the maximum number of comparisons that the algorithm will perform given an input with `n` elements.
