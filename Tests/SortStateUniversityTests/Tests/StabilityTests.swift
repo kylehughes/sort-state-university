@@ -19,6 +19,10 @@ final class StabilityTests: XCTestCase {
 
     // MARK: Tests
 
+    func test_bubbleSort_isStable() {
+        assertSortIsStable { BubbleSort(input: $0) }
+    }
+
     func test_insertionSort_isStable() {
         assertSortIsStable { InsertionSort(input: $0) }
     }

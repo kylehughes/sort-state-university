@@ -19,6 +19,7 @@ Sort State University brings this dream to life.
 
 ### Provided Algorithms
 
+- Bubble Sort
 - Insertion Sort
 - Merge Sort
 - Quicksort

@@ -33,7 +33,10 @@ public struct SortingAlgorithmLabel: Codable, Equatable, Hashable, Identifiable 
 
 extension SortingAlgorithmLabel {    
     // MARK: Built-In Sorting Algorithms
-    
+
+    /// The label of the ``BubbleSort`` algorithm.
+    public static let bubbleSort = SortingAlgorithmLabel(id: "bubble-sort", name: "Bubble Sort")
+
     /// The label of the ``InsertionSort`` algorithm.
     public static let insertionSort = SortingAlgorithmLabel(id: "insertion-sort", name: "Insertion Sort")
     

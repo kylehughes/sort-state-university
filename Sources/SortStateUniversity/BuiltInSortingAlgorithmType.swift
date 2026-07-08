@@ -7,6 +7,12 @@
 
 /// Enumeration of all sorting algorithms that are built into the library.
 public enum BuiltInSortingAlgorithmType: String, CaseIterable, Equatable, Hashable {
+    /// A simple sorting algorithm that repeatedly steps through the elements and swaps adjacent pairs that are out
+    /// of order.
+    ///
+    /// - SeeAlso: ``BubbleSort``
+    case bubbleSort = "bubble-sort"
+
     /// A simple sorting algorithm that sorts its elements one at a time.
     ///
     /// - SeeAlso: ``InsertionSort``
@@ -25,7 +31,7 @@ public enum BuiltInSortingAlgorithmType: String, CaseIterable, Equatable, Hashab
     // MARK: Public Static Interface
     
     /// A collection of all values in this type, in alphabetical order (in American English).
-    public static let allCasesInAlphabeticalOrder: [Self] = [.insertionSort, .mergeSort, .quicksort,]
+    public static let allCasesInAlphabeticalOrder: [Self] = [.bubbleSort, .insertionSort, .mergeSort, .quicksort,]
     
     // MARK: Public Instance Interface
     
@@ -33,16 +39,18 @@ public enum BuiltInSortingAlgorithmType: String, CaseIterable, Equatable, Hashab
     @inlinable
     public var erasedMetatype: any SortingAlgorithm.Type {
         switch self {
+        case .bubbleSort: BubbleSort<Any>.self
         case .insertionSort: InsertionSort<Any>.self
         case .mergeSort: MergeSort<Any>.self
         case .quicksort: Quicksort<Any>.self
         }
     }
-    
+
     /// The unique label of the associated sorting algorithm.
     @inlinable
     public var label: SortingAlgorithmLabel {
         switch self {
+        case .bubbleSort: .bubbleSort
         case .insertionSort: .insertionSort
         case .mergeSort: .mergeSort
         case .quicksort: .quicksort
