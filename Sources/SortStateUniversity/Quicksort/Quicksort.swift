@@ -46,7 +46,30 @@ public struct Quicksort<Element>: Identifiable {
         currentPartition = nil
         id = UUID()
         output = input
-        partitionStack = [Partition(low: input.startIndex, high: input.index(before: input.endIndex))]
+        partitionStack = []
+
+        pushPartition(low: input.startIndex, high: input.index(before: input.endIndex))
+    }
+
+    // MARK: Internal Instance Interface
+
+    @usableFromInline
+    internal var pendingComparisonPartition: Partition? {
+        guard let currentPartition, currentPartition.hasPendingComparison else {
+            return nil
+        }
+
+        return currentPartition
+    }
+
+    // MARK: Private Instance Interface
+
+    private mutating func pushPartition(low: Elements.Index, high: Elements.Index) {
+        guard low < high else {
+            return
+        }
+
+        partitionStack.append(Partition(low: low, high: high))
     }
 }
 
@@ -123,27 +146,38 @@ extension Quicksort: SortingAlgorithm {
 
     /// Returns the minimum number of comparisons that the algorithm will perform given an input with `n` elements.
     ///
-    /// The best case for quicksort occurs when the pivot always divides the array into two equal halves.
+    /// The best case for quicksort occurs when the pivot always divides the remaining elements into two halves that
+    /// are as equal as possible. Partitioning `n` elements always costs exactly `n - 1` comparisons, and both halves
+    /// are then sorted recursively, so the minimum satisfies the recurrence
+    /// `C(n) = (n - 1) + C(⌊(n - 1)/2⌋) + C(⌈(n - 1)/2⌉)` with `C(0) = C(1) = 0`.
     ///
-    /// - SeeAlso: Knuth, D. E. (1998). The Art of Computer Programming, Volume 3: Sorting and Searching (2nd ed.). 
+    /// - SeeAlso: Knuth, D. E. (1998). The Art of Computer Programming, Volume 3: Sorting and Searching (2nd ed.).
     ///   Addison-Wesley Professional. Section 5.2.2: Sorting by exchanging.
     /// - Parameter n: The number of elements.
     /// - Returns: The minimum number of comparisons that the algorithm will perform.
-    @inlinable
     public static func minimumNumberOfComparisons(for n: Int) -> Double {
-        guard 1 < n else {
-            return 0
+        var memo: [Int: Int] = [:]
+
+        func minimumComparisons(toSort count: Int) -> Int {
+            guard 1 < count else {
+                return 0
+            }
+
+            if let cached = memo[count] {
+                return cached
+            }
+
+            let remainder = count - 1
+            let result = remainder
+                + minimumComparisons(toSort: remainder / 2)
+                + minimumComparisons(toSort: remainder - remainder / 2)
+
+            memo[count] = result
+
+            return result
         }
-        
-        var result = 0
-        var size = n
-        
-        while 1 < size {
-            result += size - 1
-            size /= 2
-        }
-        
-        return Double(result)
+
+        return Double(minimumComparisons(toSort: n))
     }
     
     // MARK: Public Instance Interface
@@ -154,7 +188,7 @@ extension Quicksort: SortingAlgorithm {
     }
     
     public mutating func answer(_ answer: Comparison<Self>.Side) {
-        guard var partition = currentPartition else {
+        guard var partition = pendingComparisonPartition else {
             return
         }
         
@@ -187,22 +221,17 @@ extension Quicksort: SortingAlgorithm {
             return .finished(output)
         }
         
-        guard partition.high <= partition.currentIndex else {
+        guard !partition.hasPendingComparison else {
             return .comparison(Comparison(source: self))
         }
-        
+
         output.swapAt(partition.partitionIndex, partition.high)
-        
+
         let pivotIndex = partition.partitionIndex
-        
-        if partition.low < pivotIndex {
-            partitionStack.append(Partition(low: partition.low, high: pivotIndex - 1))
-        }
-        
-        if pivotIndex + 1 < partition.high {
-            partitionStack.append(Partition(low: pivotIndex + 1, high: partition.high))
-        }
-        
+
+        pushPartition(low: partition.low, high: pivotIndex - 1)
+        pushPartition(low: pivotIndex + 1, high: partition.high)
+
         currentPartition = nil
         
         return self()
@@ -210,7 +239,7 @@ extension Quicksort: SortingAlgorithm {
 
     @inlinable
     public func peekAtElement(for answer: Comparison<Self>.Side) -> Element? {
-        guard let partition = currentPartition else {
+        guard let partition = pendingComparisonPartition else {
             return nil
         }
         

@@ -12,6 +12,11 @@
 ///
 /// The elements that are sorted do not need to conform to `Comparable` because the evaluation of the comparison is left
 /// to the caller.
+///
+/// Implementations must present the element that occurred earlier – in the input, or in the partially-sorted state
+/// being examined – as the left side of every comparison. Stable algorithms rely on this convention: answering ties
+/// with the left side keeps equal elements in their original relative order, and the `Comparable` convenience on
+/// `Comparison` answers ties that way.
 public protocol SortingAlgorithm<Element>: Identifiable {
     // MARK: Associated Types
     

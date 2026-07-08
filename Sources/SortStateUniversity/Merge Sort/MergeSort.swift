@@ -155,24 +155,49 @@ extension MergeSort: SortingAlgorithm {
     
     /// Returns the average number of comparisons that the algorithm will perform given an input with `n` elements.
     ///
-    /// The algorithm may require more or fewer comparisons depending on the state of the input and the answers to the
-    /// comparisons.
+    /// The average is taken over all permutations of `n` distinct elements, each equally likely. It is exact, not an
+    /// estimate.
     ///
-    /// This value is provably correct and precise. It is not an estimate.
+    /// Merging sorted runs of lengths `m` and `k` whose combined relative order is uniformly random requires
+    /// `m + k - m/(k + 1) - k/(m + 1)` comparisons on average. This implementation is a bottom-up merge sort, so the
+    /// total is that expectation summed over every merge in the doubling partition schedule: at each pass,
+    /// `⌊n / 2p⌋` merges of two runs of length `p`, plus a final merge of runs of lengths `p` and `(n mod 2p) - p`
+    /// when the leftover is longer than one run.
     ///
-    /// - Note: This is based on the average-case analysis of merge sort as detailed in D. E. Knuth,
-    ///   *The Art of Computer Programming*, Volume 3, Section 5.2.4.
+    /// - Note: The per-merge expectation is from the analysis of merging in D. E. Knuth, *The Art of Computer
+    ///   Programming*, Volume 3, Section 5.2.4.
     /// - Parameter n: The number of elements.
     /// - Returns: The average number of comparisons that the algorithm will perform.
-    @inlinable
     public static func averageNumberOfComparisons(for n: Int) -> Double {
         guard 1 < n else {
             return 0
         }
 
-        let n = Double(n)
-        
-        return n * log2(n) - n + 1
+        func averageComparisonsForMerge(_ m: Int, _ k: Int) -> Double {
+            let m = Double(m)
+            let k = Double(k)
+
+            return m + k - m / (k + 1) - k / (m + 1)
+        }
+
+        var comparisons = 0.0
+        var partitionSize = 1
+
+        while partitionSize < n {
+            let mergedSize = partitionSize * 2
+            let numberOfFullMerges = n / mergedSize
+            let remainder = n % mergedSize
+
+            comparisons += Double(numberOfFullMerges) * averageComparisonsForMerge(partitionSize, partitionSize)
+
+            if partitionSize < remainder {
+                comparisons += averageComparisonsForMerge(partitionSize, remainder - partitionSize)
+            }
+
+            partitionSize = mergedSize
+        }
+
+        return comparisons
     }
     
     /// Returns the maximum number of comparisons that the algorithm will perform given an input with `n` elements.
@@ -199,10 +224,10 @@ extension MergeSort: SortingAlgorithm {
         
         for index in bitNumbers.indices {
             let bitNumber = bitNumbers[index]
-            sum += (bitNumber + index) * 2.pow(bitNumber)
+            sum += (bitNumber + index) * (1 << bitNumber)
         }
-        
-        return Double(1 - 2.pow(lastBitNumber) + sum)
+
+        return Double(1 - (1 << lastBitNumber) + sum)
     }
     
     /// Returns the minimum number of comparisons that the algorithm will perform given an input with `n` elements.
@@ -260,17 +285,15 @@ extension MergeSort: SortingAlgorithm {
     
     @inlinable
     public func peekAtElement(for answer: Comparison<MergeSort<Element>>.Side) -> Element? {
-        guard let ongoingMerge = ongoingMerge else {
+        guard let ongoingMerge = ongoingMerge, ongoingMerge.arePartitionIndicesInBounds else {
             return nil
         }
-        
+
         switch answer {
-        case .left where ongoingMerge.isLeftPartitionIndexInBounds:
+        case .left:
             return output[ongoingMerge.leftPartitionIndex]
-        case .right where ongoingMerge.isRightPartitionIndexInBounds:
+        case .right:
             return output[ongoingMerge.rightPartitionIndex]
-        default:
-            return nil
         }
     }
 }

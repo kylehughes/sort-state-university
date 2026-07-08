@@ -110,8 +110,9 @@ extension InsertionSort: SortingAlgorithm {
     
     /// Returns the average number of comparisons that insertion sort will perform given an input with `n` elements.
     ///
-    /// The average number of comparisons in insertion sort is calculated using the formula `E[X] = n(Hₙ - 1)`, where
-    /// `Hₙ` is the nth harmonic number.
+    /// The average is taken over all permutations of `n` distinct elements, each equally likely. It is exact, not an
+    /// estimate, and is calculated using the formula `E[X] = (n² + 3n - 4)/4 - Hₙ + 1`, where `Hₙ` is the `n`th
+    /// harmonic number.
     ///
     /// This calculation is based on the following analysis:
     ///
@@ -123,33 +124,33 @@ extension InsertionSort: SortingAlgorithm {
     ///      ```
     ///
     /// 2. **Expected Comparisons for Each Insertion:**
-    ///    - The expected number of comparisons to insert the `i`th element is:
+    ///    - The `i`th element lands in each of the `i` possible positions with equal probability. Scanning backward
+    ///      through the `i - 1` sorted elements costs one comparison per position, except that landing in the first
+    ///      position costs the same as landing in the second (the scan stops by running out of elements, not by
+    ///      losing a comparison):
     ///      ```
-    ///      E[Xᵢ] = Hᵢ - 1
+    ///      E[Xᵢ] = (i + 1)/2 - 1/i
     ///      ```
-    ///      where `Hᵢ` is the `i`th harmonic number.
     ///
     /// 3. **Total Expected Comparisons:**
     ///    - Summing over all elements from `i = 2` to `n`:
     ///      ```
-    ///      E[X] = ∑_{i=2}^{n} (Hᵢ - 1)
-    ///      ```
-    ///    - This simplifies to:
-    ///      ```
-    ///      E[X] = n(Hₙ - 1)
+    ///      E[X] = ∑_{i=2}^{n} ((i + 1)/2 - 1/i) = (n² + 3n - 4)/4 - Hₙ + 1
     ///      ```
     ///
-    /// - Note: Based on the average-case analysis of insertion sort as described in **The Art of Computer Programming**
-    ///   by Donald E. Knuth, Volume 3: *Sorting and Searching*.
+    /// - Note: Based on the average-case analysis of straight insertion sort as described in **The Art of Computer
+    ///   Programming** by Donald E. Knuth, Volume 3: *Sorting and Searching*, Section 5.2.1.
     /// - Parameter n: The number of elements.
     /// - Returns: The average number of comparisons that the algorithm will perform.
     @inlinable
     public static func averageNumberOfComparisons(for n: Int) -> Double {
-        guard 0 < n else {
+        guard 1 < n else {
             return 0
         }
 
-        return Double(n) * (n.harmonicNumber - 1.0)
+        let nDouble = Double(n)
+
+        return (nDouble * nDouble + 3 * nDouble - 4) / 4 - n.harmonicNumber + 1
     }
 
     /// Returns the maximum number of comparisons that insertion sort will perform given an input with `n` elements.

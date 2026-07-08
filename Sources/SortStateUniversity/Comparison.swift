@@ -80,13 +80,17 @@ public struct Comparison<Algorithm> where Algorithm: SortStateUniversity.Sorting
 extension Comparison where Algorithm.Element: Comparable {
     // MARK: Public Instance Interface
     
-    /// Answers the comparison with whether or not the left side is less than the right side.
+    /// Answers the comparison with whether or not the left side is less than or equal to the right side.
+    ///
+    /// Ties are answered with the left side. This preserves the stability of stable sorting algorithms: in every
+    /// built-in algorithm the left side of a comparison is the element that came earlier, so answering ties with the
+    /// left side keeps equal elements in their original relative order.
     ///
     /// The returned algorithm will be the algorithm at its next state, after the comparison is made. The algorithm
     /// can be executed to continue producing comparisons and eventually the sorted output.
     @inlinable
     public func callAsFunction() -> Algorithm {
-        self(left < right)
+        self(left <= right)
     }
 }
 

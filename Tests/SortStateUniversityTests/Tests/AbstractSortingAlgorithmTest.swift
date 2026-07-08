@@ -34,15 +34,15 @@ where
         fatalError("Must be implemented by subclass.")
     }
     
-    public var expectedAverageNumberOfComparisons: [Int: Int] {
+    public var expectedAverageNumberOfComparisons: [Int: Double] {
         fatalError("Must be implemented by subclass.")
     }
-    
-    public var expectedMaximumNumberOfComparisons: [Int: Int] {
+
+    public var expectedMaximumNumberOfComparisons: [Int: Double] {
         fatalError("Must be implemented by subclass.")
     }
-    
-    public var expectedMinimumNumberOfComparisons: [Int: Int] {
+
+    public var expectedMinimumNumberOfComparisons: [Int: Double] {
         fatalError("Must be implemented by subclass.")
     }
     
@@ -109,55 +109,61 @@ where
     
     @inlinable
     public func test_protocol_averageNumberOfComparisons() {
-        var actualOutput: [Int: Int] = [:]
-        var succeeded: Bool = true
-        
-        for (inputCount, expectedNumberOfComparisons) in expectedAverageNumberOfComparisons {
-            let actualNumberOfComparisons = Target.averageNumberOfComparisons(for: inputCount)
-            actualOutput[inputCount] = actualNumberOfComparisons
-            succeeded = succeeded && actualNumberOfComparisons == expectedNumberOfComparisons
-            XCTAssertEqual(actualNumberOfComparisons, expectedNumberOfComparisons)
-        }
-        
-        if !succeeded {
-            print("<\(Target.self)> Actual Average Number of Comparisons:")
-            printToLookLikeCode(actualOutput)
-        }
+        helpTestNumberOfComparisons(
+            expected: expectedAverageNumberOfComparisons,
+            actual: Target.averageNumberOfComparisons(for:),
+            label: "Average"
+        )
     }
-    
+
     @inlinable
     public func test_protocol_maximumNumberOfComparisons() {
-        var actualOutput: [Int: Int] = [:]
-        var succeeded: Bool = true
-        
-        for (inputCount, expectedNumberOfComparisons) in expectedMaximumNumberOfComparisons {
-            let actualNumberOfComparisons = Target.maximumNumberOfComparisons(for: inputCount)
-            actualOutput[inputCount] = actualNumberOfComparisons
-            succeeded = succeeded && actualNumberOfComparisons == expectedNumberOfComparisons
-            XCTAssertEqual(actualNumberOfComparisons, expectedNumberOfComparisons)
-        }
-        
-        if !succeeded {
-            print("<\(Target.self)> Actual Maximum Number of Comparisons:")
-            printToLookLikeCode(actualOutput)
-        }
+        helpTestNumberOfComparisons(
+            expected: expectedMaximumNumberOfComparisons,
+            actual: Target.maximumNumberOfComparisons(for:),
+            label: "Maximum"
+        )
     }
-    
+
     @inlinable
     public func test_protocol_minimumNumberOfComparisons() {
-        var actualOutput: [Int: Int] = [:]
-        var succeeded: Bool = true
-        
-        for (inputCount, expectedNumberOfComparisons) in expectedMinimumNumberOfComparisons {
-            let actualNumberOfComparisons = Target.minimumNumberOfComparisons(for: inputCount)
-            actualOutput[inputCount] = actualNumberOfComparisons
-            succeeded = succeeded && actualNumberOfComparisons == expectedNumberOfComparisons
-            XCTAssertEqual(actualNumberOfComparisons, expectedNumberOfComparisons)
-        }
-        
-        if !succeeded {
-            print("<\(Target.self)> Actual Minimum Number of Comparisons:")
-            printToLookLikeCode(actualOutput)
+        helpTestNumberOfComparisons(
+            expected: expectedMinimumNumberOfComparisons,
+            actual: Target.minimumNumberOfComparisons(for:),
+            label: "Minimum"
+        )
+    }
+
+    /// Exhaustively verifies the comparison-count functions against the algorithm's actual behavior.
+    ///
+    /// For every permutation of every input size up to 7, the algorithm is executed to completion and its comparisons
+    /// are counted. The observed minimum, maximum, and average must match `minimumNumberOfComparisons(for:)`,
+    /// `maximumNumberOfComparisons(for:)`, and `averageNumberOfComparisons(for:)` exactly, and every run must produce
+    /// sorted output. This grounds the closed-form formulas in the implementation itself rather than in tables that
+    /// were derived from the formulas.
+    @inlinable
+    public func test_protocol_numberOfComparisons_matchesActualAlgorithmBehavior() {
+        for n in 0 ... 7 {
+            let inputs = Array(0 ..< n).allPermutations()
+            var minimum = Int.max
+            var maximum = Int.min
+            var total = 0
+
+            for input in inputs {
+                let (output, numberOfComparisons) = target(for: input).runToCompletion()
+
+                XCTAssertEqual(output, input.sorted(), "n=\(n) input=\(input)")
+
+                minimum = Swift.min(minimum, numberOfComparisons)
+                maximum = Swift.max(maximum, numberOfComparisons)
+                total += numberOfComparisons
+            }
+
+            let average = Double(total) / Double(inputs.count)
+
+            XCTAssertEqual(Double(minimum), Target.minimumNumberOfComparisons(for: n), "n=\(n)")
+            XCTAssertEqual(Double(maximum), Target.maximumNumberOfComparisons(for: n), "n=\(n)")
+            XCTAssertEqual(average, Target.averageNumberOfComparisons(for: n), accuracy: 0.000001, "n=\(n)")
         }
     }
     
@@ -241,6 +247,31 @@ where
     }
     
     @inlinable
+    public func helpTestNumberOfComparisons(
+        expected: [Int: Double],
+        actual: (Int) -> Double,
+        label: String,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let accuracy = 0.0001
+        var actualOutput: [Int: Double] = [:]
+        var succeeded = true
+
+        for (inputCount, expectedNumberOfComparisons) in expected {
+            let actualNumberOfComparisons = actual(inputCount)
+            actualOutput[inputCount] = actualNumberOfComparisons
+            succeeded = succeeded && abs(actualNumberOfComparisons - expectedNumberOfComparisons) <= accuracy
+            XCTAssertEqual(actualNumberOfComparisons, expectedNumberOfComparisons, accuracy: accuracy, file: file, line: line)
+        }
+
+        if !succeeded {
+            print("<\(Target.self)> Actual \(label) Number of Comparisons:")
+            printToLookLikeCode(actualOutput)
+        }
+    }
+
+    @inlinable
     public func helpTestProtocolAnswerWhileFinished(
         inputCase: SortingAlgorithmInputCase,
         inputCount: Int,
@@ -285,15 +316,16 @@ where
     }
     
     @inlinable
-    public func printToLookLikeCode(_ dictionary: [Int: Int]) {
+    public func printToLookLikeCode(_ dictionary: [Int: Double]) {
         var result = "[\n"
-        
+
         for (key, value) in dictionary.sorted(by: { $0.key < $1.key }) {
-            result += "    \(key): \(value),\n"
+            let formattedValue = value == value.rounded() ? String(Int(value)) : String(format: "%.6f", value)
+            result += "    \(key): \(formattedValue),\n"
         }
-        
+
         result += "]"
-        
+
         print(result)
     }
 }

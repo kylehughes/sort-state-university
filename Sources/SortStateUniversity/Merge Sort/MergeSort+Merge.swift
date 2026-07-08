@@ -121,8 +121,15 @@ extension MergeSort {
         /// The merge is advanced to the state that follows the answer. If the answer is ``left`` then the
         /// ``leftTransaction`` will be added to ``output``, otherwise the ``rightTransaction` will be added to output.
         ///
+        /// If the merge is not at a point of comparison – i.e. either partition index is out of bounds – then this
+        /// function will have no effect.
+        ///
         /// - Parameter answer: The answer to the current comparison.
         public mutating func answer(_ answer: Comparison<MergeSort>.Side) {
+            guard arePartitionIndicesInBounds else {
+                return
+            }
+
             switch answer {
             case .left:
                 output.insert(leftTransaction)

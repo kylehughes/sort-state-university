@@ -38,21 +38,23 @@ extension Int {
         return exponents
     }
     
+    /// The harmonic number of the current value: the sum of the reciprocals of the first `self` positive integers.
+    ///
+    /// Values less than 1 have a harmonic number of 0 (the empty sum).
+    ///
+    /// - SeeAlso: https://en.wikipedia.org/wiki/Harmonic_number
     @inlinable
     public var harmonicNumber: Double {
+        guard 0 < self else {
+            return 0
+        }
+
         var sum = 0.0
-        
+
         for k in 1 ... self {
             sum += 1.0 / Double(k)
         }
-        
+
         return sum
-    }
-    
-    // MARK: Internal Instance Interface
-    
-    @usableFromInline
-    internal func pow(_ exponent: Int) -> Int {
-        Int(powf(Float(self), Float(exponent)))
     }
 }

@@ -21,6 +21,7 @@ Sort State University brings this dream to life.
 
 - Insertion Sort
 - Merge Sort
+- Quicksort
 
 ### Use Cases
 

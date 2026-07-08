@@ -39,9 +39,19 @@ extension Quicksort {
         public init(low: Elements.Index, high: Elements.Index) {
             self.low = low
             self.high = high
-            
+
             currentIndex = low
             partitionIndex = low
+        }
+
+        // MARK: Public Instance Interface
+
+        /// Whether the partitioning scan still has an element to compare against the pivot.
+        ///
+        /// When this value is `false` the partition is ready for its pivot to be moved into place.
+        @inlinable
+        public var hasPendingComparison: Bool {
+            currentIndex < high
         }
     }
 }
